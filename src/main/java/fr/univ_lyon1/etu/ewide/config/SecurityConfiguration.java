@@ -25,10 +25,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
       http.authorizeRequests()
         .antMatchers("/dashboard").access("hasRole('ADMIN')")
-        .and().formLogin().loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/dashboard", true)
+        .and().formLogin().loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/index", true)
         .usernameParameter("email").passwordParameter("password")
-        .and().csrf()
-        .and().exceptionHandling().accessDeniedPage("/Access_Denied");
+        //and().csrf()
+       	.and().exceptionHandling().accessDeniedPage("/Access_Denied");
     }
  
 }

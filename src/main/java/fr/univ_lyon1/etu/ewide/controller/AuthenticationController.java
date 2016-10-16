@@ -22,7 +22,6 @@ public class AuthenticationController {
 
 	@RequestMapping(value ="/login",  method = RequestMethod.GET)
 	public String connexion() {
-		
 		return "login";
 	}
 	
