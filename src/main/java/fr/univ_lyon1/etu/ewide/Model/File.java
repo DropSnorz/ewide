@@ -5,6 +5,8 @@ import javax.persistence.*;
 /**
  * Created by Maud on 17/10/2016.
  */
+@Entity
+@Table(name="File")
 public class File {
 
     @Column(name = "fileID")
