@@ -417,6 +417,9 @@
     /* creative */
     .pix-creative-1 { background-image: linear-gradient(rgba(0,0,0, 0.5), rgba(0,0,0, 0.5)),url('../images/creative/bg-clients-section.jpg');background-size: cover;background-attachment: fixed;background-position: center; }
     .pix-creative-2 { background-image: linear-gradient(rgba(0,0,0, 0.5), rgba(0,0,0, 0.5)),url('../images/creative/bg-video-section.jpg');background-size: cover;background-attachment: fixed;background-position: center; }
+    
+    /* elegant */
+    .pix-elegant-1 { background-image: url('../images/intro-bg.png');background-color: #237F52;background-size: cover;background-position: center; }
 
     section section .row { margin: 0px;}
 
@@ -425,12 +428,12 @@
     .pix-navbar-default .logo-img { margin-top: 0px;display: block;padding: 10px 0;height: 100%;width: auto; }
     .pix-navbar-default .logo-img img { display: inline-block;max-height: 100%;width: auto; }
     .pix-header-item { padding-top: 14px;padding-bottom: 14px;line-height: 20px;display: inline-block; }
-
+	
 
     /*--------------------------------------------------------------*/
     /* Header */
     .navbar-inverse { background: #222;border: 0px;border-radius: 0px; }
-    .ewide_no_margin { margin: 0px !important;padding: 0px; }
+    .ewide_no_margin { margin: 0px !important;padding: 0px !important; }
     nav li { font-family: "Roboto";letter-spacing: .4px;text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15);font-weight: 500; }
     nav .nav>li.active a, nav .nav>li:hover>a { box-shadow: 0px -3px 0px 0px #1274e7 inset !important;-webkit-transition:all .3s ease;background: rgba(255,255,255,0.1) !important;
         -moz-transition:all .3s ease;
@@ -464,7 +467,7 @@
          
           background: #222;
           font-size: 13px;
-          line-height: 13px ;
+          line-height: 11px ;
           color: #fff;
           border: 0px !important;
           margin: 0px !important;
@@ -536,7 +539,7 @@
     .ide-files-list { color: #eee; }
     .ewide-menu { position: absolute;top: 2px;left: 0;z-index: 9999;background: none;border: 0px;color: #777;height: 40px;font-size: 30px; }
     .ewide-menu:hover, .ewide-menu:focus {color: #fff;outline: none;}
-    .ewide-form {padding: 0 50px;}
+    .ewide-form {margin: 0 50px;}
 
     .pix-btn-primary {
         border: none;
@@ -552,3 +555,6 @@
         letter-spacing: .5px;
         transition: .2s ease-out;
     }
+    .alert { font-family: "Roboto"; }
+    .alert i.material-icons { position:relative;top:5px;font-size:23px; }
+    .col-border-right { border-right: 1px solid #ddd; }
