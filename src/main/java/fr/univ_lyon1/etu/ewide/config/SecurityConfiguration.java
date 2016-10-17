@@ -27,7 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .antMatchers("/dashboard").access("hasRole('ADMIN')")
         .and().formLogin().loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/index", true)
         .usernameParameter("email").passwordParameter("password")
-        //and().csrf()
+        .and().csrf()
        	.and().exceptionHandling().accessDeniedPage("/Access_Denied");
     }
  

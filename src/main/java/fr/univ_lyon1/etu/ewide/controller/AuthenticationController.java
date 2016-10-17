@@ -14,11 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AuthenticationController {
  
-	@RequestMapping("/")
-	public String init(){
-		
-		return "index";
-	}
 
 	@RequestMapping(value ="/login",  method = RequestMethod.GET)
 	public String connexion() {
