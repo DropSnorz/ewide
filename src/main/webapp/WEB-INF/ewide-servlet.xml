@@ -21,24 +21,34 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
-	<!-- Definition de projectDAO -->
-	<!--
-	<bean id="projectDAO" class="fr.univ_lyon1.etu.ewide.dao.ProjectDAOImpl"> </bean>
-	
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-  		<property name="location">
-    			<value>db_config.properties</value>
-  		</property>
-	</bean>
-	
-	<bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-    
-      	<property name="driverClassName" value="${jdbc.driverClassName}"/>
-    	<property name="url" value="${jdbc.url}" />
-    	<property name="username" value="${jdbc.username}" />
-    	<property name="password" value="${jdbc.password}" />
-    	
-    	
-	</bean>  -->
+	<context:property-placeholder location="classpath:application.properties" />
+	    
+    <bean id="entityManagerFactoryBean" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+      <property name="dataSource" ref="dataSource" />
+      <!-- This makes /META-INF/persistence.xml is no longer necessary -->
+      <property name="packagesToScan" value="com.howtodoinjava.demo.model" />
+      <!-- JpaVendorAdapter implementation for Hibernate EntityManager.
+           Exposes Hibernate's persistence provider and EntityManager extension interface -->
+      <property name="jpaVendorAdapter">
+         <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+      </property>
+      <property name="jpaProperties">
+         <props>
+            <prop key="hibernate.hbm2ddl.auto">validate</prop>
+            <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+         </props>
+      </property>
+   </bean>
+  
+   <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName" value="${application.db.driverClassName}" />
+      <property name="url" value="${application.db.url}" />
+      <property name="username" value="${application.db.username}" />
+      <property name="password" value="${application.db.password}" />
+   </bean>
+     
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+      <property name="entityManagerFactory" ref="entityManagerFactoryBean" />
+   </bean>
 
 </beans>
