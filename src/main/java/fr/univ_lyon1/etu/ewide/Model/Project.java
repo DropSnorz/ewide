@@ -24,13 +24,13 @@ public class Project {
     @OneToMany(mappedBy="project")
     protected Collection<Role> roles;
 
-    @OneToMany(mappedBy = "projectID")
+    @OneToMany(mappedBy = "project")
     protected Collection<Message> messages;
 
-    @OneToMany(mappedBy = "projectID")
+    @OneToMany(mappedBy = "project")
     protected Collection<Task> tasks;
 
-    @OneToMany(mappedBy = "projectID")
+    @OneToMany(mappedBy = "project")
     protected Collection<File> files;
 
 

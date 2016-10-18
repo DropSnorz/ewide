@@ -45,6 +45,14 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>4.0.1.RELEASE</version>
 		</dependency>
+		<!-- Spring ORM -> JDBC -->
+		<dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-orm</artifactId>
+	        <version>4.3.1.RELEASE</version>
+	        <type>jar</type>
+        <scope>compile</scope>
+    </dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
