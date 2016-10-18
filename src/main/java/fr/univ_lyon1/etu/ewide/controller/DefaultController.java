@@ -29,16 +29,16 @@ public class DefaultController {
 //	    }
 	    return "index";
 	}
-	/*
+	
 	@RequestMapping(value ="/dashboard",  method = RequestMethod.GET)
 	public String getDashboard() {
 		return "dashboard";
-	}*/
+	}
 	@RequestMapping(value ="/ide",  method = RequestMethod.GET)
 	public String getIde() {
 		return "ide";
 	}
-	
+	/*
 	@Autowired
 	 private ProjectDAOImpl projectDAO;
 
@@ -52,7 +52,7 @@ public class DefaultController {
 	        model.addObject("projectList", listProject);
 	        model.setViewName("dashboard");
 	        return model;
-	    }
+	    }*/
 	
 }
 

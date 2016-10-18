@@ -22,6 +22,7 @@
 	</bean>
 	
 	<!-- Definition de projectDAO -->
+	<!--
 	<bean id="projectDAO" class="fr.univ_lyon1.etu.ewide.dao.ProjectDAOImpl"> </bean>
 	
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -38,6 +39,6 @@
     	<property name="password" value="${jdbc.password}" />
     	
     	
-	</bean> 
+	</bean>  -->
 
 </beans>
