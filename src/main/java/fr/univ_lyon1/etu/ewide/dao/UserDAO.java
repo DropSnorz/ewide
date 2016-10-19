@@ -2,19 +2,25 @@ package fr.univ_lyon1.etu.ewide.dao;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import fr.univ_lyon1.etu.ewide.Model.User;
 
 /**
  * Created by Firas ODEH on 17/10/2016.
  */
 
+@Repository
 public class UserDAO {
-	protected EntityManager em;
 	
-	public UserDAO(EntityManager em) {
-        this.em = em;
-    }
+	@Autowired
+	protected EntityManagerFactory entityManagerFactory;
+	
+	protected EntityManager em;
 	
 	/**
      * Renvoie l'utilisateur correspondant à cet email

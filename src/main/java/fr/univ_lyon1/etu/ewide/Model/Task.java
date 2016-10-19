@@ -30,7 +30,7 @@ public class Task {
     @Column(name="state")
     String state;
 
-    @Column(name="text")
+    @Column(name="text", columnDefinition="clob")
     String text;
 
     @Column(name="referencedTask")

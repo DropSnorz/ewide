@@ -20,7 +20,7 @@ public class Version {
     User user;
 
 
-    File file;
+    //File file;
 
     @Column(name = "version")
     int version;
