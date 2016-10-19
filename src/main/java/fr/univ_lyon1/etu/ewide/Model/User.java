@@ -16,7 +16,9 @@ import java.util.List;
         @NamedQuery(name="User.getByName",
                 query = "SELECT u FROM User u WHERE u.pseudo=:name"),
         @NamedQuery(name="User.getMail",
-                query = "SELECT u.mail FROM User u")
+                query = "SELECT u.mail FROM User u"),
+        @NamedQuery(name="User.getUserByEmail",
+                query = "SELECT u.mail FROM User u WHERE u.mail=:email")
 })
 public class User {
 

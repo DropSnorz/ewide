@@ -1,4 +1,4 @@
-CREATE USER IF NOT EXISTS ‘admin’ PASSWORD admin ADMIN;
+CREATE USER IF NOT EXISTS admin PASSWORD 'admin' ADMIN;
 
 -- -----------------------------------------------------
 -- Table User

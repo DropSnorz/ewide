@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class UserDAOTest {
     @Before
     public void setUp() throws Exception {
-
+        UserDAO user;
     }
 
     @After
@@ -21,13 +21,13 @@ public class UserDAOTest {
     }
 
     @Test
-    public void getUserByEmail() throws Exception {
+    public void shouldGetUserByEmail() throws Exception {
 
     }
 
     @Test
-    public void createOrUpdate() throws Exception {
-
+    public void shouldCreateOrUpdate() throws Exception {
+        assertEquals("failure - strings are not equal", "text", "text");
     }
 
 }

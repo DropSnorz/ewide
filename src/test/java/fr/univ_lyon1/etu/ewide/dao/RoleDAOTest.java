@@ -3,6 +3,7 @@ package fr.univ_lyon1.etu.ewide.dao;
 import org.junit.After;
 import org.junit.Before;
 
+import static com.sun.xml.internal.ws.dump.LoggingDumpTube.Position.Before;
 import static org.junit.Assert.*;
 
 /**
