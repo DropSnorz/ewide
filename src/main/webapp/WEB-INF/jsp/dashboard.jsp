@@ -70,7 +70,7 @@
       </div>
       <div>
 	      <c:forEach var="project" items="${projectList}" >
-	        	<a href="${project.name}"> ${project.name }</a>  <br />                 
+	        	<a href="project/${project.name}"> ${project.name }</a>  <br />                 
 	       </c:forEach>
        </div>
 
