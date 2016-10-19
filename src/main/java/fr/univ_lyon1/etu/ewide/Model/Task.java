@@ -8,37 +8,38 @@ import java.util.Collection;
  * Created by Maud on 17/10/2016.
  */
 @Entity
-@Table(name="TASK")
+@Table(name="Task")
 public class Task {
 
     @Column(name = "taskID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    int taskID;
+    protected int taskID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "projectID")
+    @JoinColumn(name = "Project", referencedColumnName="projectID")
     protected Project project;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userID")
+    @JoinColumn(name = "User", referencedColumnName="userID")
     protected User user;
 
-    @Column(name="type")
-    String type;
+    @Column(name="type", nullable=false)
+    protected String type;
 
-    @Column(name="state")
-    String state;
+    @Column(name="state", nullable=false)
+    protected String state;
 
-    @Column(name="text", columnDefinition="clob")
-    String text;
+    @Lob
+    @Column(name="text", nullable=false)
+    protected String text;
 
-    @Column(name="referencedTask")
-    int referecenredTask;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Task", referencedColumnName="taskID")
+    protected Task referencedTask;
 
-    @Column(name="date")
-    Date date;
-
+    @Column(name="date", nullable=false)
+    protected Date date;
 
 
     public int getTaskID() {
@@ -89,12 +90,12 @@ public class Task {
         this.text = text;
     }
 
-    public int getReferecenredTask() {
-        return referecenredTask;
+    public Task getReferecenredTask() {
+        return referencedTask;
     }
 
-    public void setReferecenredTask(int referecenredTask) {
-        this.referecenredTask = referecenredTask;
+    public void setReferecenredTask(Task referencedTask) {
+        this.referencedTask = referencedTask;
     }
 
     public Date getDate() {

@@ -2,6 +2,7 @@ package fr.univ_lyon1.etu.ewide.Model;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Maud on 17/10/2016.
@@ -13,25 +14,41 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "projectID")
-    int projectID;
+    protected int projectID;
 
-    @Column(name="name")
-    String name;
+    @Column(name="name", unique=true, nullable=false)
+    protected String name;
 
     @Column(name="compiler")
-    String compiler;
+    protected String compiler;
+
+    @Lob
+    @Column(name="description")
+    protected String description;
+
+    @Column(name="linkRepo", unique=true, nullable=false)
+    protected String linkRepo;
+
+    @Column(name="fileTree", unique=true, nullable=false)
+    protected String fileTree;
+
+    @Column(name="linkMakefile", unique=true, nullable=false)
+    protected String linkMakefile;
 
     @OneToMany(mappedBy="project")
     protected Collection<Role> roles;
 
-    @OneToMany(mappedBy = "project")
-    protected Collection<Message> messages;
+    @ElementCollection
+    @CollectionTable(name = "Message", joinColumns = {@JoinColumn(name="projectID")})
+    protected List<Message> messages;
 
-    @OneToMany(mappedBy = "project")
-    protected Collection<Task> tasks;
+    @ElementCollection
+    @CollectionTable(name = "Task", joinColumns = {@JoinColumn(name="projectID")})
+    protected List<Task> tasks;
 
-    @OneToMany(mappedBy = "project")
-    protected Collection<File> files;
+    @ElementCollection
+    @CollectionTable(name = "File", joinColumns = {@JoinColumn(name="projectID")})
+    protected List<Version> files;
 
 
     /**

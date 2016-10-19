@@ -7,29 +7,30 @@ import java.sql.Date;
  * Created by Maud on 17/10/2016.
  */
 @Entity
-@Table(name="VERSION")
+@Table(name="Version")
 public class Version {
 
     @Column(name = "versionID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    int versionID;
+    protected int versionID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userID")
-    User user;
+    @JoinColumn(name = "User", referencedColumnName="userID")
+    protected User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "File", referencedColumnName="fileID")
+    protected File file;
 
-    //File file;
+    @Column(name = "version", nullable=false)
+    protected int version;
 
-    @Column(name = "version")
-    int version;
+    @Column(name = "date", nullable=false)
+    protected Date date;
 
-    @Column(name = "date")
-    Date date;
-
-    @Column(name="text")
     @Lob
-    String text;
+    @Column(name="text", nullable=false)
+    protected String text;
 
 }
