@@ -24,7 +24,7 @@ public class Message {
     @JoinColumn(name = "projectID")
     protected Project project;
 
-    @Column(name="text")
+    @Column(name="text", columnDefinition="clob")
     String text;
 
     @Column(name="date")

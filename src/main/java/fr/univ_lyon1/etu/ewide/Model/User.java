@@ -18,7 +18,7 @@ public class User {
     @Column(name="pseudo")
     String pseudo;
 
-    @Column(name="mail")
+    @Column(name="email")
     String mail;
 
     @Column(name="pwd")
