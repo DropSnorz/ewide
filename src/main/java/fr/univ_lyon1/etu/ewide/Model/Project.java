@@ -38,17 +38,14 @@ public class Project {
     @OneToMany(mappedBy="project")
     protected Collection<Role> roles;
 
-    @ElementCollection
-    @CollectionTable(name = "Message", joinColumns = {@JoinColumn(name="projectID")})
+    @OneToMany(mappedBy="project")
     protected List<Message> messages;
 
-    @ElementCollection
-    @CollectionTable(name = "Task", joinColumns = {@JoinColumn(name="projectID")})
+    @OneToMany(mappedBy="project")
     protected List<Task> tasks;
 
-    @ElementCollection
-    @CollectionTable(name = "File", joinColumns = {@JoinColumn(name="projectID")})
-    protected List<Version> files;
+    @OneToMany(mappedBy="project")
+    protected List<File> files;
 
 
     /**

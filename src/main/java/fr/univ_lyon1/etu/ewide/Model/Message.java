@@ -16,11 +16,11 @@ public class Message {
     protected int messageID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "User", referencedColumnName="userID")
+    @JoinColumn(name = "userID", referencedColumnName="userID")
     protected User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Project", referencedColumnName="projectID")
+    @JoinColumn(name = "projectID", referencedColumnName="projectID")
     protected Project project;
 
     @Lob

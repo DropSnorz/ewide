@@ -1,6 +1,10 @@
 package fr.univ_lyon1.etu.ewide.Model;
 
+import java.util.List;
+
 import javax.persistence.*;
+
+import fr.univ_lyon1.etu.ewide.Model.Version;
 
 /**
  * Created by Maud on 17/10/2016.
@@ -15,8 +19,11 @@ public class File {
     protected int fileID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Project", referencedColumnName="projectID")
+    @JoinColumn(name = "projectID", referencedColumnName="projectID")
     protected Project project;
+    
+    @OneToMany(mappedBy="file")
+    protected List<Version> versions;
 
     @Column(name="name", nullable=false)
     protected String name;

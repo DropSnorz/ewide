@@ -17,11 +17,11 @@ public class Task {
     protected int taskID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Project", referencedColumnName="projectID")
+    @JoinColumn(name = "projectID", referencedColumnName="projectID")
     protected Project project;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "User", referencedColumnName="userID")
+    @JoinColumn(name = "userID", referencedColumnName="userID")
     protected User user;
 
     @Column(name="type", nullable=false)
@@ -34,9 +34,10 @@ public class Task {
     @Column(name="text", nullable=false)
     protected String text;
 
+    /*
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Task", referencedColumnName="taskID")
-    protected Task referencedTask;
+    @JoinColumn(name = "taskID")
+    protected Task referencedTask;*/
 
     @Column(name="date", nullable=false)
     protected Date date;
@@ -90,13 +91,14 @@ public class Task {
         this.text = text;
     }
 
+    /*
     public Task getReferecenredTask() {
         return referencedTask;
     }
-
     public void setReferecenredTask(Task referencedTask) {
         this.referencedTask = referencedTask;
     }
+    */
 
     public Date getDate() {
         return date;

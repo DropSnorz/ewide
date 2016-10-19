@@ -9,6 +9,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "User")
+//TODO Fix queries
 @NamedQueries({
         @NamedQuery(name="User.getAll",
                 query="SELECT u FROM User u"),
@@ -27,7 +28,7 @@ public class User {
     @Column(name="pseudo", unique=true, nullable=false)
     protected String pseudo;
 
-    @Column(name="mail", unique=true, nullable=false)
+    @Column(name="email", unique=true, nullable=false)
     protected String mail;
 
     @Column(name="pwd", nullable=false)
@@ -36,16 +37,13 @@ public class User {
     @OneToMany(mappedBy="user")
     protected Collection<Role> roles;
 
-    @ElementCollection
-    @CollectionTable(name = "Message", joinColumns = {@JoinColumn(name="userID")})
+    @OneToMany(mappedBy="user")
     protected List<Message> messages;
 
-    @ElementCollection
-    @CollectionTable(name = "Task", joinColumns = {@JoinColumn(name="userID")})
+    @OneToMany(mappedBy="user")
     protected List<Task> tasks;
 
-    @ElementCollection
-    @CollectionTable(name = "Version", joinColumns = {@JoinColumn(name="userID")})
+    @OneToMany(mappedBy="user")
     protected List<Version> versions;
 
     public int getUserID() {

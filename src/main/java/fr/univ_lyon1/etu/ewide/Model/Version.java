@@ -16,12 +16,14 @@ public class Version {
     protected int versionID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "User", referencedColumnName="userID")
+    @JoinColumn(name = "userID", referencedColumnName="userID")
     protected User user;
 
+    
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "File", referencedColumnName="fileID")
+    @JoinColumn(name = "fileID", referencedColumnName="fileID")
     protected File file;
+    
 
     @Column(name = "version", nullable=false)
     protected int version;
