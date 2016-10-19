@@ -15,6 +15,7 @@ import fr.univ_lyon1.etu.ewide.Model.Project;
  */
 @Repository
 public class ProjectDAO {
+	
 	@PersistenceContext
 	protected EntityManager em;
 	
@@ -33,5 +34,35 @@ public class ProjectDAO {
       }else{
           return results;
       }
-  }
+	}
+	
+	/**
+     * Créée un nouvel projet
+     * @param name
+     * @param compiler
+     * @return le projet créé
+     */
+    public Project createFile(String name, String compiler) {
+      Project p = new Project();
+      p.setName(name);
+      p.setCompiler(compiler);
+      em.merge(p);
+      return p;
+    }
+    
+    /**
+     * mis à jour un projet 
+     * @param projectID
+     * @param name
+     * @param compiler
+     * @return le projet mis à jour
+     */
+    public Project UpdateFile(int projectID, String name, String compiler) {
+      Project p = new Project();
+      p.setProjectID(projectID);
+      p.setName(name);
+      p.setCompiler(compiler);
+      em.merge(p);
+      return p;
+    }
 }

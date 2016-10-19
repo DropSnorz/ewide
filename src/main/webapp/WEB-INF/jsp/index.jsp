@@ -7,7 +7,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
 	<title>EWIDE</title>
-	<link rel="shortcut icon" href="resources/images/favicon.ico">
 	<link rel="shortcut icon" href="resources/images/favicon.ico"> 
 	<!-- CSS dependencies -->
 	<link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css" />
@@ -32,7 +31,7 @@
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
             <li><a href="dashboard">Dashboard</a></li>
-            <li><a href="ide">Editor</a></li>
+            <li><a href="project">Editor</a></li>
             <li><a href="#contact">Contact</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>

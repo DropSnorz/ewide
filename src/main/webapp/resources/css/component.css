@@ -571,3 +571,7 @@ body,
 .no-js .st-pusher {
 	padding-left: 300px;
 }
+
+.menu-projects { text-decoration: none;color: #eee;background: rgba(255,255,255,0.2);border-radius: 3px;padding: 5px 10px;margin: 5px !important;position: relative;top: 5px;display: inline-block;font-family: "Roboto"; }
+.menu-projects:hover, .menu-projects:focus { text-decoration: none;color: #fff;background: rgba(255,255,255,0.3); }
+.menu-projects i { font-size: 19px;position: relative;top: 4px;font-weight: normal; }
