@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.univ_lyon1.etu.ewide.dao.UserDAO;
 
-@Service("userDetailsService")
+@Service("authenticationUserSerive")
 @Configurable
 public class AuthenticationUserService implements UserDetailsService {
 
@@ -31,6 +32,14 @@ public class AuthenticationUserService implements UserDetailsService {
 		fr.univ_lyon1.etu.ewide.Model.User user = userDAO.getUserByEmail(username);
 		List<GrantedAuthority> authorities = buildUserAuthority();
 		return buildUserForAuthentication(user, authorities);
+	}
+	
+	@Transactional(readOnly=true)
+	public fr.univ_lyon1.etu.ewide.Model.User getCurrentUser(){
+		
+		User spring_user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		fr.univ_lyon1.etu.ewide.Model.User user = userDAO.getUserByEmail(spring_user.getUsername());
+		return user;
 	}
 
 	private User buildUserForAuthentication(fr.univ_lyon1.etu.ewide.Model.User user,
