@@ -9,6 +9,9 @@ import javax.persistence.*;
 @Table(name="Role")
 //TODO Fix queries
 @NamedQueries({
+	
+    @NamedQuery(name="User.getUsersByProjectID",
+    		query="SELECT r FROM Role r join r.project p join r.user u WHERE p.projectID=:projectID ")
        /* @NamedQuery(name="Role.getUsersIDByProject",
                     query="SELECT r.userID FROM Role r WHERE r.projectID=:projectID"), */
         @NamedQuery(name="Role.getProjectIDByUser",
@@ -31,4 +34,40 @@ public class Role {
     @Column(name="role")
     protected String role;
 
+	public int getRoleID() {
+		return roleID;
+	}
+
+	public void setRoleID(int roleID) {
+		this.roleID = roleID;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getPseudo(){
+		return this.user.getPseudo();
+	}
+    
 }
