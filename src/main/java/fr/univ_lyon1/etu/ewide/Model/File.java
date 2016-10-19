@@ -12,20 +12,20 @@ public class File {
     @Column(name = "fileID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    int fileID;
+    protected int fileID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "projectID")
-    Project project;
+    @JoinColumn(name = "Project", referencedColumnName="projectID")
+    protected Project project;
 
-    @Column(name="name")
-    String name;
+    @Column(name="name", nullable=false)
+    protected String name;
 
-    @Column(name="path")
-    String path;
+    @Column(name="path", unique=true, nullable=false)
+    protected String path;
 
-    @Column(name = "type")
-    String type;
+    @Column(name = "type", nullable=false)
+    protected String type;
 
     public int getFileID() {
         return fileID;

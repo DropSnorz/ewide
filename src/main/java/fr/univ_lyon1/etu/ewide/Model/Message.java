@@ -7,28 +7,28 @@ import java.sql.Date;
  * Created by Maud on 17/10/2016.
  */
 @Entity
-@Table(name="MESSAGE")
+@Table(name="Message")
 public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "messageID")
-    int messageID;
+    protected int messageID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userID")
+    @JoinColumn(name = "User", referencedColumnName="userID")
     protected User user;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "projectID")
+    @JoinColumn(name = "Project", referencedColumnName="projectID")
     protected Project project;
 
-    @Column(name="text", columnDefinition="clob")
-    String text;
+    @Lob
+    @Column(name="text", nullable=false)
+    protected String text;
 
-    @Column(name="date")
-    Date date;
+    @Column(name="date", nullable=false)
+    protected Date date;
 
     public int getMessageID() {
         return messageID;

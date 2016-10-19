@@ -2,39 +2,51 @@ package fr.univ_lyon1.etu.ewide.Model;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Maud on 17/10/2016.
  */
 @Entity
-@Table(name = "USER")
+@Table(name = "User")
+@NamedQueries({
+        @NamedQuery(name="User.getAll",
+                query="SELECT u FROM User u"),
+        @NamedQuery(name="User.getByName",
+                query = "SELECT u FROM User u WHERE u.pseudo=:name"),
+        @NamedQuery(name="User.getMail",
+                query = "SELECT u.mail FROM User u")
+})
 public class User {
 
     @Column(name = "userID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    int userID;
+    protected int userID;
 
-    @Column(name="pseudo")
-    String pseudo;
+    @Column(name="pseudo", unique=true, nullable=false)
+    protected String pseudo;
 
-    @Column(name="email")
-    String mail;
+    @Column(name="mail", unique=true, nullable=false)
+    protected String mail;
 
-    @Column(name="pwd")
-    String pwd;
+    @Column(name="pwd", nullable=false)
+    protected String pwd;
 
     @OneToMany(mappedBy="user")
     protected Collection<Role> roles;
 
-    @OneToMany(mappedBy = "user")
-    protected Collection<Message> messages;
+    @ElementCollection
+    @CollectionTable(name = "Message", joinColumns = {@JoinColumn(name="userID")})
+    protected List<Message> messages;
 
-    @OneToMany(mappedBy = "user")
-    protected Collection<Task> tasks;
+    @ElementCollection
+    @CollectionTable(name = "Task", joinColumns = {@JoinColumn(name="userID")})
+    protected List<Task> tasks;
 
-    @OneToMany(mappedBy = "user")
-    protected Collection<Version> versions;
+    @ElementCollection
+    @CollectionTable(name = "Version", joinColumns = {@JoinColumn(name="userID")})
+    protected List<Version> versions;
 
     public int getUserID() {
         return userID;
