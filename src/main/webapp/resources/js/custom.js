@@ -36,7 +36,7 @@ $( window ).load(function() {
 	    htmlTextArea
 		    .height(0.65 * $(window).height())
 		    .show()
-		;	
+		;
 	}
 
 	consoleArea = $('#the_console');

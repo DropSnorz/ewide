@@ -7,7 +7,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
 	<title>EWIDE</title>
-	<link rel="shortcut icon" href="resources/images/favicon.ico">
 	<link rel="shortcut icon" href="resources/images/favicon.ico"> 
 	<!-- CSS dependencies -->
 	<link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css" />

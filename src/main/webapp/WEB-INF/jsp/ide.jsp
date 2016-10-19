@@ -18,6 +18,9 @@
 	
 <div id="st-container">
 	<nav class="st-menu st-effect-4" id="menu-2">
+		<a href="dashboard" class="menu-projects"><i class="material-icons">view_list</i> <span>
+			List projets</span>
+		</a>
 		<h2 class="icon icon-stack">Menu Projet</h2>
 		<ul>
 			<li><a class="icon icon-data" href="#">Wiki</a></li>
@@ -85,8 +88,6 @@
 				<i class="material-icons">save</i> <span>Sauvegarder</span>
 			</a><a href="#" class="tools-btn">
 				<i class="material-icons">playlist_play</i> <span>Compiler</span>
-			</a><a href="#" class="tools-btn">
-				<i class="material-icons">view_list</i> <span>List projets</span>
 			</a>
 		</div>
 	</div>

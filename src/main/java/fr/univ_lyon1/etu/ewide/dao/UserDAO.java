@@ -4,6 +4,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
 import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +13,14 @@ import org.springframework.stereotype.Repository;
 import fr.univ_lyon1.etu.ewide.Model.User;
 
 /**
- * Created by Firas ODEH on 17/10/2016.
+ * Created by Firas on 17/10/2016.
  */
 
 @Repository
 public class UserDAO {
+	
+	@Autowired
+	protected EntityManagerFactory entityManagerFactory;
 	
 	
 	@PersistenceContext
@@ -47,7 +51,7 @@ public class UserDAO {
      * Créée un nouvel utilisateur ou met à jour son pseudo
      * @param email
      * @param pseudo
-     * @return l'utilisateur créé ou lis à jour
+     * @return l'utilisateur créé ou mis à jour
      */
     public User createOrUpdate(String email, String pseudo, String password) {
       User u = new User();

@@ -31,7 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
       http.authorizeRequests()
       	.antMatchers("/dashboard").access("hasRole('USER')")
-      	.antMatchers("/ide").access("hasRole('USER')")
+      	.antMatchers("/project").access("hasRole('USER')")
         .and().formLogin().loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/dashboard", true)
         .usernameParameter("email").passwordParameter("password")
         .and().csrf()
