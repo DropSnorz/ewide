@@ -29,9 +29,9 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Dashboard</a></li>
+            <li><a href="dashboard">Dashboard</a></li>
             <li><a href="project">Editor</a></li>
-            <li><a href="newproject">Create Project</a></li>
+            <li class="active"><a href="newproject">Create Project</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -62,19 +62,28 @@
 	
 
     <div class="container theme-showcase" role="main">
+		<div class="col-md-6 col-xs-12 col-md-offset-3">
+			<h1 class="text-center"><strong>New Project</strong></h1>
+			<hr>
+			<form>
+				<div class="form-group">
+					<label for="projectName">Project Name</label>
+					<input type="text" class="form-control" id="projectName" placeholder="Project Name">
+				</div>
+				<div class="form-group">
+					<label for="projectDesc">Description</label>
+					<textarea class="form-control" rows="3" id="projectDesc" placeholder="Project Description"></textarea>
+				</div>
+				<div class="form-group">
+					<label for="projectUsers">Users</label>
+					<input type="text" class="form-control" id="projectUsers" placeholder="Users">
+				</div>
+				<button class="btn btn-lg btn-success btn-block pix-btn-primary" type="submit">Confirm</button>
+			</form>
+		</div>
 
-      <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <h1>Dashboard</h1>
-        <p>This is a template showcasing the optional theme stylesheet included in Bootstrap. Use it as a starting point to create something more unique by building on or modifying it.</p>
-      </div>
-      <div>
-	      <c:forEach var="project" items="${projectList}" >
-	        	<a href="${project.name}"> ${project.name }</a>  <br />                 
-	       </c:forEach>
-       </div>
 
-    </div> <!-- /container -->
+	</div> <!-- /container -->
 	
 	<!-- Javascripts -->
 	<!-- Placed at the end of the document so the pages load faster -->
