@@ -69,7 +69,7 @@ public class UserDAO {
     public List<User> getAllUsersByProjectID(int projectID){
     	TypedQuery<User> query =
     		      em.createNamedQuery("User.getUsersByProjectID", User.class)
-    		      .setParameter("projectID", projectID);;
+    		      .setParameter("projectID", projectID);
     		      List<User> results = query.getResultList();
     		      if(results.isEmpty()){
     		          return null;

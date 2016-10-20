@@ -35,6 +35,11 @@ public class DefaultController {
 		return "ide";
 	}
 	
+	@RequestMapping(value ="/newproject",  method = RequestMethod.GET)
+	public String getNewProject() {
+		return "new_project";
+	}
+	
 	
 }
 

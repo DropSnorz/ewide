@@ -5,7 +5,7 @@
     
          <div>
 	      <c:forEach var="user" items="${listUsers}" >
-	        	${user.roles.get(0).role}    
-	        	${user.pseudo }          
+	        	${user.roles.get(0).role}  
+	        	${user.pseudo}    <br/>      
 	       </c:forEach>
        </div>

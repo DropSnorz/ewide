@@ -83,7 +83,7 @@ public class User {
     public void setPwd(String pwd) {
         this.pwd = pwd;
     }
-
+    
     public Collection<Role> getRoles() {
         return roles;
     }
