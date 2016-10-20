@@ -5,8 +5,10 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -32,10 +34,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       http.authorizeRequests()
       	.antMatchers("/dashboard").access("hasRole('USER')")
       	.antMatchers("/project").access("hasRole('USER')")
+      	.antMatchers("/project/**").access("hasRole('USER')")
+      	.antMatchers("/newproject").access("hasRole('USER')")
+      	.antMatchers("/register").permitAll()
         .and().formLogin().loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/dashboard", true)
         .usernameParameter("email").passwordParameter("password")
         .and().csrf()
        	.and().exceptionHandling().accessDeniedPage("/Access_Denied");
+    }
+    
+    @Bean(name="authenticationManager")
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
  
 }

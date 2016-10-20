@@ -9,12 +9,12 @@ import java.util.List;
  */
 @Entity
 @Table(name = "User")
-//TODO Fix queries
+
 @NamedQueries({
         @NamedQuery(name="User.getAll",
                 query="SELECT u FROM User u"),
-        @NamedQuery(name="User.getByName",
-                query = "SELECT u FROM User u WHERE u.pseudo=:name"),
+        @NamedQuery(name="User.getByUsername",
+                query = "SELECT u FROM User u WHERE u.username=:username"),
         @NamedQuery(name="User.getMail",
                 query = "SELECT u.mail FROM User u"),
         @NamedQuery(name="User.getUserByEmail",
@@ -31,7 +31,7 @@ public class User {
     protected int userID;
 
     @Column(name="pseudo", unique=true, nullable=false)
-    protected String pseudo;
+    protected String username;
 
     @Column(name="email", unique=true, nullable=false)
     protected String mail;
@@ -60,12 +60,12 @@ public class User {
         this.userID = userID;
     }
 
-    public String getPseudo() {
-        return pseudo;
+    public String getUsername() {
+        return username;
     }
 
-    public void setPseudo(String pseudo) {
-        this.pseudo = pseudo;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getMail() {

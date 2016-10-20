@@ -5,14 +5,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
-
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.TypedQuery;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
 
+
+import fr.univ_lyon1.etu.ewide.Model.Project;
 import fr.univ_lyon1.etu.ewide.Model.Role;
 import fr.univ_lyon1.etu.ewide.Model.User;
 
@@ -44,13 +43,22 @@ public class UserDAO {
 					.setParameter("email_value", email);
 			return query.getSingleResult();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 			return null;
 		}
     
     }
-	
+	public User getUserByUsername(String username){
+		 try {
+				TypedQuery<User> query = em.createNamedQuery("User.getByUsername", User.class);
+				query.setParameter("username", username);
+				return query.getSingleResult();
+			} catch (Exception e) {
+
+				return null;
+			}
+	}
+			
 	/**
      * Créée un nouvel utilisateur ou met à jour son pseudo
      * @param email
@@ -59,7 +67,7 @@ public class UserDAO {
      */
     public User createOrUpdate(String email, String pseudo, String password) {
       User u = new User();
-      u.setPseudo(pseudo);
+      u.setUsername(pseudo);
       u.setMail(email);
       u.setPwd(password);
       em.merge(u);

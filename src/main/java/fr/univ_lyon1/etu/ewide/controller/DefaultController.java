@@ -30,15 +30,7 @@ public class DefaultController {
 	    return "index";
 	}
 	
-	@RequestMapping(value ="/project",  method = RequestMethod.GET)
-	public String getIde() {
-		return "ide";
-	}
 	
-	@RequestMapping(value ="/newproject",  method = RequestMethod.GET)
-	public String getNewProject() {
-		return "new_project";
-	}
 	
 	
 }

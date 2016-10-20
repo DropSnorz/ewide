@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=windows-1256"
     pageEncoding="windows-1256"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page isELIgnored="false" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -89,16 +91,27 @@
 			</div>
 			<div class="col-md-6">
 				<div class="ewide-form">
-					<form name="formSignUp" class="form-signup" action="Signup" method="post">
+				<spring:hasBindErrors name="registerForm">
+				<div class="alert alert-danger" role="alert">
+					<i class="material-icons">error</i>
+					<span class="sr-only">Error: </span>
+					<c:forEach var="error" items="${errors.allErrors}">
+							<b><spring:message message="${error}" /></b>		
+					</c:forEach>
+				</div>
+				</spring:hasBindErrors>
+					<form:form name="registerForm" class="form-signup" action="register" method="post">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						<h2 class="form-signup-heading">S'inscrire</h2>
+						<label for="inputUsername" class="sr-only">Email address</label>
+						<input name="username" type="text" id="username" class="form-control" placeholder="Username" autofocus><br>
 						<label for="inputEmail" class="sr-only">Email address</label>
-						<input name="email" type="email" id="email" class="form-control" placeholder="Email address" autofocus><br>
+						<input name="email" type="email" id="email" class="form-control" placeholder="Email address"><br>
 						<label for="inputPassword" class="sr-only">Password</label>
 						<input name="password" type="password" id="password" class="form-control" placeholder="Password">
 						<br>
 						<button class="btn btn-lg btn-success btn-block pix-btn-primary" name="submit" type="submit">Sign Up</button>
-					</form>
+					</form:form>
 					<br><br>
 				</div>
 			</div>

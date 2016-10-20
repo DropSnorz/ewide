@@ -73,16 +73,16 @@
 			<table class="table users_table">
 				<thead>
 					<tr>
-						<th class="">Pseudo</th>
+						<th class="">User name</th>
 						<th class="text-center role_col">Role</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="user" items="${listUsers}" >
 						<tr>
-							<td>${user.pseudo}</td>
+							<td>${user.username}</td>
 							<td class="text-center">
-								<select class="userrole form-control" name="${user.pseudo}">
+								<select class="userrole form-control" name="${user.username}">
 									<c:forEach var="role" items="${roles}">
 								        <option value="${role}" ${role == user.roles.get(0).role ? 'selected="selected"' : ''}>${role}</option>
 								    </c:forEach>
