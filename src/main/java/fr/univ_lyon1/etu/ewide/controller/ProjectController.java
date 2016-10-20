@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.univ_lyon1.etu.ewide.Model.Project;
@@ -25,13 +28,11 @@ import fr.univ_lyon1.etu.ewide.dao.RoleDAO;
 public class ProjectController {
 	
 	 
-	@Autowired
-	 public  ProjectDAO projectDAO;
 	
 	@Autowired
 	AuthenticationUserService authenticationUserSerive;
 
-	@Autowired
+	@Autowired	
 	public RoleDAO roleDAO;
 	 
 	 @RequestMapping(value ="/dashboard", method = RequestMethod.GET)
@@ -46,6 +47,42 @@ public class ProjectController {
 	        model.setViewName("dashboard");
 	        return model;
 	    }
+	 
+	 @RequestMapping(value ="/newproject", method = RequestMethod.GET)
+	 	public String getNewProject()	{
+		 	return "new_project";
+	 }
+	 
+	 // Cette fonction permet de créer un projet au sein de la base de donnée
+	 // Elle affecte également les utilisateurs liées au projet à leurs rôles
+
+		@Autowired
+		 public  ProjectDAO projectDAO;
+	 @RequestMapping(value ="/newproject", method = RequestMethod.POST)
+	 public String addProject (@RequestParam("projectName")String projectName,
+			 @RequestParam("projectDesc")String projectDesc,
+			 @RequestParam("projectUsers") String projectUser,
+			 Project project,
+			 Role role,
+			   ModelMap model) {
+		 User user = authenticationUserSerive.getCurrentUser();
+		 // Affectation des attributs du projet
+		 project.setName(projectName);
+		 project.setName(projectDesc);
+		 project.setFileTree(projectName);
+		 project.setLinkRepo(projectName);
+		 project.setLinkMakefile(projectName);
+		 // Création du projet dans la BDD
+		 projectDAO.createProject(project);
+		 //Affectation du créateur du projet  au role de manager
+		 role.setUser(user);
+		 roleDAO.createRole(user, project);
+		
+		 //  Fonction fonctionnelle mais non terminée
+			     
+		 	return "new_project";
+			     
+	 }
 	
 
 }

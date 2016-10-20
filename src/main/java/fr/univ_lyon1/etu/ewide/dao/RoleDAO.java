@@ -7,6 +7,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.univ_lyon1.etu.ewide.Model.Project;
 import fr.univ_lyon1.etu.ewide.Model.Role;
@@ -33,5 +35,18 @@ public class RoleDAO {
 	          return results;
 	      }
 	  }
+	
+	// Permet de créer des rôles en fonction du projet et de l'utilisateur
+	@Transactional(propagation = Propagation.REQUIRED)
+    public void createRole(User user, Project project) {
+		
+		Role role = new Role();
+		role.setProject(project);
+		
+		role.setUser(user);
+		role.setRole("Manager");
+
+      em.persist(role);
+    }
 	
 }

@@ -7,12 +7,15 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.univ_lyon1.etu.ewide.Model.Project;
 
 /**
  * Created by Firas ODEH on 17/10/2016.
  */
+
 @Repository
 public class ProjectDAO {
 	
@@ -37,25 +40,22 @@ public class ProjectDAO {
 	}
 	
 	/**
-     * Créée un nouvel projet
+     * Crï¿½ï¿½e un nouvel projet
      * @param name
      * @param compiler
-     * @return le projet créé
+     * @return le projet crï¿½ï¿½
      */
-    public Project createFile(String name, String compiler) {
-      Project p = new Project();
-      p.setName(name);
-      p.setCompiler(compiler);
-      em.merge(p);
-      return p;
+	@Transactional(propagation = Propagation.REQUIRED)
+    public void createProject(Project project) {	
+      em.persist(project);   
     }
     
     /**
-     * mis à jour un projet 
+     * mis ï¿½ jour un projet 
      * @param projectID
      * @param name
      * @param compiler
-     * @return le projet mis à jour
+     * @return le projet mis ï¿½ jour
      */
     public Project UpdateFile(int projectID, String name, String compiler) {
       Project p = new Project();
