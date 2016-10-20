@@ -9,7 +9,9 @@ import java.util.List;
  */
 @Entity
 @Table(name="Project")
-@NamedQuery(name = "Project.getAll", query = "Select c FROM Project c")
+@NamedQueries({
+@NamedQuery(name = "Project.getAll", query = "Select c FROM Project c"),
+})
 public class Project {
 	
 	
@@ -106,4 +108,62 @@ public class Project {
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
     }
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getLinkRepo() {
+		return linkRepo;
+	}
+
+	public void setLinkRepo(String linkRepo) {
+		this.linkRepo = linkRepo;
+	}
+
+	public String getFileTree() {
+		return fileTree;
+	}
+
+	public void setFileTree(String fileTree) {
+		this.fileTree = fileTree;
+	}
+
+	public String getLinkMakefile() {
+		return linkMakefile;
+	}
+
+	public void setLinkMakefile(String linkMakefile) {
+		this.linkMakefile = linkMakefile;
+	}
+
+	public List<Message> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
+	}
+
+	public List<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}
+
+	public List<File> getFiles() {
+		return files;
+	}
+
+	public void setFiles(List<File> files) {
+		this.files = files;
+	}
+    
+    
 }
