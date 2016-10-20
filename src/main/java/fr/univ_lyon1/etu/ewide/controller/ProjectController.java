@@ -84,5 +84,9 @@ public class ProjectController {
 			     
 	 }
 	
-
+		
+	 @RequestMapping(value = {"/project/{project.name}"}, method = RequestMethod.GET)
+	 public String getProjectByName(){
+		 return "ide";
+	 }
 }
