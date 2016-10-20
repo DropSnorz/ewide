@@ -1,7 +1,9 @@
 package fr.univ_lyon1.etu.ewide.controller;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+
 
 
 
@@ -26,12 +28,25 @@ public class UsersManagerController {
 	 @Autowired
 	 public  UserDAO usersDAO;
 	 
+	 public static List<String> roles=Arrays.asList("MANAGER","DEVELOPER","REPORTER"); 
 	 
-	 @RequestMapping(value ="/usersManager", method = RequestMethod.GET)
+	 
+	 /**
+	  * donne la liste des membres d'un projet
+	  * @param Model 
+	  * @return la vue usersmanager
+	  * @throws IOException
+	  */
+	 @RequestMapping(value ="/users_manager", method = RequestMethod.GET)
 	 	public ModelAndView usersManager(ModelMap Model) throws IOException{
 	 		System.out.println("ON doit bind avec la view");
 	        List<User> listUsers = usersDAO.getAllUsersByProjectID(1);
+	        
 	        ModelAndView model = new ModelAndView("usersmanager");
+	        
+	        //liste des roles connus de la bdd
+	        model.addObject("roles",roles);
+	        //liste des utilisateurs avec leur role
 	        model.addObject("listUsers", listUsers);
 	        model.setViewName("usersmanager");
 	        return model;
