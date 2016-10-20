@@ -76,10 +76,7 @@
 					<label for="projectDesc">Description</label>
 					<textarea class="form-control" rows="3" name ="projectDesc" id="projectDesc" placeholder="Project Description"></textarea>
 				</div>
-				<div class="form-group">
-					<label for="projectUsers">Users</label>
-					<input type="text" class="form-control" name ="projectUsers" id="projectUsers" placeholder="Users">
-				</div>
+				
 				<button class="btn btn-lg btn-success btn-block pix-btn-primary" type="submit">Confirm</button>
 			</form:form>
 		</div>

@@ -61,7 +61,7 @@ public class ProjectController {
 	 @RequestMapping(value ="/newproject", method = RequestMethod.POST)
 	 public String addProject (@RequestParam("projectName")String projectName,
 			 @RequestParam("projectDesc")String projectDesc,
-			 @RequestParam("projectUsers") String projectUser,
+			
 			 Project project,
 			 Role role,
 			   ModelMap model) {
@@ -80,7 +80,7 @@ public class ProjectController {
 		
 		 //  Fonction fonctionnelle mais non terminée
 			     
-		 	return "new_project";
+		 	return "redirect:/dashboard";
 			     
 	 }
 	
