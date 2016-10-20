@@ -8,11 +8,17 @@ import java.util.List;
 
 
 
+
+
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.univ_lyon1.etu.ewide.Model.Role;
@@ -28,7 +34,7 @@ public class UsersManagerController {
 	 @Autowired
 	 public  UserDAO usersDAO;
 	 
-	 public static List<String> roles=Arrays.asList("MANAGER","DEVELOPER","REPORTER"); 
+	 public static List<String> roles=Arrays.asList("","MANAGER","DEVELOPER","REPORTER"); 
 	 
 	 
 	 /**
@@ -51,6 +57,14 @@ public class UsersManagerController {
 	        model.setViewName("usersmanager");
 	        return model;
 	    }
+	 
+	 @RequestMapping(value="/user_manager",method=RequestMethod.POST)
+	 public String changeRoles(Map<String,String> map, BindingResult result, SessionStatus status){
+		    //Validation code start
+		    boolean error = false;
+		    System.out.print(map);
+		    return "usermanager";
+	 }
 	
 
 }
