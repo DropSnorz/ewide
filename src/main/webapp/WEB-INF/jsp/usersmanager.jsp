@@ -68,6 +68,7 @@
 		<div class="col-md-6 col-xs-12 col-md-offset-3">
 			<h1 class="text-center"><strong>Utilisateurs</strong></h1>
 			<hr>
+			<form name="formlogin" class="users_roles" id="users_roles" method="POST">
 			<table class="table users_table">
 				<thead>
 					<tr>
@@ -80,7 +81,7 @@
 						<tr>
 							<td>${user.pseudo}</td>
 							<td class="text-center">
-								<select class="userrole form-control">
+								<select class="userrole form-control" name="${user.pseudo}">
 									<c:forEach var="role" items="${roles}">
 								        <option value="${role}" ${role == user.roles.get(0).role ? 'selected="selected"' : ''}>${role}</option>
 								    </c:forEach>
@@ -90,15 +91,17 @@
 				     </c:forEach>
 				</tbody>
 			</table>
-			<button class="btn btn-lg btn-success btn-block pix-btn-primary disabled" id="users_submit" type="submit">No Changes yet</button>
+			<button class="btn btn-lg btn-success btn-block pix-btn-primary " id="users_submit" type="submit">No Changes yet</button>
+			</form>
 		</div>
 
 	</div>
 	
 	<!-- Javascripts -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.2.js" />"/>
-	<script type="text/javascript" src="<c:url value="/resources/js/jquery-ui.js" />"/>
-	<script type="text/javascript" src="<c:url value="/resources/bootstrap/js/bootstrap.js" />"/>
+	<script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.2.js" />"/></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/jquery-ui.js" />"/></script>    
+	<script type="text/javascript" src="<c:url value="/resources/bootstrap/js/bootstrap.js" />"/></script>    
+	<script type="text/javascript" src="<c:url value="/resources/js/custom_users.js" />"/></script>    
 </body>
 </html>
