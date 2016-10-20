@@ -12,12 +12,15 @@ import java.util.List;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -58,11 +61,12 @@ public class UsersManagerController {
 	        return model;
 	    }
 	 
-	 @RequestMapping(value="/user_manager",method=RequestMethod.POST)
-	 public String changeRoles(Map<String,String> map, BindingResult result, SessionStatus status){
+	 @RequestMapping(value="/users_manager",method=RequestMethod.POST)
+	 public String changeRoles(@RequestParam Map<String,String> allRequestParams){
 		    //Validation code start
-		    boolean error = false;
-		    System.out.print(map);
+		  	for(Map.Entry<String, String>pseudo : allRequestParams.entrySet()){
+		  		System.out.print(pseudo.getKey() + pseudo.getValue());
+		  	}
 		    return "usermanager";
 	 }
 	

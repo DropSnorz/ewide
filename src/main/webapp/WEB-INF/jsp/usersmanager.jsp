@@ -68,7 +68,8 @@
 		<div class="col-md-6 col-xs-12 col-md-offset-3">
 			<h1 class="text-center"><strong>Utilisateurs</strong></h1>
 			<hr>
-			<form name="formlogin" class="users_roles" id="users_roles" method="POST">
+			<form name="formlogin" class="users_roles" id="users_roles" method="POST" action="users_manager">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<table class="table users_table">
 				<thead>
 					<tr>
