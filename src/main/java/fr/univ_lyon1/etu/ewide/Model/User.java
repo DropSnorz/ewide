@@ -18,7 +18,10 @@ import java.util.List;
         @NamedQuery(name="User.getMail",
                 query = "SELECT u.mail FROM User u"),
         @NamedQuery(name="User.getUserByEmail",
-                query = "SELECT u.mail FROM User u WHERE u.mail=:email")
+                query = "SELECT u.mail FROM User u WHERE u.mail=:email"),
+        @NamedQuery(name="User.getUsersByProjectID",
+                query="SELECT u FROM User u join u.roles r "
+                		+ "WHERE r.project.projectID=:projectID and r.user.userID = u.userID"),
 })
 public class User {
 
@@ -36,8 +39,9 @@ public class User {
     @Column(name="pwd", nullable=false)
     protected String pwd;
 
-    @OneToMany(mappedBy="user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL)
     protected Collection<Role> roles;
+
 
     @OneToMany(mappedBy="user")
     protected List<Message> messages;
@@ -79,7 +83,7 @@ public class User {
     public void setPwd(String pwd) {
         this.pwd = pwd;
     }
-
+    
     public Collection<Role> getRoles() {
         return roles;
     }

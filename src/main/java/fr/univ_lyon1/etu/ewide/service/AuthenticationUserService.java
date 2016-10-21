@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,7 +32,7 @@ public class AuthenticationUserService implements UserDetailsService {
 
 	@Autowired
 	private UserDAO userDAO;
-	
+
 	@Autowired 
 	AuthenticationManager authenticationManager;
 
@@ -42,27 +43,38 @@ public class AuthenticationUserService implements UserDetailsService {
 		List<GrantedAuthority> authorities = buildUserAuthority();
 		return buildUserForAuthentication(user, authorities);
 	}
-	
+
 	@Transactional(readOnly=true)
 	public fr.univ_lyon1.etu.ewide.Model.User getCurrentUser(){
-		
+
 		User spring_user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		fr.univ_lyon1.etu.ewide.Model.User user = userDAO.getUserByEmail(spring_user.getUsername());
 		return user;
 	}
-	
+
 	public void doLogin(String username, String password, HttpServletRequest request) {
 
-	    try {
-	        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
-	        token.setDetails(new WebAuthenticationDetails(request));
-	        Authentication authentication = this.authenticationManager.authenticate(token);
-	        SecurityContextHolder.getContext().setAuthentication(authentication);
-	    } catch (Exception e) {
-	        SecurityContextHolder.getContext().setAuthentication(null);
-	        e.printStackTrace();
-	    }
+		try {
+			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+			token.setDetails(new WebAuthenticationDetails(request));
+			Authentication authentication = this.authenticationManager.authenticate(token);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+		} catch (Exception e) {
+			SecurityContextHolder.getContext().setAuthentication(null);
+			e.printStackTrace();
+		}
 
+	}
+
+	public boolean isCurrentUserLogged(){
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+
+			return true;
+		}
+		
+		return false;
 	}
 
 	private User buildUserForAuthentication(fr.univ_lyon1.etu.ewide.Model.User user,

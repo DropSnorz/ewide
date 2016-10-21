@@ -10,12 +10,8 @@ import javax.persistence.*;
 //TODO Fix queries
 @NamedQueries({
 
-    @NamedQuery(name="User.getUsersByProjectID",
-    		query="SELECT r FROM Role r join r.project p join r.user u WHERE p.projectID=:projectID "),
-       /* @NamedQuery(name="Role.getUsersIDByProject",
-                    query="SELECT r.userID FROM Role r WHERE r.projectID=:projectID"), */
         @NamedQuery(name="Role.getProjectIDByUser",
-                    query = "SELECT r.project FROM Role r WHERE r.user = :user")
+                    query = "SELECT r.project FROM Role r WHERE r.user = :user") 
 })
 public class Role {
     @Id

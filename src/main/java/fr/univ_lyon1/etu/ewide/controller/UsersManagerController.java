@@ -25,7 +25,7 @@ public class UsersManagerController {
 	
 	 @Autowired
 	 public  UserDAO usersDAO;
-	 
+
 	 
 	 @RequestMapping(value ="/usersManager", method = RequestMethod.GET)
 	 	public ModelAndView usersManager(ModelMap Model) throws IOException{
