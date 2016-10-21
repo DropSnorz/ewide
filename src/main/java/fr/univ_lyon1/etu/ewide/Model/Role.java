@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name="Role")
 //TODO Fix queries
 @NamedQueries({
-	
+
     @NamedQuery(name="User.getUsersByProjectID",
     		query="SELECT r FROM Role r join r.project p join r.user u WHERE p.projectID=:projectID "),
        /* @NamedQuery(name="Role.getUsersIDByProject",
