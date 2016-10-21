@@ -1,80 +1,30 @@
-<%@ page language="java" contentType="text/html; charset=windows-1256"
-    pageEncoding="windows-1256"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
-	<title>EWIDE</title>
-	<link rel="shortcut icon" href="resources/images/favicon.ico">
-	<!-- CSS dependencies -->
-	
-	<link href="<c:url value="/resources/bootstrap/css/bootstrap.css" />" rel="stylesheet">
-	<link href="<c:url value="/resources/css/font-awesome.min.css" />" rel="stylesheet">
-	<link href="<c:url value="/resources/css/font-awesome.min.css" />" rel="stylesheet">
-	<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
-	
- 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>EWIDE - Users manager</title>
 </head>
 <body>
 
-	<!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index">EWIDE</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="dashboard">Dashboard</a></li>
-            <li><a href="project">Editor</a></li>
-            <li class="active"><a href="newproject">Create Project</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-             <li>
-             	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Moi <span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li><a href="#">Mot de passe</a></li>
-					<li role="separator" class="divider"></li>
-					<li><a href="logout">Sign Out</a></li>
-				</ul>
-             </li>
-           </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
-
+	<!-- Header Template -->
+	<jsp:include page="header.jsp"/>
 	
-	
+	<!-- Page Content -->	
 	<div class="container">
 		<div class="col-md-6 col-xs-12 col-md-offset-3">
 			<h1 class="text-center"><strong>Utilisateurs</strong></h1>
 			<hr>
-			<form name="formlogin" class="users_roles" id="users_roles" method="POST" action="users_manager">
+			<form name="formlogin" class="users_roles" id="users_roles" action="users_manager" method="POST">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<table class="table users_table">
 				<thead>
 					<tr>
-						<th class="">User name</th>
+						<th class="">Pseudo</th>
 						<th class="text-center role_col">Role</th>
+						<th class="text-center"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -88,14 +38,18 @@
 								    </c:forEach>
 								</select>
 							</td>
+							<td class="text-center">
+								<a href="#" class="btn btn-danger btn-delete-user delete-user"><i class="material-icons">delete</i></a>
+							</td>
 						</tr>
 				     </c:forEach>
 				</tbody>
 			</table>
-			<button class="btn btn-lg btn-success btn-block pix-btn-primary " id="users_submit" type="submit">No Changes yet</button>
+			<button class="btn btn-lg btn-success btn-block pix-btn-primary " id="users_submit" type="submit">Save</button>
 			</form>
+			<br>
+			<a href="#" class="btn btn-primary" id="ajaxtest">AJAX Test</a>
 		</div>
-
 	</div>
 	
 	<!-- Javascripts -->
