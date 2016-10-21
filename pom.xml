@@ -10,6 +10,7 @@
 	<name>ewide Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
+  	
 	<dependencies>
 		<!-- JUnit -->
 		<dependency>
@@ -102,6 +103,36 @@
 			<version>4.3.0.Final</version>
 		</dependency>
 
+		
+		
+	<!-- ****** JGIT ****** -->
+				
+	<!-- Core Library -->
+	    <dependency>		
+	      <groupId>org.eclipse.jgit</groupId>
+	      <artifactId>org.eclipse.jgit</artifactId>
+	      <version>4.5.0.201609210915-r</version>
+	    </dependency>
+	  <!-- Smart HTTP Servlet -->
+	    <dependency>
+	      <groupId>org.eclipse.jgit</groupId>
+	      <artifactId>org.eclipse.jgit.http.server</artifactId>
+	      <version>4.5.0.201609210915-r</version>
+	    </dependency>
+	  <!-- AWT UI Helpers -->
+	    <dependency>
+	      <groupId>org.eclipse.jgit</groupId>
+	      <artifactId>org.eclipse.jgit.ui</artifactId>
+	      <version>4.5.0.201609210915-r</version>
+	    </dependency>
+	  <!-- JUnit Test Support -->
+	    <dependency>
+	      <groupId>org.eclipse.jgit</groupId>
+	      <artifactId>org.eclipse.jgit.junit</artifactId>
+	      <version>4.5.0.201609210915-r</version>
+	    </dependency>
+	    
+	    <!-- ******* FIN JGIT ******* -->
 	</dependencies>
 
 	<build>
