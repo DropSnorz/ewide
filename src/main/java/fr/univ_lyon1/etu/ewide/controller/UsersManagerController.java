@@ -3,9 +3,7 @@ package fr.univ_lyon1.etu.ewide.controller;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-
-
-
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.univ_lyon1.etu.ewide.Model.Project;
@@ -22,6 +21,7 @@ import fr.univ_lyon1.etu.ewide.Model.User;
 import fr.univ_lyon1.etu.ewide.dao.ProjectDAO;
 import fr.univ_lyon1.etu.ewide.dao.RoleDAO;
 import fr.univ_lyon1.etu.ewide.dao.UserDAO;
+
 
 @Transactional
 @Controller
@@ -52,7 +52,7 @@ public class UsersManagerController {
 	    }
 	
 	 /**
-	  * modifie les roles qui ont été changés 
+	  * modifie les roles qui ont ï¿½tï¿½ changï¿½s 
 	  * @param allRequestParams (HashMap<String, String>)
 	  * @param projectID (int)
 	  * @return 

@@ -61,11 +61,11 @@ public class ProjectController {
 	 @RequestMapping(value ="/newproject", method = RequestMethod.POST)
 	 public String addProject (@RequestParam("projectName")String projectName,
 			 @RequestParam("projectDesc")String projectDesc,
-			 @RequestParam("projectUsers") String projectUser,
 			 Project project,
 			 Role role,
 			   ModelMap model) {
 		 User user = authenticationUserSerive.getCurrentUser();
+		
 		 // Affectation des attributs du projet
 		 project.setName(projectName);
 		 project.setName(projectDesc);
@@ -76,13 +76,21 @@ public class ProjectController {
 		 projectDAO.createProject(project);
 		 //Affectation du créateur du projet  au role de manager
 		 role.setUser(user);
-		 roleDAO.createRole(user, project);
+		 roleDAO.createOrUpdate(user, project,"MANAGER");
 		
 		 //  Fonction fonctionnelle mais non terminée
 			     
-		 	return "new_project";
+		 	return "redirect:/dashboard";
 			     
 	 }
+	 
+     @RequestMapping(value = {"/project/{project.id}"}, method = RequestMethod.GET)
+     public String getProjectByName(){
+
+             return "ide";
+
+     }
+
 	
 
 }

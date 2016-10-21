@@ -41,18 +41,8 @@ public class RoleDAO {
 	      }
 	  }
 	
-	// Permet de créer des rôles en fonction du projet et de l'utilisateur
-	@Transactional(propagation = Propagation.REQUIRED)
-    public void createRole(User user, Project project) {
-		
-		Role role = new Role();
-		role.setProject(project);
-		
-		role.setUser(user);
-		role.setRole("Manager");
-
-      em.persist(role);
-    }
+	
+	
 	/**
 	 * donne l'id du role en fonction d'un utilisateur et d'un projet
 	 * @param user (User)
@@ -67,7 +57,7 @@ public class RoleDAO {
 		 return query.getSingleResult();
 	}
 	/**
-	 * cr�er ou modifie le role 
+	 * cr�er ou modifie le role 
 	 * @param user (User)
 	 * @param project (Project)
 	 * @param role_name (String)
