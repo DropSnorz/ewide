@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.univ_lyon1.etu.ewide.Model.File;
 import fr.univ_lyon1.etu.ewide.Model.Project;
 import fr.univ_lyon1.etu.ewide.Model.Role;
 import fr.univ_lyon1.etu.ewide.Model.User;
@@ -49,12 +50,18 @@ public class RoleDAO {
 	 * @param project (Project)
 	 * @return 0 si le Role n'existe pas 
 	 */
+	@Transactional(propagation=Propagation.REQUIRED)
 	public Role searchRoleByUserAndProject(User user,Project project){
 		 TypedQuery<Role> query =
 			      em.createNamedQuery("Role.getRoleIDByUserAndProject",Role.class);
 		 query.setParameter("user",user)
 		 	   .setParameter("project",project);
-		 return query.getSingleResult();
+		 List<Role> results = query.getResultList();
+		 if(results.isEmpty()){
+	          return null;
+	      }else{
+	          return results.get(0);
+	      }
 	}
 	/**
 	 * cr�er ou modifie le role 
@@ -62,20 +69,21 @@ public class RoleDAO {
 	 * @param project (Project)
 	 * @param role_name (String)
 	 */
-	public void createOrUpdate(User user, Project project, String role_name){
+	public void updateRole(User user, Project project, String role_name){
 		Role role=this.searchRoleByUserAndProject(user, project);
 		if(role!=null){
 			role.setRole(role_name);
 			em.merge(role);
 		}
-		else{
-			role=new Role();
-			System.out.println("created");
-			role.setProject(project);
-			role.setUser(user);
-			role.setRole(role_name);
-			em.persist(role);
-		}
 	}
 	
-}
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void createRole(User user, Project project, String roleName) {
+       Role role = new Role();
+       role.setProject(project);          
+       role.setUser(user);
+       role.setRole(roleName);
+       em.persist(role);
+
+	}
+}	
