@@ -32,8 +32,8 @@ public class Project {
     @Column(name="description")
     protected String description;
 
-    @Column(name="linkRepo", unique=true, nullable=false)
-    protected String linkRepo;
+    /*@Column(name="linkRepo", unique=true, nullable=false)
+    protected String linkRepo;*/
 
     @Column(name="fileTree", unique=true, nullable=false)
     protected String fileTree;
@@ -119,13 +119,13 @@ public class Project {
 		this.description = description;
 	}
 
-	public String getLinkRepo() {
+	/*public String getLinkRepo() {
 		return linkRepo;
 	}
 
 	public void setLinkRepo(String linkRepo) {
 		this.linkRepo = linkRepo;
-	}
+	}*/
 
 	public String getFileTree() {
 		return fileTree;

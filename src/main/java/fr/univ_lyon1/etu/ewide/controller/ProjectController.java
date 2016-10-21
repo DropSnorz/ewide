@@ -72,7 +72,7 @@ public class ProjectController {
 		 project.setDescription(projectDesc);
 		 project.setFileTree(projectName);
 		 
-		 project.setLinkRepo(projectName);
+		 /*project.setLinkRepo(projectName);*/
 		 project.setLinkMakefile(projectName);
 		 // Création du projet dans la BDD
 		 projectDAO.createProject(project);

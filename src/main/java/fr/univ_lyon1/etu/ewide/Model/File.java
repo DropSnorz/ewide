@@ -22,8 +22,8 @@ public class File {
     @JoinColumn(name = "projectID", referencedColumnName="projectID")
     protected Project project;
     
-    @OneToMany(mappedBy="file")
-    protected List<Version> versions;
+    /*@OneToMany(mappedBy="file")
+    protected List<Version> versions;*/
 
     @Column(name="name", nullable=false)
     protected String name;
