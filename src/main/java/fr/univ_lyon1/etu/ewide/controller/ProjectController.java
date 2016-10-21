@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -68,15 +69,16 @@ public class ProjectController {
 		
 		 // Affectation des attributs du projet
 		 project.setName(projectName);
-		 project.setName(projectDesc);
+		 project.setDescription(projectDesc);
 		 project.setFileTree(projectName);
+		 
 		 project.setLinkRepo(projectName);
 		 project.setLinkMakefile(projectName);
 		 // Création du projet dans la BDD
 		 projectDAO.createProject(project);
 		 //Affectation du créateur du projet  au role de manager
 		 role.setUser(user);
-		 roleDAO.createOrUpdate(user, project,"MANAGER");
+		 roleDAO.createRole(user, project,"MANAGER");
 		
 		 //  Fonction fonctionnelle mais non terminée
 			     
@@ -84,10 +86,15 @@ public class ProjectController {
 			     
 	 }
 	 
-     @RequestMapping(value = {"/project/{project.id}"}, method = RequestMethod.GET)
-     public String getProjectByName(){
-
-             return "ide";
+     @RequestMapping(value = {"/project/{projectID}"}, method = RequestMethod.GET)
+     public ModelAndView getProjectByName(@PathVariable("projectID") int projectID){
+    	 ModelAndView model = new ModelAndView("dashboard");
+    	 Project project = new Project();
+    	 project = projectDAO.getProjectById(projectID);
+	        model.addObject("project", project);
+	        model.setViewName("ide");
+	        return model;
+             
 
      }
 

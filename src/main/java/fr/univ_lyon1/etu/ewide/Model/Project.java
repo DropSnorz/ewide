@@ -41,7 +41,8 @@ public class Project {
     @Column(name="linkMakefile", unique=true, nullable=false)
     protected String linkMakefile;
 
-    @OneToMany(mappedBy="project")
+    //@OneToMany(mappedBy="project")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="project", cascade = CascadeType.ALL)
     protected Collection<Role> roles;
 
     @OneToMany(mappedBy="project")

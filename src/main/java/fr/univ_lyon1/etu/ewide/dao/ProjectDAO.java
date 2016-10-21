@@ -19,6 +19,7 @@ import fr.univ_lyon1.etu.ewide.Model.Project;
  */
 
 @Repository
+@Transactional
 public class ProjectDAO {
 	
 	@Autowired
