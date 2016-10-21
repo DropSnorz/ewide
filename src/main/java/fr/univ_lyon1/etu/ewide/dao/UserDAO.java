@@ -22,6 +22,7 @@ import fr.univ_lyon1.etu.ewide.Model.User;
 @Repository
 public class UserDAO {
 	
+	
 	@Autowired
 	protected EntityManagerFactory entityManagerFactory;
 	
@@ -75,6 +76,23 @@ public class UserDAO {
       return u;
     }
 
+    /**
+     * retourne les utilisateurs en fonction d'un id de projet
+     * @param projectID (int)
+     * @return (List<User>)
+     */
+    public List<User> getAllUsersByProjectID(int projectID){
+    	TypedQuery<User> query =
+    		      em.createNamedQuery("User.getUsersByProjectID", User.class)
+    		      .setParameter("projectID", projectID);
+    		      List<User> results = query.getResultList();
+    		      if(results.isEmpty()){
+    		          return null;
+    		      }else{
+    		          return results;
+    		      }
+    			}
+
 	/**
 	 * Cr��e un nouvel utilisateur ou met � jour son pseudo
 	 * @param user
@@ -95,19 +113,5 @@ public class UserDAO {
 		}
 		return user;
 	}
-    
-    public List<Role> getAllUsersByProjectID(int projectID){
-    	TypedQuery<Role> query =
-    		      em.createNamedQuery("User.getUsersByProjectID", Role.class)
-    		      .setParameter("projectID", projectID);;
-    		      List<Role> results = query.getResultList();
-    		      if(results.isEmpty()){
-    		          return null;
-    		      }else{
-    		          return results;
-    		      }
-    			}
-
-
-
+	
 }

@@ -21,7 +21,7 @@ import java.util.List;
                 query = "SELECT u.mail FROM User u WHERE u.mail=:email"),
         @NamedQuery(name="User.getUsersByProjectID",
                 query="SELECT u FROM User u join u.roles r "
-                		+ "WHERE r.project.projectID=:projectID and r.user.userID = u.userID"),
+                		+ "WHERE r.project.projectID=:projectID and r.user.userID = u.userID")
 })
 public class User {
 
