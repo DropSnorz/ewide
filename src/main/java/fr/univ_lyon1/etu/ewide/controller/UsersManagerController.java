@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -98,5 +99,11 @@ public class UsersManagerController {
 		    return "usermanager";
 	 }
 	
-
+	 //	 Test Ajax
+	 @RequestMapping(value="/user_delete")
+	 public String deleteUser2(HttpServletRequest request, HttpServletResponse response){
+		    System.out.print(request.getParameterMap().toString());
+		    return "users_manager";
+	 }
+	 
 }
