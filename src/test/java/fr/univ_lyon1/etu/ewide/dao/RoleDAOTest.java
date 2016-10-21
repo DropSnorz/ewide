@@ -2,6 +2,7 @@ package fr.univ_lyon1.etu.ewide.dao;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,6 +31,11 @@ public class RoleDAOTest {
 
     @After
     public void tearDown() throws Exception {
+
+    }
+
+    @Test
+    public void jeSuisUnTest() throws Exception {
 
     }
 
