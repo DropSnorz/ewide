@@ -75,8 +75,13 @@ public class UsersManagerController {
 	        return model;
 	    }
 	 
+	 /**
+	  * modifie les roles qui ont été changés 
+	  * @param allRequestParams (HashMap<String, String>)
+	  * @param projectID (int)
+	  * @return 
+	  */
 	 @RequestMapping(value="/users_manager",method=RequestMethod.POST)
-	 
 	 public String changeRoles(@RequestParam HashMap<String,String> allRequestParams,@PathVariable("projectID") int projectID){
 		 	allRequestParams.remove("_csrf");
 		  	for(Map.Entry<String, String>node : allRequestParams.entrySet()){
