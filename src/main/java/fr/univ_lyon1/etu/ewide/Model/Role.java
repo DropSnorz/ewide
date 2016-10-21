@@ -15,7 +15,7 @@ import javax.persistence.*;
        /* @NamedQuery(name="Role.getUsersIDByProject",
                     query="SELECT r.userID FROM Role r WHERE r.projectID=:projectID"), */
         @NamedQuery(name="Role.getProjectIDByUser",
-                    query = "SELECT r.project FROM Role r WHERE r.user = :user") 
+                    query = "SELECT r.project FROM Role r WHERE r.user = :user")
 })
 public class Role {
     @Id
