@@ -22,6 +22,7 @@ import fr.univ_lyon1.etu.ewide.Model.User;
 @Repository
 public class UserDAO {
 	
+	
 	@Autowired
 	protected EntityManagerFactory entityManagerFactory;
 	
@@ -74,6 +75,11 @@ public class UserDAO {
       return u;
     }
     
+    /**
+     * retourne les utilisateurs en fonction d'un id de projet
+     * @param projectID (int)
+     * @return (List<User>)
+     */
     public List<User> getAllUsersByProjectID(int projectID){
     	TypedQuery<User> query =
     		      em.createNamedQuery("User.getUsersByProjectID", User.class)
@@ -85,7 +91,6 @@ public class UserDAO {
     		          return results;
     		      }
     			}
-    
     
 	
 }

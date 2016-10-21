@@ -10,7 +10,8 @@ import java.util.List;
 @Entity
 @Table(name="Project")
 @NamedQueries({
-@NamedQuery(name = "Project.getAll", query = "Select c FROM Project c"),
+	@NamedQuery(name = "Project.getAll", query = "Select c FROM Project c"),
+	@NamedQuery(name="Project.getProjectById", query="SELECT p FROM Project p WHERE p.projectID=:projectID"),
 })
 public class Project {
 	
