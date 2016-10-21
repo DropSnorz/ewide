@@ -49,8 +49,8 @@ public class User {
     @OneToMany(mappedBy="user")
     protected List<Task> tasks;
 
-    @OneToMany(mappedBy="user")
-    protected List<Version> versions;
+    /*@OneToMany(mappedBy="user")
+    protected List<Version> versions;*/
 
     public int getUserID() {
         return userID;
