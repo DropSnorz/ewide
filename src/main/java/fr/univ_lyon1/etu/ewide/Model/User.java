@@ -21,7 +21,7 @@ import java.util.List;
                 query = "SELECT u.mail FROM User u WHERE u.mail=:email"),
         @NamedQuery(name="User.getUsersByProjectID",
                 query="SELECT u FROM User u join u.roles r "
-                		+ "WHERE r.project.projectID=:projectID and r.user.userID = u.userID"),
+                		+ "WHERE r.project.projectID=:projectID and r.user.userID = u.userID")
 })
 public class User {
 
@@ -49,8 +49,8 @@ public class User {
     @OneToMany(mappedBy="user")
     protected List<Task> tasks;
 
-    @OneToMany(mappedBy="user")
-    protected List<Version> versions;
+    /*@OneToMany(mappedBy="user")
+    protected List<Version> versions;*/
 
     public int getUserID() {
         return userID;

@@ -22,6 +22,7 @@ import fr.univ_lyon1.etu.ewide.Model.User;
 @Repository
 public class UserDAO {
 	
+	
 	@Autowired
 	protected EntityManagerFactory entityManagerFactory;
 	
@@ -30,7 +31,7 @@ public class UserDAO {
 	protected EntityManager em;
 	
 	/**
-     * Renvoie l'utilisateur correspondant à cet email
+     * Renvoie l'utilisateur correspondant ï¿½ cet email
      * @param email l'email de l'utilisateur
      * @return l'utilisateur ou null s'il n'existe pas
      */
@@ -60,20 +61,26 @@ public class UserDAO {
 	}
 			
 	/**
-     * Créée un nouvel utilisateur ou met à jour son pseudo
-     * @param email
-     * @param pseudo
-     * @return l'utilisateur créé ou mis à jour
+     * Crï¿½ï¿½e un nouvel utilisateur ou met ï¿½ jour son pseudo
+     * @param email email de l'utilisateur
+     * @param username pseudo de l'utilisateur
+     * @param password mot de passe de l'utilisateur
+     * @return l'utilisateur crï¿½ï¿½ ou mis ï¿½ jour
      */
-    public User createOrUpdate(String email, String pseudo, String password) {
+    public User createOrUpdate(String email, String username, String password) {
       User u = new User();
-      u.setUsername(pseudo);
+      u.setUsername(username);
       u.setMail(email);
       u.setPwd(password);
       em.merge(u);
       return u;
     }
-    
+
+    /**
+     * retourne les utilisateurs en fonction d'un id de projet
+     * @param projectID (int)
+     * @return (List<User>)
+     */
     public List<User> getAllUsersByProjectID(int projectID){
     	TypedQuery<User> query =
     		      em.createNamedQuery("User.getUsersByProjectID", User.class)
@@ -85,7 +92,26 @@ public class UserDAO {
     		          return results;
     		      }
     			}
-    
-    
+
+	/**
+	 * Crï¿½ï¿½e un nouvel utilisateur ou met ï¿½ jour son pseudo
+	 * @param user
+	 * @return l'utilisateur crï¿½ï¿½ ou mis ï¿½ jour
+	 */
+	public User createOrUpdate(User user) {
+		if(em.find(User.class, user.getUsername())!= null)
+		{
+			em.getTransaction().begin();
+			em.merge(user); // mise a jour
+			em.getTransaction().commit();
+		}
+		else
+		{
+			em.getTransaction().begin();
+			em.persist(user);  // persiste
+			em.getTransaction().commit();
+		}
+		return user;
+	}
 	
 }
