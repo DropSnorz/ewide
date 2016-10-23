@@ -3,13 +3,16 @@ package fr.univ_lyon1.etu.ewide.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.univ_lyon1.etu.ewide.Model.File;
 import fr.univ_lyon1.etu.ewide.Model.Project;
 import fr.univ_lyon1.etu.ewide.Model.Role;
 import fr.univ_lyon1.etu.ewide.Model.User;
@@ -19,6 +22,9 @@ import fr.univ_lyon1.etu.ewide.Model.User;
  */
 @Repository
 public class RoleDAO {
+	@Autowired
+	protected EntityManagerFactory entityManagerFactory;
+	
 	@PersistenceContext
 	protected EntityManager em;
 	
@@ -57,16 +63,48 @@ public class RoleDAO {
 	  }
 	
 	// Permet de créer des rôles en fonction du projet et de l'utilisateur
-	@Transactional(propagation = Propagation.REQUIRED)
-    public void createRole(User user, Project project) {
-		
-		Role role = new Role();
-		role.setProject(project);
-		
-		role.setUser(user);
-		role.setRole("Manager");
-
-      em.persist(role);
-    }
 	
-}
+	
+	/**
+	 * donne l'id du role en fonction d'un utilisateur et d'un projet
+	 * @param user (User)
+	 * @param project (Project)
+	 * @return 0 si le Role n'existe pas 
+	 */
+	@Transactional(propagation=Propagation.REQUIRED)
+	public Role searchRoleByUserAndProject(User user,Project project){
+		 TypedQuery<Role> query =
+			      em.createNamedQuery("Role.getRoleIDByUserAndProject",Role.class);
+		 query.setParameter("user",user)
+		 	   .setParameter("project",project);
+		 List<Role> results = query.getResultList();
+		 if(results.isEmpty()){
+	          return null;
+	      }else{
+	          return results.get(0);
+	      }
+	}
+	/**
+	 * cr�er ou modifie le role 
+	 * @param user (User)
+	 * @param project (Project)
+	 * @param role_name (String)
+	 */
+	public void updateRole(User user, Project project, String role_name){
+		Role role=this.searchRoleByUserAndProject(user, project);
+		if(role!=null){
+			role.setRole(role_name);
+			em.merge(role);
+		}
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void createRole(User user, Project project, String roleName) {
+       Role role = new Role();
+       role.setProject(project);          
+       role.setUser(user);
+       role.setRole(roleName);
+       em.persist(role);
+
+	}
+}	

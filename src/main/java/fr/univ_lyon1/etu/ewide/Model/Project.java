@@ -10,7 +10,8 @@ import java.util.List;
 @Entity
 @Table(name="Project")
 @NamedQueries({
-@NamedQuery(name = "Project.getAll", query = "Select c FROM Project c"),
+	@NamedQuery(name = "Project.getAll", query = "Select c FROM Project c"),
+	@NamedQuery(name="Project.getProjectById", query="SELECT p FROM Project p WHERE p.projectID=:projectID"),
 })
 public class Project {
 	
@@ -31,8 +32,8 @@ public class Project {
     @Column(name="description")
     protected String description;
 
-    @Column(name="linkRepo", unique=true, nullable=false)
-    protected String linkRepo;
+    /*@Column(name="linkRepo", unique=true, nullable=false)
+    protected String linkRepo;*/
 
     @Column(name="fileTree", unique=true, nullable=false)
     protected String fileTree;
@@ -40,7 +41,8 @@ public class Project {
     @Column(name="linkMakefile", unique=true, nullable=false)
     protected String linkMakefile;
 
-    @OneToMany(mappedBy="project")
+    //@OneToMany(mappedBy="project")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="project", cascade = CascadeType.ALL)
     protected Collection<Role> roles;
 
     @OneToMany(mappedBy="project")
@@ -117,13 +119,13 @@ public class Project {
 		this.description = description;
 	}
 
-	public String getLinkRepo() {
+	/*public String getLinkRepo() {
 		return linkRepo;
 	}
 
 	public void setLinkRepo(String linkRepo) {
 		this.linkRepo = linkRepo;
-	}
+	}*/
 
 	public String getFileTree() {
 		return fileTree;

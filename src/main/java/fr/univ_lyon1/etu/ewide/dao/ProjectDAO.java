@@ -3,9 +3,11 @@ package fr.univ_lyon1.etu.ewide.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,8 +19,12 @@ import fr.univ_lyon1.etu.ewide.Model.Project;
  */
 
 @Repository
+@Transactional
 public class ProjectDAO {
 	
+	@Autowired
+	protected EntityManagerFactory entityManagerFactory;
+
 	@PersistenceContext
 	protected EntityManager em;
 	
@@ -50,7 +56,12 @@ public class ProjectDAO {
       em.persist(project);   
     }
 	
-	public Project getProjectById(String idProject){
+	 /**
+     * donne le projet en fonction de son id
+     * @param projectID (int)
+     * @return null if doesn't exist
+     */
+	public Project getProjectById(int idProject){
 		try {
 			return em.find(Project.class, idProject);
 		} catch (Exception e) {
@@ -73,4 +84,6 @@ public class ProjectDAO {
       em.merge(p);
       return p;
     }
+    
+
 }

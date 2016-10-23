@@ -43,7 +43,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       	.antMatchers("/dashboard").access("hasRole('USER')")
       	.antMatchers("/project").access("hasRole('USER')")
       	.antMatchers("/project/**").access("hasRole('USER')")
-      	.antMatchers("/newproject").access("hasRole('USER')")
       	.antMatchers("/register").permitAll()
         .and().formLogin().loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/dashboard", true)
         .usernameParameter("email").passwordParameter("password")

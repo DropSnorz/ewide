@@ -1,38 +1,24 @@
 package fr.univ_lyon1.etu.ewide.Model;
 
-import javax.persistence.*;
-import java.sql.Date;
-
-/**
- * Created by Maud on 17/10/2016.
- */
-@Entity
-@Table(name="Version")
 public class Version {
 
-    @Column(name = "versionID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Id
-    protected int versionID;
+	
+	public int versionID;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userID", referencedColumnName="userID")
-    protected User user;
+    public String user;
 
+    public String version;
+
+    public String date;
+
+    public String comment;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fileID", referencedColumnName="fileID")
-    protected File file;
-    
-
-    @Column(name = "version", nullable=false)
-    protected int version;
-
-    @Column(name = "date", nullable=false)
-    protected Date date;
-
-    @Lob
-    @Column(name="text", nullable=false)
-    protected String text;
+    public Version(int versionID, String User, String version, String date, String comment){
+    	this.versionID = versionID;
+    	this.user = User;
+    	this.version = version;
+    	this.date = date;
+    	this.comment = comment;
+    }
 
 }
