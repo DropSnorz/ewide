@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>fr.univ-lyon1.etu</groupId>
 	<artifactId>ewide</artifactId>
@@ -44,7 +43,7 @@
 			<artifactId>spring-orm</artifactId>
 			<version>4.1.4.RELEASE</version>
 		</dependency>
-        <!-- Spring Security -->
+		<!-- Spring Security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
@@ -55,7 +54,7 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>4.0.1.RELEASE</version>
 		</dependency>
-        <!-- Servlet -->
+		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -96,13 +95,24 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>4.3.0.Final</version>
 		</dependency>
+		<!-- Aspect -->
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.6.11</version>
+		</dependency>
 
 	</dependencies>
 
 	<build>
 		<finalName>ewide</finalName>
 		<pluginManagement>
-            <!-- Tomcat plugin -->
+			<!-- Tomcat plugin -->
 			<plugins>
 				<plugin>
 					<groupId>org.apache.tomcat.maven</groupId>
@@ -112,56 +122,56 @@
 			</plugins>
 		</pluginManagement>
 
-        <plugins>
-            <!-- Tomcat plugin -->
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
-                <configuration>
-                    <server>${tomcat-server}</server>
-                    <charset>UTF-8</charset>
-                    <url>${tomcat-url}</url>
-                    <update>true</update>
-                    <!-- pas très safe -->
-                    <username>${tomcat-username}</username>
-                    <password>${tomcat-password}</password>
-                </configuration>
-            </plugin>
-        </plugins>
+		<plugins>
+			<!-- Tomcat plugin -->
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<server>${tomcat-server}</server>
+					<charset>UTF-8</charset>
+					<url>${tomcat-url}</url>
+					<update>true</update>
+					<!-- pas très safe -->
+					<username>${tomcat-username}</username>
+					<password>${tomcat-password}</password>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 
-    <profiles>
-        <profile>
-            <id>localhost</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <tomcat-server>localhost</tomcat-server>
-                <tomcat-url>http://localhost:8080/manager/text</tomcat-url>
-                <tomcat-username>machine</tomcat-username>
-                <tomcat-password>machine</tomcat-password>
-            </properties>
-        </profile>
-        <profile>
-            <id>vm_mathilde</id>
-            <properties>
-                <tomcat-server>vm_mathilde</tomcat-server>
-                <tomcat-url>http://192.168.77.24:8080/manager/text</tomcat-url>
-                <tomcat-username>machine</tomcat-username>
-                <tomcat-password>machine</tomcat-password>
-            </properties>
-        </profile>
-        <profile>
-            <id>vm_arthur</id>
-            <properties>
-                <tomcat-server>vm_arthur</tomcat-server>
-                <tomcat-url>http://192.168.77.126:8080/manager/text</tomcat-url>
-                <tomcat-username>machine</tomcat-username>
-                <tomcat-password>machine</tomcat-password>
-            </properties>
-        </profile>
-    </profiles>
+	<profiles>
+		<profile>
+			<id>localhost</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<tomcat-server>localhost</tomcat-server>
+				<tomcat-url>http://localhost:8080/manager/text</tomcat-url>
+				<tomcat-username>machine</tomcat-username>
+				<tomcat-password>machine</tomcat-password>
+			</properties>
+		</profile>
+		<profile>
+			<id>vm_mathilde</id>
+			<properties>
+				<tomcat-server>vm_mathilde</tomcat-server>
+				<tomcat-url>http://192.168.77.24:8080/manager/text</tomcat-url>
+				<tomcat-username>machine</tomcat-username>
+				<tomcat-password>machine</tomcat-password>
+			</properties>
+		</profile>
+		<profile>
+			<id>vm_arthur</id>
+			<properties>
+				<tomcat-server>vm_arthur</tomcat-server>
+				<tomcat-url>http://192.168.77.126:8080/manager/text</tomcat-url>
+				<tomcat-username>machine</tomcat-username>
+				<tomcat-password>machine</tomcat-password>
+			</properties>
+		</profile>
+	</profiles>
 
 </project>

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -21,6 +22,7 @@ import fr.univ_lyon1.etu.ewide.Model.User;
 
 import fr.univ_lyon1.etu.ewide.dao.ProjectDAO;
 import fr.univ_lyon1.etu.ewide.service.AuthenticationUserService;
+import fr.univ_lyon1.etu.ewide.service.UserRoleService;
 import fr.univ_lyon1.etu.ewide.dao.RoleDAO;
 
 @Transactional
@@ -28,9 +30,9 @@ import fr.univ_lyon1.etu.ewide.dao.RoleDAO;
 public class ProjectController {
 	
 	 
-	
 	@Autowired
 	AuthenticationUserService authenticationUserSerive;
+	
 
 	@Autowired	
 	public RoleDAO roleDAO;
@@ -48,16 +50,20 @@ public class ProjectController {
 	        return model;
 	    }
 	 
+	 @PreAuthorize("@roleService.isMember()")
 	 @RequestMapping(value ="/newproject", method = RequestMethod.GET)
 	 	public String getNewProject()	{
 		 	return "new_project";
 	 }
+	 
 	 
 	 // Cette fonction permet de créer un projet au sein de la base de donnée
 	 // Elle affecte également les utilisateurs liées au projet à leurs rôles
 
 		@Autowired
 		 public  ProjectDAO projectDAO;
+		
+
 	 @RequestMapping(value ="/newproject", method = RequestMethod.POST)
 	 public String addProject (@RequestParam("projectName")String projectName,
 			 @RequestParam("projectDesc")String projectDesc,

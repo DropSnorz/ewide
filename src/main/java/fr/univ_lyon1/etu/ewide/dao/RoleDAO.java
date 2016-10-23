@@ -36,6 +36,26 @@ public class RoleDAO {
 	      }
 	  }
 	
+	public Role getRoleByUserIdAndProjectId(int userId, int projectId) {
+		
+	      try {
+			TypedQuery<Role> query =
+			  em.createQuery("SELECT r FROM Role r"
+			  		+ " WHERE r.user.userID=:userId AND r.project.projectID=:projectId",Role.class);
+			  
+			  query.setParameter("userId", userId);
+			  query.setParameter("projectId", projectId);
+			  	
+			  Role role = query.getSingleResult();
+			  return role;
+		} catch (Exception e) {
+			
+			return null;
+		}
+	      
+	     
+	  }
+	
 	// Permet de créer des rôles en fonction du projet et de l'utilisateur
 	@Transactional(propagation = Propagation.REQUIRED)
     public void createRole(User user, Project project) {

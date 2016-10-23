@@ -49,6 +49,14 @@ public class ProjectDAO {
     public void createProject(Project project) {	
       em.persist(project);   
     }
+	
+	public Project getProjectById(String idProject){
+		try {
+			return em.find(Project.class, idProject);
+		} catch (Exception e) {
+			return null;
+		}
+	}
     
     /**
      * mis � jour un projet 
