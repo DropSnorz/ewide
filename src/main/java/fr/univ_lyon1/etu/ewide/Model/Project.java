@@ -22,7 +22,7 @@ public class Project {
     @Column(name = "projectID")
     protected int projectID;
 
-    @Column(name="name", unique=true, nullable=false)
+    @Column(name="name", nullable=false)
     protected String name;
 
     @Column(name="compiler")

@@ -30,7 +30,7 @@ public class User {
     @Id
     protected int userID;
 
-    @Column(name="pseudo", unique=true, nullable=false)
+    @Column(name="username", unique=true, nullable=false)
     protected String username;
 
     @Column(name="email", unique=true, nullable=false)
