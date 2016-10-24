@@ -51,7 +51,6 @@ public class ProjectController {
 	        return model;
 	    }
 	 
-	 @PreAuthorize("@roleService.isMember()")
 	 @RequestMapping(value ="/newproject", method = RequestMethod.GET)
 	 	public String getNewProject()	{
 		 	return "new_project";
