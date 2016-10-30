@@ -38,7 +38,7 @@ pageEncoding="UTF-8"%>
 						<th class="text-center"></th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody  id="userRoleTab">
 					<c:forEach var="user" items="${listUsers}" >
 						<tr>
 							<td>${user.username}</td>

@@ -14,7 +14,30 @@ function adduser(){
 	        xhr.setRequestHeader(header, token);
 	    },
 		success:function(data){
-			console.log(data);
+			if(data){
+				var newChild = document.createElement("tr");
+				newChild.setAttribute("id", data.username);
+				var usertd=document.createElement("td");
+				var user=document.createTextNode(data.username);
+				var roletd=document.createElement("td");
+				roletd.setAttribute("id", "roleselect");
+				var deletetd=document.createElement("td");
+				deletetd.setAttribute("class","text-center");
+				deletetd.setAttribute("id","dlt");
+				usertd.appendChild(user);
+				newChild.appendChild(usertd);
+				newChild.appendChild(roletd);
+				newChild.appendChild(deletetd);
+				document.getElementById("userRoleTab").appendChild(newChild);
+				document.getElementById("roleselect").innerHTML="<select class=\"userrole form-control\" name=\""+data.username+"\">"+
+						"<option value=\"\"></option>"+
+						"<option value=\"MANAGER\">MANAGER </option>"+
+						"<option value=\"REPORTER\">REPORTER </option>"+
+						"<option selected=\"selected\" value=\"DEVELOPER\">DEVELOPER </option>"+
+						+"</select>";
+				document.getElementById("dlt").innerHTML="<a href=\"#\" onclick=\"deleteonclick(\'"+data.username+"\')\" class=\"btn btn-danger btn-delete-user\"><i class=\"material-icons\">delete</i></a>";
+				
+				}
 			}
 		});
 
@@ -49,8 +72,19 @@ $( document ).ready(function() {
 		var option = document.createElement("option");
 		option.text = "Removed";
 		option.value = "null";
+		console.log("oui");
 		$(this).closest( "tr" ).find('select')[0].appendChild(option);
 		$(this).closest( "tr" ).find('select').val("null").change();
 		$(this).closest( "tr" ).hide('100');
 	});
 });
+//----------------------------------------------------------------------
+function deleteonclick(username){
+	var node=document.getElementById(username);
+	var option = document.createElement("option");
+	option.text = "Removed";
+	option.value = "null";
+	node.first.next.find('select')[0].appendChild(option);
+	node.first.next.find('select').val("null").change();
+	node.first.next.closest( "tr" ).hide('100');
+}

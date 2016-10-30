@@ -92,7 +92,6 @@ public class UsersManagerController {
 	  * @param projectID (int)
 	  * @return
 	  */
-	 //TODO delete a User
 	 @RequestMapping(value="/{projectID}/users_manager",method=RequestMethod.POST)
 	 public String changeRoles(@RequestParam HashMap<String,String> allRequestParams,@PathVariable("projectID") int projectID){
 		 	allRequestParams.remove("_csrf");
@@ -112,7 +111,6 @@ public class UsersManagerController {
 		 	else{
 		 		//return an error 
 		 	}
-
 	 
 		  	//TODO return validation
 		    return "usermanager";
@@ -140,7 +138,6 @@ public class UsersManagerController {
 	  * @param role (model)
 	  * @return
 	  */
-	 //TODO
 	 @RequestMapping(value="/{projectID}/adduser", method=RequestMethod.POST)
 	 @ResponseBody
 	 //TODO return not finished
@@ -151,7 +148,7 @@ public class UsersManagerController {
 		 if(!(roleDAO.getProjectIDByUser(user)!=null &&roleDAO.getProjectIDByUser(user).contains(project))){
 			 role.setUser(user);
 			 roleDAO.createRole(user, project,"DEVELOPER");
-			 if(!roleDAO.getProjectIDByUser(user).contains(project)){
+			 if(roleDAO.getProjectIDByUser(user).contains(project)){
 				 return user;
 			 }
 		 }
