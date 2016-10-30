@@ -107,4 +107,11 @@ public class RoleDAO {
        em.persist(role);
 
 	}
+	
+	public void deleteRole(User user, Project project){
+		Role role=searchRoleByUserAndProject(user, project);
+		if(role!=null){
+			em.remove(role);
+		}
+	}
 }	

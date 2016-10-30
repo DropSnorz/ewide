@@ -68,14 +68,17 @@ public class UsersManagerController {
 	 	public ModelAndView usersManager(ModelMap Model, @PathVariable("projectID") int projectID) throws IOException{
 	     
 		 	List<User> listUsers = usersDAO.getAllUsersByProjectID(projectID);
-	      
+		 	User user = authenticationUserSerive.getCurrentUser();
+		 	Role role=roleDAO.getRoleByUserIdAndProjectId(user.getUserID(), projectID);
 	        ModelAndView model = new ModelAndView("usersmanager");
 	        
-	        //liste des roles connus de la bdd
+	        //set of roles that exist (for the select)
 	        model.addObject("roles",roles);
-	        //TODO add userRole to display or not the deleted button
 	        
-	        //liste des utilisateurs avec leur role
+	        //role of the actual user (to display or not deleted button)
+	        model.addObject("userrole",role.getRole());
+	          
+	        //list of users with their role
 	        model.addObject("listUsers", listUsers);
 	        model.setViewName("usersmanager");
 	        return model;
@@ -89,18 +92,27 @@ public class UsersManagerController {
 	  * @param projectID (int)
 	  * @return
 	  */
-	 //TODO can't change Manager if there is only one 
+	 //TODO delete a User
 	 @RequestMapping(value="/{projectID}/users_manager",method=RequestMethod.POST)
 	 public String changeRoles(@RequestParam HashMap<String,String> allRequestParams,@PathVariable("projectID") int projectID){
 		 	allRequestParams.remove("_csrf");
-		  	for(Map.Entry<String, String>node : allRequestParams.entrySet()){
-		  		User user=usersDAO.getUserByUsername(node.getKey());
-		  		System.out.println(node.getKey());
-		  		System.out.println(user);
-		  		Project project=projectDAO.getProjectById(projectID);
-		  		System.out.println(project);
-		  		roleDAO.updateRole(user, project, node.getValue());
-		  	}
+		 	//must as at less a manager
+		 	if(allRequestParams.containsValue("MANAGER")){
+			  	for(Map.Entry<String, String>node : allRequestParams.entrySet()){
+			  		User user=usersDAO.getUserByUsername(node.getKey());
+			  		Project project=projectDAO.getProjectById(projectID);
+			  		if(node.getValue().equals("null")|| node.getValue()==null){
+			  			roleDAO.deleteRole(user,project);
+			  		}
+			  		else{
+			  			roleDAO.updateRole(user, project, node.getValue());
+			  		}
+			  	}
+		 	}
+		 	else{
+		 		//return an error 
+		 	}
+
 	 
 		  	//TODO return validation
 		    return "usermanager";
