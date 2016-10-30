@@ -71,9 +71,7 @@ public class RoleDAO {
 			return null;
 		}
 	      
-	     
 	  }
-	
 	
 	/**
 	 * gives role by user and project
