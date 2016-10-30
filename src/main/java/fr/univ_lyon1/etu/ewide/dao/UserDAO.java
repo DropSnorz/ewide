@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+
 import fr.univ_lyon1.etu.ewide.Model.Project;
 import fr.univ_lyon1.etu.ewide.Model.Role;
 import fr.univ_lyon1.etu.ewide.Model.User;
@@ -31,9 +32,9 @@ public class UserDAO {
 	protected EntityManager em;
 	
 	/**
-     * Renvoie l'utilisateur correspondant � cet email
-     * @param email l'email de l'utilisateur
-     * @return l'utilisateur ou null s'il n'existe pas
+     * gets a User by his email
+     * @param email (String)
+     * @return (User) 
      */
 	public User getUserByEmail(String email) {
 		
@@ -49,6 +50,11 @@ public class UserDAO {
 		}
     
     }
+	/**
+	 * gets a User by username
+	 * @param username (String)
+	 * @return (User)
+	 */
 	public User getUserByUsername(String username){
 		 try {
 				TypedQuery<User> query = em.createNamedQuery("User.getByUsername", User.class);
@@ -61,11 +67,11 @@ public class UserDAO {
 	}
 			
 	/**
-     * Cr��e un nouvel utilisateur ou met � jour son pseudo
-     * @param email email de l'utilisateur
-     * @param username pseudo de l'utilisateur
-     * @param password mot de passe de l'utilisateur
-     * @return l'utilisateur cr�� ou mis � jour
+     * Creates or updates a User
+     * @param email (String)
+     * @param username (String)
+     * @param password (String)
+     * @return (User) created or updated User
      */
     public User createOrUpdate(String email, String username, String password) {
       User u = new User();
@@ -77,7 +83,7 @@ public class UserDAO {
     }
 
     /**
-     * retourne les utilisateurs en fonction d'un id de projet
+     * gives the Users of a project 
      * @param projectID (int)
      * @return (List<User>)
      */
@@ -94,9 +100,9 @@ public class UserDAO {
     			}
 
 	/**
-	 * Cr��e un nouvel utilisateur ou met � jour son pseudo
-	 * @param user
-	 * @return l'utilisateur cr�� ou mis � jour
+	 * Creates or updates a User in the database
+	 * @param (User) 
+	 * @return (User) created or updated User
 	 */
 	public User createOrUpdate(User user) {
 		if(em.find(User.class, user.getUsername())!= null)
@@ -112,6 +118,26 @@ public class UserDAO {
 			em.getTransaction().commit();
 		}
 		return user;
+	}
+	
+	/**
+	 * return the list of the Users that start with the string name
+	 * @param name : searched name 
+	 * @param user : actual connected user
+	 * @return
+	 */
+	public List<User> getUsersStartedwith(String name,User user){
+	      try {
+				TypedQuery<User> query =
+				  em.createQuery("SELECT u FROM User u"
+				  		+ " WHERE username LIKE :name and username NOT LIKE :user",User.class);
+				  query.setParameter("name","%"+ name+"%");
+				  query.setParameter("user",user.getUsername());
+				  return (List<User>)query.getResultList();
+			} catch (Exception e) {
+				
+				return null;
+			}
 	}
 	
 }

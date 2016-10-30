@@ -3,7 +3,47 @@
  * 2016
  */
 
-	
+function adduser(){
+	 var token = $("meta[name='_csrf']").attr("content");
+	 var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajax({
+		type:"POST",
+		data:"username="+document.getElementById("adduser").value,
+		url:"adduser",
+	    beforeSend: function(xhr){
+	        xhr.setRequestHeader(header, token);
+	    },
+		success:function(data){
+			console.log(data);
+			}
+		});
+
+}
+//-----------------------------------------------------------------
+$("#adduser").autocomplete({
+	source:function(request,response){
+		if((document.getElementById("adduser").value).length>2){
+			var users;
+			$.ajax({
+				type:"GET",
+				data:"username="+document.getElementById("adduser").value,
+				url:"/ewide/project/users",
+				success:function(respond){
+					console.log(respond);
+		            response($.map(respond,function(object){
+		                return{
+		                    label:object.username,
+		                    value:object.username
+		                };
+		            }));
+				}
+			});
+		}
+	}
+});
+
+
+	/*
 $( document ).ready(function() {
 	//alert("test2");
 	//$("form").live( "submit", function( event ) {
@@ -69,4 +109,4 @@ $( document ).ready(function() {
 	
 	
 	
-});
+});*/
