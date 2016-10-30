@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class RoleDAO {
 	@PersistenceContext
 	protected EntityManager em;
 	
+	/**
+	 * gets the list of the projects of a user
+	 * @param user (User)
+	 * @return (List<Project>)
+	 */
 	public List<Project> getProjectIDByUser(User user) {
 			
 	      TypedQuery<Project> query =
@@ -42,6 +48,12 @@ public class RoleDAO {
 	      }
 	  }
 	
+	/**
+	 * gives role by userID and projectID
+	 * @param userId (int)
+	 * @param projectId (int) 
+	 * @return (Role)
+	 */
 	public Role getRoleByUserIdAndProjectId(int userId, int projectId) {
 		
 	      try {
@@ -62,14 +74,12 @@ public class RoleDAO {
 	     
 	  }
 	
-	// Permet de créer des rôles en fonction du projet et de l'utilisateur
-	
 	
 	/**
-	 * donne l'id du role en fonction d'un utilisateur et d'un projet
+	 * gives role by user and project
 	 * @param user (User)
 	 * @param project (Project)
-	 * @return 0 si le Role n'existe pas 
+	 * @return 0 if doesn't exist 
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Role searchRoleByUserAndProject(User user,Project project){
@@ -85,7 +95,7 @@ public class RoleDAO {
 	      }
 	}
 	/**
-	 * cr�er ou modifie le role 
+	 * Creates or updates a role 
 	 * @param user (User)
 	 * @param project (Project)
 	 * @param role_name (String)
@@ -98,6 +108,12 @@ public class RoleDAO {
 		}
 	}
 	
+	/**
+	 * creates a role 
+	 * @param user (User)
+	 * @param project (Project)
+	 * @param roleName (String)
+	 */
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void createRole(User user, Project project, String roleName) {
        Role role = new Role();
@@ -108,10 +124,18 @@ public class RoleDAO {
 
 	}
 	
+	/**
+	 * delete a role 
+	 * @param user (User)
+	 * @param project (Project)
+	 */
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void deleteRole(User user, Project project){
-		Role role=searchRoleByUserAndProject(user, project);
-		if(role!=null){
-			em.remove(role);
-		}
+		Query query = em.createQuery(
+			      "DELETE FROM Role r WHERE r.user=:user AND r.project=:project");
+		query.setParameter("user",user)
+			  					.setParameter("project",project)
+			  					.executeUpdate();
+					  
 	}
 }	
