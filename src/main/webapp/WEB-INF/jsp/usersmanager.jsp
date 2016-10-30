@@ -6,6 +6,9 @@ pageEncoding="UTF-8"%>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>EWIDE - Users manager</title>
+	<meta name="_csrf" content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 </head>
 <body>
 
@@ -16,6 +19,10 @@ pageEncoding="UTF-8"%>
 	<div class="container">
 		<div class="col-md-6 col-xs-12 col-md-offset-3">
 			<h1 class="text-center"><strong>Utilisateurs</strong></h1>
+			<hr>
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				<input type="text" id="adduser" />
+				<input type="button" value="add" onclick="adduser()"/>
 			<hr>
 			<form name="formlogin" class="users_roles" id="users_roles" action="users_manager" method="POST">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -48,7 +55,6 @@ pageEncoding="UTF-8"%>
 			<button class="btn btn-lg btn-success btn-block pix-btn-primary " id="users_submit" type="submit">Save</button>
 			</form>
 			<br>
-			<a href="#" class="btn btn-primary" id="ajaxtest">AJAX Test</a>
 		</div>
 	</div>
 	
