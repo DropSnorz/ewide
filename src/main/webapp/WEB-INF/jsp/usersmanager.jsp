@@ -1,0 +1,62 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>EWIDE - Users manager</title>
+</head>
+<body>
+
+	<!-- Header Template -->
+	<jsp:include page="header.jsp"/>
+	
+	<!-- Page Content -->	
+	<div class="container">
+		<div class="col-md-6 col-xs-12 col-md-offset-3">
+			<h1 class="text-center"><strong>Utilisateurs</strong></h1>
+			<hr>
+			<form name="formlogin" class="users_roles" id="users_roles" action="users_manager" method="POST">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<table class="table users_table">
+				<thead>
+					<tr>
+						<th class="">Pseudo</th>
+						<th class="text-center role_col">Role</th>
+						<th class="text-center"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="user" items="${listUsers}" >
+						<tr>
+							<td>${user.username}</td>
+							<td class="text-center">
+								<select class="userrole form-control" name="${user.username}">
+									<c:forEach var="role" items="${roles}">
+								        <option value="${role}" ${role == user.roles.get(0).role ? 'selected="selected"' : ''}>${role}</option>
+								    </c:forEach>
+								</select>
+							</td>
+							<td class="text-center">
+								<a href="#" class="btn btn-danger btn-delete-user delete-user"><i class="material-icons">delete</i></a>
+							</td>
+						</tr>
+				     </c:forEach>
+				</tbody>
+			</table>
+			<button class="btn btn-lg btn-success btn-block pix-btn-primary " id="users_submit" type="submit">Save</button>
+			</form>
+			<br>
+			<a href="#" class="btn btn-primary" id="ajaxtest">AJAX Test</a>
+		</div>
+	</div>
+	
+	<!-- Javascripts -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.2.js" />"/></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/jquery-ui.js" />"/></script>    
+	<script type="text/javascript" src="<c:url value="/resources/bootstrap/js/bootstrap.js" />"/></script>    
+	<script type="text/javascript" src="<c:url value="/resources/js/custom_users.js" />"/></script>    
+</body>
+</html>
