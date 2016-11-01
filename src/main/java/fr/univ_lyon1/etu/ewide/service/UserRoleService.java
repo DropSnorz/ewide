@@ -54,7 +54,6 @@ public class UserRoleService {
 	}
 
 	public boolean isMember(int projectId){
-		System.out.println(projectId);
 		Role role = fetchUserRoleForProjectId(projectId);
 		if(role != null){
 
