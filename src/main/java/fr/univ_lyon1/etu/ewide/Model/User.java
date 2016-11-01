@@ -1,6 +1,10 @@
 package fr.univ_lyon1.etu.ewide.Model;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -40,6 +44,7 @@ public class User {
     protected String pwd;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL)
+    @JsonBackReference
     protected Collection<Role> roles;
 
 

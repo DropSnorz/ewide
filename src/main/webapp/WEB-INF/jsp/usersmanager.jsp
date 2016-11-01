@@ -6,6 +6,9 @@ pageEncoding="UTF-8"%>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>EWIDE - Users manager</title>
+	<meta name="_csrf" content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 </head>
 <body>
 
@@ -17,6 +20,14 @@ pageEncoding="UTF-8"%>
 		<div class="col-md-6 col-xs-12 col-md-offset-3">
 			<h1 class="text-center"><strong>Utilisateurs</strong></h1>
 			<hr>
+			<!-- adding a User  -->
+			<c:if test="${userrole=='MANAGER'}">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				<input type="text" id="adduser" />
+				<input type="button" value="add" onclick="adduser()"/>
+				<hr>
+			</c:if>
+			<!-- roles of users  -->
 			<form name="formlogin" class="users_roles" id="users_roles" action="users_manager" method="POST">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<table class="table users_table">
@@ -27,28 +38,36 @@ pageEncoding="UTF-8"%>
 						<th class="text-center"></th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody  id="userRoleTab">
 					<c:forEach var="user" items="${listUsers}" >
 						<tr>
 							<td>${user.username}</td>
 							<td class="text-center">
+							<c:if test="${userrole=='MANAGER'}">
 								<select class="userrole form-control" name="${user.username}">
 									<c:forEach var="role" items="${roles}">
 								        <option value="${role}" ${role == user.roles.get(0).role ? 'selected="selected"' : ''}>${role}</option>
 								    </c:forEach>
 								</select>
+							</c:if>
+							<c:if test="${userrole!='MANAGER'}">
+								${user.roles.get(0).role}
+							</c:if>
 							</td>
 							<td class="text-center">
-								<a href="#" class="btn btn-danger btn-delete-user delete-user"><i class="material-icons">delete</i></a>
+								<c:if test="${userrole=='MANAGER'}">
+									<a href="#" class="btn btn-danger btn-delete-user delete-user"><i class="material-icons">delete</i></a>
+								</c:if>
 							</td>
 						</tr>
 				     </c:forEach>
 				</tbody>
 			</table>
-			<button class="btn btn-lg btn-success btn-block pix-btn-primary " id="users_submit" type="submit">Save</button>
+			<c:if test="${userrole=='MANAGER'}">
+				<button class="btn btn-lg btn-success btn-block pix-btn-primary " id="users_submit" type="submit">Save</button>
+			</c:if>
 			</form>
 			<br>
-			<a href="#" class="btn btn-primary" id="ajaxtest">AJAX Test</a>
 		</div>
 	</div>
 	

@@ -2,6 +2,9 @@ package fr.univ_lyon1.etu.ewide.Model;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * Created by Maud on 17/10/2016.
  */
@@ -23,6 +26,7 @@ public class Role {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userID", referencedColumnName="userID")
+    @JsonManagedReference
     protected User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
