@@ -31,9 +31,9 @@ public class UserRoleService {
 		}
 	}
 
-	public boolean isDevelopper(int projectId) {
+	public boolean isDeveloper(int projectId) {
 		Role role = fetchUserRoleForProjectId(projectId);
-		if(role != null &&  role.getRole().equals("DEVELOPPER")){
+		if(role != null &&  role.getRole().equals("DEVELOPER")){
 			return true;
 		}
 		else{
