@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import fr.univ_lyon1.etu.ewide.Model.Role;
-import fr.univ_lyon1.etu.ewide.Model.User;
 import fr.univ_lyon1.etu.ewide.dao.RoleDAO;
+import fr.univ_lyon1.etu.ewide.model_temp.Role;
+import fr.univ_lyon1.etu.ewide.model_temp.User;
 
 @Component("userRoleService")
 public class UserRoleService {

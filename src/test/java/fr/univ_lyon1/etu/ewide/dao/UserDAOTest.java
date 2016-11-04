@@ -1,6 +1,5 @@
 package fr.univ_lyon1.etu.ewide.dao;
 
-import fr.univ_lyon1.etu.ewide.Model.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +9,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+
+import fr.univ_lyon1.etu.ewide.model_temp.User;
 
 import javax.persistence.Persistence;
 

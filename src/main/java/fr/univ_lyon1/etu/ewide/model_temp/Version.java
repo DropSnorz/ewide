@@ -1,4 +1,4 @@
-package fr.univ_lyon1.etu.ewide.Model;
+package fr.univ_lyon1.etu.ewide.model_temp;
 
 public class Version {
 

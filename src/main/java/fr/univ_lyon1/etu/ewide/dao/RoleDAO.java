@@ -13,10 +13,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import fr.univ_lyon1.etu.ewide.Model.File;
-import fr.univ_lyon1.etu.ewide.Model.Project;
-import fr.univ_lyon1.etu.ewide.Model.Role;
-import fr.univ_lyon1.etu.ewide.Model.User;
+import fr.univ_lyon1.etu.ewide.model_temp.File;
+import fr.univ_lyon1.etu.ewide.model_temp.Project;
+import fr.univ_lyon1.etu.ewide.model_temp.Role;
+import fr.univ_lyon1.etu.ewide.model_temp.User;
 
 /**
  * Created by Firas ODEH on 17/10/2016.

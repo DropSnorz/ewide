@@ -8,13 +8,12 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
+
+import fr.univ_lyon1.etu.ewide.model_temp.Project;
+import fr.univ_lyon1.etu.ewide.model_temp.Role;
+import fr.univ_lyon1.etu.ewide.model_temp.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
-
-
-
-import fr.univ_lyon1.etu.ewide.Model.Project;
-import fr.univ_lyon1.etu.ewide.Model.Role;
-import fr.univ_lyon1.etu.ewide.Model.User;
 
 /**
  * Created by Firas on 17/10/2016.

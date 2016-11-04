@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import fr.univ_lyon1.etu.ewide.Model.User;
 import fr.univ_lyon1.etu.ewide.dao.UserDAO;
 import fr.univ_lyon1.etu.ewide.form.RegisterForm;
+import fr.univ_lyon1.etu.ewide.model_temp.User;
 import fr.univ_lyon1.etu.ewide.service.AuthenticationUserService;
 
 @Transactional
