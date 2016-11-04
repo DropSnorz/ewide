@@ -13,8 +13,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import fr.univ_lyon1.etu.ewide.model_temp.Project;
-import fr.univ_lyon1.etu.ewide.model_temp.Task;
+import fr.univ_lyon1.etu.ewide.model.Project;
+import fr.univ_lyon1.etu.ewide.model.Task;
 
 /**
  * Created by Firas on 18/10/2016.

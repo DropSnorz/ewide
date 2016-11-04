@@ -8,8 +8,8 @@ import javax.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import fr.univ_lyon1.etu.ewide.model_temp.File;
-import fr.univ_lyon1.etu.ewide.model_temp.Project;
+import fr.univ_lyon1.etu.ewide.model.File;
+import fr.univ_lyon1.etu.ewide.model.Project;
 
 /**
  * Created by Firas on 18/10/2016.

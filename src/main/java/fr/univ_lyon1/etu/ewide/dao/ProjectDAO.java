@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import fr.univ_lyon1.etu.ewide.model_temp.Project;
+import fr.univ_lyon1.etu.ewide.model.Project;
 
 /**
  * Created by Firas ODEH on 17/10/2016.

@@ -9,9 +9,9 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
-import fr.univ_lyon1.etu.ewide.model_temp.Project;
-import fr.univ_lyon1.etu.ewide.model_temp.Role;
-import fr.univ_lyon1.etu.ewide.model_temp.User;
+import fr.univ_lyon1.etu.ewide.model.Project;
+import fr.univ_lyon1.etu.ewide.model.Role;
+import fr.univ_lyon1.etu.ewide.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

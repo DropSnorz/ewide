@@ -1,4 +1,4 @@
-package fr.univ_lyon1.etu.ewide.model_temp;
+package fr.univ_lyon1.etu.ewide.model;
 
 import javax.persistence.*;
 import java.sql.Date;

@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import fr.univ_lyon1.etu.ewide.model_temp.User;
+import fr.univ_lyon1.etu.ewide.model.User;
 
 import javax.persistence.Persistence;
 
