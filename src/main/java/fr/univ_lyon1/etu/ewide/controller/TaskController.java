@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.univ_lyon1.etu.ewide.dao.TaskDAO;
-import fr.univ_lyon1.etu.ewide.model_temp.Task;
+import fr.univ_lyon1.etu.ewide.model.Task;
 
 @Controller
 @RequestMapping(value="/project/{projectId}/task")

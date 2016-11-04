@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import fr.univ_lyon1.etu.ewide.dao.UserDAO;
 import fr.univ_lyon1.etu.ewide.form.RegisterForm;
-import fr.univ_lyon1.etu.ewide.model_temp.User;
+import fr.univ_lyon1.etu.ewide.model.User;
 import fr.univ_lyon1.etu.ewide.service.AuthenticationUserService;
 
 @Transactional

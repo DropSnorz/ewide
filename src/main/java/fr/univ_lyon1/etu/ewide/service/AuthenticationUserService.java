@@ -39,16 +39,16 @@ public class AuthenticationUserService implements UserDetailsService {
 	@Transactional(readOnly=true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		fr.univ_lyon1.etu.ewide.model_temp.User user = userDAO.getUserByEmail(username);
+		fr.univ_lyon1.etu.ewide.model.User user = userDAO.getUserByEmail(username);
 		List<GrantedAuthority> authorities = buildUserAuthority();
 		return buildUserForAuthentication(user, authorities);
 	}
 
 	@Transactional(readOnly=true)
-	public fr.univ_lyon1.etu.ewide.model_temp.User getCurrentUser(){
+	public fr.univ_lyon1.etu.ewide.model.User getCurrentUser(){
 
 		User spring_user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		fr.univ_lyon1.etu.ewide.model_temp.User user = userDAO.getUserByEmail(spring_user.getUsername());
+		fr.univ_lyon1.etu.ewide.model.User user = userDAO.getUserByEmail(spring_user.getUsername());
 		return user;
 	}
 
@@ -77,7 +77,7 @@ public class AuthenticationUserService implements UserDetailsService {
 		return false;
 	}
 
-	private User buildUserForAuthentication(fr.univ_lyon1.etu.ewide.model_temp.User user,
+	private User buildUserForAuthentication(fr.univ_lyon1.etu.ewide.model.User user,
 			List<GrantedAuthority> authorities)
 	{
 		return new User(user.getMail(), user.getPwd(),

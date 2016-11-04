@@ -33,9 +33,9 @@ import org.springframework.web.servlet.ModelAndView;
 import fr.univ_lyon1.etu.ewide.dao.ProjectDAO;
 import fr.univ_lyon1.etu.ewide.dao.RoleDAO;
 import fr.univ_lyon1.etu.ewide.dao.UserDAO;
-import fr.univ_lyon1.etu.ewide.model_temp.Project;
-import fr.univ_lyon1.etu.ewide.model_temp.Role;
-import fr.univ_lyon1.etu.ewide.model_temp.User;
+import fr.univ_lyon1.etu.ewide.model.Project;
+import fr.univ_lyon1.etu.ewide.model.Role;
+import fr.univ_lyon1.etu.ewide.model.User;
 import fr.univ_lyon1.etu.ewide.service.AuthenticationUserService;
 
 @Transactional

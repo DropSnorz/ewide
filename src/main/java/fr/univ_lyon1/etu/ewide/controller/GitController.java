@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import fr.univ_lyon1.etu.ewide.model_temp.Version;
+import fr.univ_lyon1.etu.ewide.model.Version;
 
 import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.*;
