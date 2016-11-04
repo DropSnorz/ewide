@@ -30,12 +30,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import fr.univ_lyon1.etu.ewide.Model.Project;
-import fr.univ_lyon1.etu.ewide.Model.Role;
-import fr.univ_lyon1.etu.ewide.Model.User;
 import fr.univ_lyon1.etu.ewide.dao.ProjectDAO;
 import fr.univ_lyon1.etu.ewide.dao.RoleDAO;
 import fr.univ_lyon1.etu.ewide.dao.UserDAO;
+import fr.univ_lyon1.etu.ewide.model_temp.Project;
+import fr.univ_lyon1.etu.ewide.model_temp.Role;
+import fr.univ_lyon1.etu.ewide.model_temp.User;
 import fr.univ_lyon1.etu.ewide.service.AuthenticationUserService;
 
 @Transactional

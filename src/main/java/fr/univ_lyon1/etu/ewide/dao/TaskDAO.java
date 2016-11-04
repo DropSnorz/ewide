@@ -11,9 +11,10 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.univ_lyon1.etu.ewide.Model.Project;
-import fr.univ_lyon1.etu.ewide.Model.Task;
 import org.springframework.stereotype.Repository;
+
+import fr.univ_lyon1.etu.ewide.model_temp.Project;
+import fr.univ_lyon1.etu.ewide.model_temp.Task;
 
 /**
  * Created by Firas on 18/10/2016.

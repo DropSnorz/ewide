@@ -17,14 +17,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import fr.univ_lyon1.etu.ewide.Model.Project;
-import fr.univ_lyon1.etu.ewide.Model.Role;
-import fr.univ_lyon1.etu.ewide.Model.User;
-
 import fr.univ_lyon1.etu.ewide.dao.ProjectDAO;
 import fr.univ_lyon1.etu.ewide.service.AuthenticationUserService;
 import fr.univ_lyon1.etu.ewide.service.UserRoleService;
 import fr.univ_lyon1.etu.ewide.dao.RoleDAO;
+import fr.univ_lyon1.etu.ewide.model_temp.Project;
+import fr.univ_lyon1.etu.ewide.model_temp.Role;
+import fr.univ_lyon1.etu.ewide.model_temp.User;
 
 @Transactional
 @Controller

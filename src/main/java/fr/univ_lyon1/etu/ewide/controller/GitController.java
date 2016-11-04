@@ -1,7 +1,5 @@
 package fr.univ_lyon1.etu.ewide.controller;
 
-import fr.univ_lyon1.etu.ewide.Model.Version;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
@@ -14,6 +12,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import fr.univ_lyon1.etu.ewide.model_temp.Version;
+
 import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.*;
 import org.eclipse.jgit.dircache.DirCache;

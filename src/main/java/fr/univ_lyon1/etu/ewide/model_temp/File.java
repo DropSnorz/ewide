@@ -1,10 +1,10 @@
-package fr.univ_lyon1.etu.ewide.Model;
+package fr.univ_lyon1.etu.ewide.model_temp;
 
 import java.util.List;
 
 import javax.persistence.*;
 
-import fr.univ_lyon1.etu.ewide.Model.Version;
+import fr.univ_lyon1.etu.ewide.model_temp.Version;
 
 /**
  * Created by Maud on 17/10/2016.
