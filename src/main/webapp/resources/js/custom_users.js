@@ -46,23 +46,25 @@ function adduser(){
 $("#adduser").autocomplete({
 	source:function(request,response){
 		if((document.getElementById("adduser").value).length>2){
-			var users;
 			$.ajax({
 				type:"GET",
 				data:"username="+document.getElementById("adduser").value,
 				url:"/ewide/project/users",
 				success:function(respond){
-					console.log(respond);
 		            response($.map(respond,function(object){
 		                return{
-		                    label:object.username,
-		                    value:object.username
+		                    value:object.username,
+		                    label:object.username
 		                };
 		            }));
 				}
 			});
 		}
-	}
+	},
+    messages: {
+        noResults: '',
+        results: function() {}
+    }
 });
 
 //---------------------------------------------------------------------
@@ -80,11 +82,10 @@ $( document ).ready(function() {
 });
 //----------------------------------------------------------------------
 function deleteonclick(username){
-	var node=document.getElementById(username);
 	var option = document.createElement("option");
 	option.text = "Removed";
 	option.value = "null";
-	node.first.next.find('select')[0].appendChild(option);
-	node.first.next.find('select').val("null").change();
-	node.first.next.closest( "tr" ).hide('100');
+	$("#"+username).find('select')[0].appendChild(option);
+	$("#"+username).find('select').val("null").change();
+	$("#"+username).hide('100');
 }
