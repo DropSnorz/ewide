@@ -3,6 +3,11 @@
  * 2016
  */
 
+
+//-----------------------------------------------------------------
+/**
+ * add a user as a developer in the project
+ */
 function adduser(){
 	 var token = $("meta[name='_csrf']").attr("content");
 	 var header = $("meta[name='_csrf_header']").attr("content");
@@ -30,7 +35,6 @@ function adduser(){
 				newChild.appendChild(deletetd);
 				document.getElementById("userRoleTab").appendChild(newChild);
 				document.getElementById("roleselect").innerHTML="<select class=\"userrole form-control\" name=\""+data.username+"\">"+
-						"<option value=\"\"></option>"+
 						"<option value=\"MANAGER\">MANAGER </option>"+
 						"<option value=\"REPORTER\">REPORTER </option>"+
 						"<option selected=\"selected\" value=\"DEVELOPER\">DEVELOPER </option>"+

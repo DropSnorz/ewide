@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -55,7 +56,7 @@ public class UsersManagerController {
 	 @Autowired
 	 ProjectDAO projectDAO;
 	 
-	 public static List<String> roles=Arrays.asList("","MANAGER","DEVELOPER","REPORTER"); 
+	 public static List<String> roles=Arrays.asList("MANAGER","DEVELOPER","REPORTER"); 
 	 
 	 
 	 /**
@@ -65,7 +66,8 @@ public class UsersManagerController {
 	  * @throws IOException
 	  */
 	 @RequestMapping(value ="/{projectID}/users_manager", method = RequestMethod.GET)
-	 	public ModelAndView usersManager(ModelMap Model, @PathVariable("projectID") int projectID) throws IOException{
+	 @PreAuthorize("@userRoleService.isMember(#projectID)")
+	 public ModelAndView usersManager(ModelMap Model, @PathVariable("projectID") int projectID) throws IOException{
 	     
 		 	List<User> listUsers = usersDAO.getAllUsersByProjectID(projectID);
 		 	User user = authenticationUserSerive.getCurrentUser();
@@ -93,27 +95,49 @@ public class UsersManagerController {
 	  * @return
 	  */
 	 @RequestMapping(value="/{projectID}/users_manager",method=RequestMethod.POST)
-	 public String changeRoles(@RequestParam HashMap<String,String> allRequestParams,@PathVariable("projectID") int projectID){
+	 @PreAuthorize("@userRoleService.isManager(#projectID)")
+	 public ModelAndView changeRoles(@RequestParam HashMap<String,String> allRequestParams,@PathVariable("projectID") int projectID){
 		 	allRequestParams.remove("_csrf");
+		 
+		 	ModelAndView model = new ModelAndView("usersmanager");
+		 
+		 	User user1 = authenticationUserSerive.getCurrentUser();
+		 	Role role=roleDAO.getRoleByUserIdAndProjectId(user1.getUserID(), projectID);
+	        
+	        //set of roles that exist (for the select)
+	        model.addObject("roles",roles);
+	        
+	        //role of the actual user (to display or not deleted button)
+	        model.addObject("userrole",role.getRole());
+	        
+	        
 		 	//must as at less a manager
 		 	if(allRequestParams.containsValue("MANAGER")){
 			  	for(Map.Entry<String, String>node : allRequestParams.entrySet()){
 			  		User user=usersDAO.getUserByUsername(node.getKey());
 			  		Project project=projectDAO.getProjectById(projectID);
+			  		//user can be deleted
 			  		if(node.getValue().equals("null")|| node.getValue()==null){
 			  			roleDAO.deleteRole(user,project);
 			  		}
+			  		//user can be updated
 			  		else{
 			  			roleDAO.updateRole(user, project, node.getValue());
 			  		}
 			  	}
+			  	model.addObject("success", "The users have been updated.");
+
 		 	}
+		 	//there isn't any manager 
 		 	else{
-		 		//return an error 
+		 		//get the roles again
+		 		model.addObject("error", "The project must have at less a manager.");
+	
 		 	}
-	 
-		  	//TODO return validation
-		    return "usermanager";
+		 	List<User> listUsers = usersDAO.getAllUsersByProjectID(projectID);
+	        model.addObject("listUsers", listUsers);
+	        model.setViewName("usersmanager");
+			return model;
 	 }
 	 
 	 /**
@@ -140,6 +164,7 @@ public class UsersManagerController {
 	  */
 	 @RequestMapping(value="/{projectID}/adduser", method=RequestMethod.POST)
 	 @ResponseBody
+	 @PreAuthorize("@userRoleService.isManager(#projectID)")
 	 //TODO return not finished
 	 public User adduser(@RequestParam String username, @PathVariable("projectID") int projectID, Role role){
 		 User user = usersDAO.getUserByUsername(username);
