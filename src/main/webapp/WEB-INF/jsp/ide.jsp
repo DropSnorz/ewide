@@ -28,9 +28,9 @@ pageEncoding="UTF-8"%>
 	<div class="ewide st-pusher">
 		<div id="st-trigger-effects" class="column">
 								
-								<button class="ewide-menu" data-effect="st-effect-4"><i class="material-icons">menu</i></button>
+			<button class="ewide-menu" data-effect="st-effect-4"><i class="material-icons md-36">menu</i></button>
 								
-							</div>
+		</div>
 		<header>
 		    <jsp:include page="header.jsp"/>
 		</header>
