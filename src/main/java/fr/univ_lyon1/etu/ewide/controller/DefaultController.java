@@ -24,13 +24,14 @@ public class DefaultController {
 			return "redirect:/dashboard";
 		}
 		
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//	    if (auth.isAuthenticated()){    
-//	    	
-//	    }
 	    return "index";
 	}
 	
+	@RequestMapping(value ={"/access-denied"},  method = RequestMethod.GET)
+	public String getAccessDenied() {
+		
+		return "access-denied";
+	}
 	
 	
 }
