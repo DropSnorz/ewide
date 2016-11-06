@@ -15,6 +15,8 @@ pageEncoding="UTF-8"%>
 	<!-- Header Template -->
 	<jsp:include page="header.jsp"/>
 	
+
+	
 	<!-- Page Content -->	
 	<div class="container">
 		<div class="col-md-6 col-xs-12 col-md-offset-3">
@@ -31,8 +33,12 @@ pageEncoding="UTF-8"%>
 					<hr>
 				</c:if>
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-				<input type="text" id="adduser" />
-				<input type="button" value="add" onclick="adduser()"/>
+				<div class="form-inline">
+					<div class="form-group">
+						<input type="text" style="width:400px" class="form-control"  id="adduser" placeholder="Search a user...">
+					</div>
+						<button class="btn btn-secondary"  onclick="adduser()" >Add</button>
+				</div>
 				<hr>
 			</c:if>
 			<!-- roles of users  -->

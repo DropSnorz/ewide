@@ -47,6 +47,9 @@ function adduser(){
 
 }
 //-----------------------------------------------------------------
+/**
+ * autocomplete the search user 
+ */
 $("#adduser").autocomplete({
 	source:function(request,response){
 		if((document.getElementById("adduser").value).length>2){
@@ -72,7 +75,9 @@ $("#adduser").autocomplete({
 });
 
 //---------------------------------------------------------------------
-
+/**
+ * remove a user that was in the project : need to be save
+ */
 $( document ).ready(function() {
 	$('.delete-user').click(function() {
 		var option = document.createElement("option");
@@ -85,6 +90,9 @@ $( document ).ready(function() {
 	});
 });
 //----------------------------------------------------------------------
+/**
+ * remove a user that wasn't in the project : need to be save
+ */
 function deleteonclick(username){
 	var option = document.createElement("option");
 	option.text = "Removed";

@@ -34,7 +34,7 @@
     }
     .secondary-font { font-family: 'Montserrat', sans-serif; }
     /* Typography */
-    h1 { font-size: 48px;line-height: 77px; }
+    h1 { font-size: 38px;line-height: 77px; }
     h2 { font-size: 36px;line-height: 58px; }
     h3 { font-size: 28px;line-height: 45px; }
     h4 { font-size: 24px;line-height: 38px; }
@@ -538,8 +538,10 @@
 
     .ide-body { background: #444; }
     .ide-files-list { color: #eee; }
-    .ewide-menu { position: absolute;top: 2px;left: 0;z-index: 9999;background: none;border: 0px;color: #777;height: 40px;font-size: 30px; }
-    .ewide-menu:hover, .ewide-menu:focus {color: #fff;outline: none;}
+    .ewide-menu { position: absolute;top: 5px;left: 0;z-index: 9999;
+    				background: none;border: 0px;color: white;height: 40px;left:5px;
+    				font-size: 40px; }
+    .ewide-menu:hover, .ewide-menu:focus {color: #0099e5;outline: none;}
     .ewide-form {margin: 0 50px;}
 
     .pix-btn-primary {
