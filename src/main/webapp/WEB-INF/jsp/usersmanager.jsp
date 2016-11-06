@@ -22,6 +22,14 @@ pageEncoding="UTF-8"%>
 			<hr>
 			<!-- adding a User  -->
 			<c:if test="${userrole=='MANAGER'}">
+				<c:if test="${not empty error}">
+					<div class="alert alert-danger">${error}</div>
+					<hr>
+				</c:if>
+				<c:if test="${not empty success}">
+					<div class="alert alert-success">${success}</div>
+					<hr>
+				</c:if>
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<input type="text" id="adduser" />
 				<input type="button" value="add" onclick="adduser()"/>
