@@ -1,7 +1,7 @@
 package fr.univ_lyon1.etu.ewide.model;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Collection;
 
 /**
@@ -42,8 +42,24 @@ public class Task {
     @Column(name="date", nullable=false)
     protected Date date;
 
+    public Task(){
+    	
+    	
+    }
+    
+    
+    public Task(Project project, User user, String type, String state, String text, Date date) {
+		super();
+		this.project = project;
+		this.user = user;
+		this.type = type;
+		this.state = state;
+		this.text = text;
+		this.date = date;
+	}
 
-    public int getTaskID() {
+
+	public int getTaskID() {
         return taskID;
     }
 
