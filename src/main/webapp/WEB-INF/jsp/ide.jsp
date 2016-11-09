@@ -19,7 +19,7 @@ pageEncoding="UTF-8"%>
 			<li><a class="icon icon-location" href="#">Workspace</a></li>
 			<li><a class="icon icon-study" href="#">Versioning</a></li>
 			<li><a class="icon icon-photo" href="<c:url value="/project/${project.projectID}/users_manager"/>">Utilisateurs</a></li>
-			<li><a class="icon icon-wallet" href="#">Tâches en cours</a></li>
+			<li><a class="icon icon-wallet" href="<c:url value="/project/${project.projectID}/task"/>">Tâches en cours</a></li>
 			<li><a class="icon icon-wallet" href="#">Tâches réalisées</a></li>
 		</ul>
 	</nav>

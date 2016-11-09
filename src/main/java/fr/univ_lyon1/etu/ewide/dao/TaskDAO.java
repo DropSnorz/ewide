@@ -100,6 +100,12 @@ public class TaskDAO {
 		
 	}
 	
+	public Task createOrpdate(Task task){
+		
+		em.merge(task);
+		return task;
+	}
+	
 
 
 	/**

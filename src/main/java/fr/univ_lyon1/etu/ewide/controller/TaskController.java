@@ -52,6 +52,9 @@ public class TaskController {
 
 		return model;
 	}
+	
+	
+	//task Create
 
 	@PreAuthorize("@userRoleService.isMember(#projectId)")
 	@RequestMapping(value="/create", method = RequestMethod.GET)
@@ -91,6 +94,57 @@ public class TaskController {
 
 		return view;
 	}
+	
+	//task Edit
+	
+	
+	@PreAuthorize("@userRoleService.isMember(#projectId)")
+	@RequestMapping(value="/{taskId}/edit", method = RequestMethod.GET)
+	public ModelAndView getTaskEdit(@PathVariable("projectId") int projectId,
+			@PathVariable("taskId") int taskId){
+
+		ModelAndView model = new ModelAndView("task/task-edit");
+		Task task = taskDAO.getTaskById(taskId);
+		
+		model.addObject("task", task);
+		
+
+		return model;
+	}
+
+	@PreAuthorize("@userRoleService.isMember(#projectId)")
+	@RequestMapping(value="/{taskId}/edit", method = RequestMethod.POST)
+	public ModelAndView postTaskEdit(@PathVariable("projectId") int projectId, 
+			@PathVariable("taskId") int taskId,
+			@ModelAttribute("taskForm") @Valid final TaskForm form,
+			final BindingResult bindingResult, final Model model){
+
+		
+		ModelAndView view = new ModelAndView("task/task-edit");
+
+		if(bindingResult.hasErrors()){
+			view.setViewName("task/task-edit");
+			view.addObject("taskText", form.getTaskText());
+			view.addObject("taskType", form.getTaskType());
+			view.addObject("taskState", form.getTaskState());
+
+			return view;
+
+		}
+		
+		Task task = taskDAO.getTaskById(taskId);
+		task.setText(form.getTaskText());
+		task.setType(form.getTaskType());
+		task.setState(form.getTaskState());
+			
+		taskDAO.createOrpdate(task);
+		
+		view.setViewName("redirect:../../task/");
+
+		return view;
+	}
+	
+	// Task delete
 	
 	@PreAuthorize("@userRoleService.isMember(#projectId)")
 	@RequestMapping(value="/{taskId}/delete", method = RequestMethod.GET)
