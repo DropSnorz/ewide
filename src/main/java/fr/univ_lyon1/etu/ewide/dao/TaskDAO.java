@@ -23,8 +23,7 @@ import fr.univ_lyon1.etu.ewide.model.Task;
 @Repository
 public class TaskDAO {
 
-	@Autowired
-	protected EntityManagerFactory entityManagerFactory;
+
 	@PersistenceContext
 	protected EntityManager em;
 
@@ -41,7 +40,7 @@ public class TaskDAO {
 			query.setParameter("projectId", projectId);
 			List<Task> result = query.getResultList();
 			return result;
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			return new ArrayList<Task>();
@@ -51,46 +50,53 @@ public class TaskDAO {
 
 	}
 
-/**
- * Créée une nouvelle task
- * @param type
- * @param state
- * @param text
- * @param project
- * @param date
- * @return la task créé
- */
-public Task create(String type, String state, String text, Project project, Date date) {
-	Task t = new Task();
-	t.setType(type);
-	t.setState(state);
-	t.setText(text);
-	t.setProject(project);
-	t.setDate(date);
-	em.merge(t);
-	return t;
-}
+	/**
+	 * Créée une nouvelle task
+	 * @param type
+	 * @param state
+	 * @param text
+	 * @param project
+	 * @param date
+	 * @return la task créé
+	 */
+	public Task create(String type, String state, String text, Project project, Date date) {
+		Task t = new Task();
+		t.setType(type);
+		t.setState(state);
+		t.setText(text);
+		t.setProject(project);
+		t.setDate(date);
+		em.merge(t);
+		return t;
+	}
+	
+	public Task createTask(Task task) {
+		
+		em.persist(task);
+		return task;
+	}
 
-/**
- * mis à jour une task
- * @param taskID
- * @param type
- * @param state
- * @param text
- * @param referencedTask
- * @param date
- * @return la task mis à jour
- */
-public Task Update(int taskID, String type, String state, String text, Project project, Date date) {
-	Task t = new Task();
-	t.setTaskID(taskID); 
-	t.setType(type);
-	t.setState(state);
-	t.setText(text);
-	t.setProject(project);
-	t.setDate(date);
-	em.merge(t);
-	return t;
-}
+
+	/**
+	 * mis à jour une task
+	 * @param taskID
+	 * @param type
+	 * @param state
+	 * @param text
+	 * @param referencedTask
+	 * @param date
+	 * @return la task mis à jour
+	 */
+	public Task Update(int taskID, String type, String state, String text, Project project, Date date) {
+		Task t = new Task();
+		t.setTaskID(taskID); 
+		t.setType(type);
+		t.setState(state);
+		t.setText(text);
+		t.setProject(project);
+		t.setDate(date);
+		em.merge(t);
+		return t;
+	}
 
 }
