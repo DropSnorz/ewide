@@ -28,6 +28,17 @@ public class TaskDAO {
 	protected EntityManager em;
 
 
+	
+	public Task getTaskById(int taskId){
+		
+		try {
+			Task task = em.find(Task.class, taskId);
+			return task;
+		} catch (Exception e) {
+			
+			return null;
+		}
+	}
 	/**
 	 * Renvoie une list de tous les tasks d'un projet
 	 * @return liste des tasks ou liste vide s'il n'existe pas
@@ -75,6 +86,20 @@ public class TaskDAO {
 		em.persist(task);
 		return task;
 	}
+	
+	public void deleteTask(Task task) {
+		
+		em.remove(task);
+		
+	}
+	
+	public void deleteTask(int taskId) {
+		
+		Task task = em.find(Task.class, taskId);
+		em.remove(task);
+		
+	}
+	
 
 
 	/**

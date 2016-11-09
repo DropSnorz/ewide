@@ -91,6 +91,29 @@ public class TaskController {
 
 		return view;
 	}
+	
+	@PreAuthorize("@userRoleService.isMember(#projectId)")
+	@RequestMapping(value="/{taskId}/delete", method = RequestMethod.GET)
+	public ModelAndView getTaskDelete(@PathVariable("projectId") int projectId,
+			@PathVariable("taskId") int taskId){
+
+		ModelAndView model = new ModelAndView("task/task-delete");
+		Task task = taskDAO.getTaskById(taskId);
+		model.addObject("task", task);
+
+		return model;
+	}
+	
+	@PreAuthorize("@userRoleService.isMember(#projectId)")
+	@RequestMapping(value="/{taskId}/delete", method = RequestMethod.POST)
+	public ModelAndView postTaskDelete(@PathVariable("projectId") int projectId,
+			@PathVariable("taskId") int taskId){
+
+		ModelAndView model = new ModelAndView("redirect:../../task");
+		taskDAO.deleteTask(taskId);
+		return model;
+	}
+	
 
 }
 
