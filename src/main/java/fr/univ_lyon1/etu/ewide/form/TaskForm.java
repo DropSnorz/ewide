@@ -10,6 +10,9 @@ public class TaskForm {
 	@Size(min=2, max=45)
 	private String taskText;
 
+	@Size(max=2000)
+	private String taskDescription;
+	
 	@NotNull
 	@Size(min=2, max=45)
 	private String taskState;
@@ -24,6 +27,15 @@ public class TaskForm {
 
 	public void setTaskText(String taskText) {
 		this.taskText = taskText;
+	}
+	
+
+	public String getTaskDescription() {
+		return taskDescription;
+	}
+
+	public void setTaskDescription(String taskDesription) {
+		this.taskDescription = taskDesription;
 	}
 
 	public String getTaskState() {

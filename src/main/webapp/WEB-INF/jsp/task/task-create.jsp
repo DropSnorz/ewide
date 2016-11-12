@@ -37,12 +37,17 @@
 				<div class="col-md-12">
 			
 					<div class="form-group">
-						<label for="projectName">Task label</label>
+						<label for="taskText">Task label</label>
 						<input type="text" class="form-control" name="taskText" id="taskText" placeholder="Task label" value="${taskText}">
 					</div>
 					
 					<div class="form-group">
-						<label for="projectName">Type</label>
+						<label for="taskDescription">Task Description</label>
+						<textarea class="form-control" name="taskDescription" id="taskDescription" placeholder="Task Description">${taskDescription}</textarea>
+					</div>
+					
+					<div class="form-group">
+						<label for="taskType">Type</label>
 						<select class="form-control" name="taskType" id="taskType">
 							<option value="TODO" <c:if test="${taskType == 'TODO' }"> selected="selected" </c:if> >TODO</option>
 							<option value="Bug" <c:if test="${taskType == 'Bug' }"> selected="selected" </c:if>>Bug</option>
@@ -50,7 +55,7 @@
 					</div>
 					
 					<div class="form-group">
-						<label for="projectName">State</label>
+						<label for="taskState">State</label>
 					
 						<select class="form-control" name="taskState" id="taskState">
 							<option value="New" <c:if test="${taskState == 'New' }"> selected="selected" </c:if>>New</option>

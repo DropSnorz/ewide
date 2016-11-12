@@ -86,7 +86,7 @@ public class TaskController {
 		
 		User user = authenticationUserService.getCurrentUser();
 		Project project = projectDAO.getProjectById(projectId);
-		Task task = new Task(project, user, form.getTaskType(), form.getTaskState(), form.getTaskText(), new Date());
+		Task task = new Task(project, user, form.getTaskType(), form.getTaskState(), form.getTaskText(),form.getTaskDescription(), new Date());
 		
 		taskDAO.createTask(task);
 		
@@ -125,6 +125,7 @@ public class TaskController {
 		if(bindingResult.hasErrors()){
 			view.setViewName("task/task-edit");
 			view.addObject("taskText", form.getTaskText());
+			view.addObject("taskDescription", form.getTaskDescription());
 			view.addObject("taskType", form.getTaskType());
 			view.addObject("taskState", form.getTaskState());
 
@@ -134,6 +135,7 @@ public class TaskController {
 		
 		Task task = taskDAO.getTaskById(taskId);
 		task.setText(form.getTaskText());
+		task.setDescription(form.getTaskDescription());
 		task.setType(form.getTaskType());
 		task.setState(form.getTaskState());
 			
