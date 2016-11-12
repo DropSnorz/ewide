@@ -16,6 +16,7 @@
 	<!-- Page Content -->
 	<div class="container">
 		<div class="col-md-8 col-xs-12 col-md-offset-2">
+			<jsp:include page="../include/alert.jsp" />
 			<h1 class="text-center">
 				<strong>Tasks</strong>
 			</h1>
@@ -77,6 +78,6 @@
 	<script type="text/javascript"
 		src="<c:url value="/resources/bootstrap/js/bootstrap.js" />" /></script>
 	<script type="text/javascript"
-		src="<c:url value="/resources/js/custom_users.js" />" /></script>
+		src="<c:url value="/resources/js/custom.js" />" /></script>
 </body>
 </html>
