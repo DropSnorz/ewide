@@ -13,7 +13,7 @@
 <body>
 
 	<!-- Header Template -->
-	<jsp:include page="../header.jsp" />
+	<jsp:include page="../header.jsp" />	
 
 	<!-- Page Content -->
 	<div class="container">
