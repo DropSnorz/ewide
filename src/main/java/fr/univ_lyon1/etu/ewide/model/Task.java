@@ -33,6 +33,11 @@ public class Task {
     @Lob
     @Column(name="text", nullable=false)
     protected String text;
+    
+    @Lob
+    @Column(name="description")
+    protected String description;
+    
 
     /*
     @ManyToOne(fetch = FetchType.LAZY)
@@ -48,13 +53,14 @@ public class Task {
     }
     
     
-    public Task(Project project, User user, String type, String state, String text, Date date) {
+    public Task(Project project, User user, String type, String state, String text, String description, Date date) {
 		super();
 		this.project = project;
 		this.user = user;
 		this.type = type;
 		this.state = state;
 		this.text = text;
+		this.description = description;
 		this.date = date;
 	}
 
@@ -106,7 +112,8 @@ public class Task {
     public void setText(String text) {
         this.text = text;
     }
-
+    
+    
     /*
     public Task getReferecenredTask() {
         return referencedTask;
@@ -116,7 +123,17 @@ public class Task {
     }
     */
 
-    public Date getDate() {
+    public String getDescription() {
+		return description;
+	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+	public Date getDate() {
         return date;
     }
 
