@@ -1,6 +1,7 @@
 package fr.univ_lyon1.etu.ewide.model;
 
 import javax.persistence.*;
+
 import java.sql.Date;
 
 /**
@@ -8,6 +9,13 @@ import java.sql.Date;
  */
 @Entity
 @Table(name="Message")
+@NamedQueries({
+	@NamedQuery(name="Message.getMessagesByProject",
+						query="SELECT m FROM Message m join m.user u "
+								+ "WHERE m.project.projectID=:projectID and u.userID = m.user.userID"
+								)
+
+})
 public class Message {
 
     @Id

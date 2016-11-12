@@ -26,13 +26,14 @@ public class MessageDAO {
 	protected EntityManager em;
 	
 	/**
-     * Renvoie une list de tous les Messages de chat dans un projet
-     * @return liste des Messages ou null s'il n'existe pas
+     * to display the chat, we need all the messages
+     * @return list of the messages of the project
      */
-	public List<Message> getMessagesByProject(String project) {
+	public List<Message> getMessagesByProject(int projectID, int limit) {
       TypedQuery<Message> query =
-      em.createNamedQuery("File.getMessagesByProject", Message.class)
-      				.setParameter("project",project);
+      em.createNamedQuery("Message.getMessagesByProject", Message.class)
+      				.setParameter("projectID",projectID)
+      				.setMaxResults(limit);
       List<Message> results = query.getResultList();
       if(results.isEmpty()){
           return null;

@@ -85,6 +85,10 @@ public class HelloWorld
 	</div>
 	</div>
 	</div>
+	<iframe id="_chat" name="_chat" src="<%=request.getContextPath()%>/jsp/chat.jsp"  scrolling="auto" class="ifcontent"></iframe>
+	        <form action='<c:url value="/project/${project.projectID}/messages"/>' method="get" target="_chat" class="chatForm">
+	        	<input type="submit" value="ouvrir le chat"/>
+	        </form>
 	
 	<!-- Javascripts -->
 	<!-- Placed at the end of the document so the pages load faster -->
@@ -98,6 +102,7 @@ public class HelloWorld
 	<script type="text/javascript" src="<c:url value="/resources/js/jquery.scrollbar.js" />"></script>
 	<script src="<c:url value="/resources/js/classie.js" />"></script>
 	<script src="<c:url value="/resources/js/sidebarEffects.js" />"></script>
+	<script src="<c:url value="/resources/js/chat.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/custom.js" />"></script>  
 </body>
 </html>
