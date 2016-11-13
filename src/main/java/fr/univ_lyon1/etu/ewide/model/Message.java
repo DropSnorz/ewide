@@ -2,6 +2,8 @@ package fr.univ_lyon1.etu.ewide.model;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.sql.Date;
 
 /**
@@ -23,8 +25,9 @@ public class Message {
     @Column(name = "messageID")
     protected int messageID;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userID", referencedColumnName="userID")
+    @JsonManagedReference
     protected User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -76,5 +79,8 @@ public class Message {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+    public String getUsername(){
+    	return this.user.getUsername();
     }
 }

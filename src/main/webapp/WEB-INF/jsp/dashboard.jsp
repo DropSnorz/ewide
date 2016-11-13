@@ -26,7 +26,7 @@ pageEncoding="UTF-8"%>
 				<tbody>
 					<c:forEach var="project" items="${projectList}" >
 						<tr>
-							<td><a href="project/${project.projectID}"> ${project.name }</a></td>
+							<td><a href="project/${project.projectID}/"> ${project.name }</a></td>
 							<td class="text-center">
 								<a href="project/${project.projectID}/users_manager">Edit Users</a>
 							</td>

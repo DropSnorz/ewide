@@ -5,6 +5,7 @@ pageEncoding="UTF-8"%>
 <html>
 <head>
 	<title>EWIDE - Editor</title>
+	<link href="<c:url value="/resources/css/chat.css" />" rel="stylesheet">
 </head>
 <body id="ide_page">
 	
@@ -81,14 +82,19 @@ public class HelloWorld
 			</div>
 				<div id="the_console">Console Output goes here...</div>
 			</div>
+		<div class="right">
+			<div id="chatdiv">
+				<div id="chat"></div>
+				<textarea rows="1" id="chattext"></textarea>
+			</div>
+	   		<button onclick="openchat()"> open chat</button>
+	    </div>
 		</div> <!-- /container -->
+
 	</div>
 	</div>
 	</div>
-	<iframe id="_chat" name="_chat" src="<%=request.getContextPath()%>/jsp/chat.jsp"  scrolling="auto" class="ifcontent"></iframe>
-	        <form action='<c:url value="/project/${project.projectID}/messages"/>' method="get" target="_chat" class="chatForm">
-	        	<input type="submit" value="ouvrir le chat"/>
-	        </form>
+
 	
 	<!-- Javascripts -->
 	<!-- Placed at the end of the document so the pages load faster -->

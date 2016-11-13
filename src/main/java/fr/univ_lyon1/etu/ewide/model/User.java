@@ -48,7 +48,8 @@ public class User {
     protected Collection<Role> roles;
 
 
-    @OneToMany(mappedBy="user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="user", cascade = CascadeType.ALL)
+    @JsonBackReference
     protected List<Message> messages;
 
     @OneToMany(mappedBy="user")
