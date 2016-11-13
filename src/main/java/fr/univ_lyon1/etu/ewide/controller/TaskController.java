@@ -30,7 +30,7 @@ import fr.univ_lyon1.etu.ewide.service.AuthenticationUserService;
 @Controller
 @Transactional
 @RequestMapping(value="/project/{projectId}/task")
-public class TaskController {
+public class TaskController extends BaseProjectController {
 
 	@Autowired
 	private TaskDAO taskDAO;
