@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import fr.univ_lyon1.etu.ewide.dao.ProjectDAO;
 import fr.univ_lyon1.etu.ewide.dao.TaskDAO;
@@ -29,7 +30,7 @@ import fr.univ_lyon1.etu.ewide.service.AuthenticationUserService;
 @Controller
 @Transactional
 @RequestMapping(value="/project/{projectId}/task")
-public class TaskController {
+public class TaskController extends BaseProjectController {
 
 	@Autowired
 	private TaskDAO taskDAO;
@@ -69,7 +70,7 @@ public class TaskController {
 	@RequestMapping(value="/create", method = RequestMethod.POST)
 	public ModelAndView postTaskCreate(@PathVariable("projectId") int projectId, 
 			@ModelAttribute("taskForm") @Valid final TaskForm form,
-			final BindingResult bindingResult, final Model model){
+			final BindingResult bindingResult, final Model model, RedirectAttributes redirectAttributes){
 
 		
 		ModelAndView view = new ModelAndView("task/task-create");
@@ -86,10 +87,11 @@ public class TaskController {
 		
 		User user = authenticationUserService.getCurrentUser();
 		Project project = projectDAO.getProjectById(projectId);
-		Task task = new Task(project, user, form.getTaskType(), form.getTaskState(), form.getTaskText(), new Date());
+		Task task = new Task(project, user, form.getTaskType(), form.getTaskState(), form.getTaskText(),form.getTaskDescription(), new Date());
 		
 		taskDAO.createTask(task);
 		
+        redirectAttributes.addFlashAttribute("SUCCESS_MESSAGE", "Task successfully created !");
 		view.setViewName("redirect:../task/");
 
 		return view;
@@ -117,7 +119,8 @@ public class TaskController {
 	public ModelAndView postTaskEdit(@PathVariable("projectId") int projectId, 
 			@PathVariable("taskId") int taskId,
 			@ModelAttribute("taskForm") @Valid final TaskForm form,
-			final BindingResult bindingResult, final Model model){
+			final BindingResult bindingResult, final Model model,
+			RedirectAttributes redirectAttributes){
 
 		
 		ModelAndView view = new ModelAndView("task/task-edit");
@@ -125,6 +128,7 @@ public class TaskController {
 		if(bindingResult.hasErrors()){
 			view.setViewName("task/task-edit");
 			view.addObject("taskText", form.getTaskText());
+			view.addObject("taskDescription", form.getTaskDescription());
 			view.addObject("taskType", form.getTaskType());
 			view.addObject("taskState", form.getTaskState());
 
@@ -134,11 +138,13 @@ public class TaskController {
 		
 		Task task = taskDAO.getTaskById(taskId);
 		task.setText(form.getTaskText());
+		task.setDescription(form.getTaskDescription());
 		task.setType(form.getTaskType());
 		task.setState(form.getTaskState());
 			
 		taskDAO.createOrpdate(task);
 		
+		redirectAttributes.addFlashAttribute("SUCCESS_MESSAGE", "Task successfully updated !");
 		view.setViewName("redirect:../../task/");
 
 		return view;
@@ -161,10 +167,12 @@ public class TaskController {
 	@PreAuthorize("@userRoleService.isMember(#projectId)")
 	@RequestMapping(value="/{taskId}/delete", method = RequestMethod.POST)
 	public ModelAndView postTaskDelete(@PathVariable("projectId") int projectId,
-			@PathVariable("taskId") int taskId){
+			@PathVariable("taskId") int taskId, RedirectAttributes redirectAttributes){
 
 		ModelAndView model = new ModelAndView("redirect:../../task");
 		taskDAO.deleteTask(taskId);
+		
+		redirectAttributes.addFlashAttribute("SUCCESS_MESSAGE", "Task successfully deleted !");
 		return model;
 	}
 	
