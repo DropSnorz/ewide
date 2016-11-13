@@ -2,17 +2,16 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>EWIDE - Tasks</title>
-</head>
-<body>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-	<!-- Header Template -->
-	<jsp:include page="../header.jsp" />
 
+<t:base>
+
+<jsp:attribute name="head">
+<title>EWIDE - Tasks</title>    
+</jsp:attribute>
+
+<jsp:body>
 	<!-- Page Content -->
 	<div class="container">
 		<div class="col-md-8 col-xs-12 col-md-offset-2">
@@ -68,16 +67,5 @@
 			</div>
 		</div>
 	</div>
-
-	<!-- Javascripts -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<script type="text/javascript"
-		src="<c:url value="/resources/js/jquery-1.11.2.js" />" /></script>
-	<script type="text/javascript"
-		src="<c:url value="/resources/js/jquery-ui.js" />" /></script>
-	<script type="text/javascript"
-		src="<c:url value="/resources/bootstrap/js/bootstrap.js" />" /></script>
-	<script type="text/javascript"
-		src="<c:url value="/resources/js/custom.js" />" /></script>
-</body>
-</html>
+</jsp:body>
+	</t:base>
