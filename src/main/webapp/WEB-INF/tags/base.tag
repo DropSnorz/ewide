@@ -16,6 +16,7 @@
 	<link href="<c:url value="/resources/css/md-icons.css" />" rel="stylesheet">
 	<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
 	<link href="<c:url value="/resources/css/component.css" />" rel="stylesheet">
+	<link href="<c:url value="/resources/css/jquery.scrollbar.css" />" rel="stylesheet">
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/smoothness/jquery-ui.css" />
 	
 	<jsp:invoke fragment="head" />
