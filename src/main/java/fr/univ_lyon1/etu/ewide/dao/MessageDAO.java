@@ -44,21 +44,20 @@ public class MessageDAO {
 	
 	
 	/**
-     * Envoyer une message sur le group chat d'un projet
-     * @param user
-     * @param project
-     * @param text
-     * @param date
-     * @return le message créé
+     * Send message to the group of the project
+     * @param user (User)
+     * @param project (Project
+     * @param text (String)
+     * @param date (Date)
+     * @return the created message
      */
-    public Message sendMessage(User user, Project project, String text, Date date ) {
+    public void sendMessage(User user, Project project, String text, Date date ) {
       Message m = new Message();
       m.setUser(user);
       m.setProject(project);
       m.setText(text);
       m.setDate(date);
-      em.persist(m);;
-      return m;
+      em.persist(m);
     }
 	
 	
