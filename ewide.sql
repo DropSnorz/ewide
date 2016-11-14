@@ -84,6 +84,7 @@ projectID INT NOT NULL,
 type VARCHAR(45) NOT NULL,
 state VARCHAR(45) NOT NULL,
 text CLOB NOT NULL,
+description CLOB,
 referencedTask INT,
 date DATE NOT NULL DEFAULT CURRENT_DATE,
 FOREIGN KEY (userID) REFERENCES User(userID)
