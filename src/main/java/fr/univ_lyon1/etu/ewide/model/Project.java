@@ -35,7 +35,7 @@ public class Project {
     @Column(name="fileTree", unique=true, nullable=false)
     protected String fileTree;
 
-    @Column(name="linkMakefile", unique=true, nullable=false)
+    @Column(name="linkMakefile", unique=true)
     protected String linkMakefile;
 
     //@OneToMany(mappedBy="project")
