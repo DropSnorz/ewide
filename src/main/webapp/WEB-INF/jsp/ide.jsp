@@ -6,6 +6,7 @@ pageEncoding="UTF-8"%>
 <head>
 	<title>EWIDE - Editor</title>
 	<link href="<c:url value="/resources/css/chat.css" />" rel="stylesheet">
+	<link href="<c:url value="/resources/css/jquery.scrollbar.css" />" rel="stylesheet">
 	<meta name="_csrf" content="${_csrf.token}"/>
     <!-- default header name is X-CSRF-TOKEN -->
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
@@ -85,13 +86,13 @@ public class HelloWorld
 			</div>
 				<div id="the_console">Console Output goes here...</div>
 			</div>
-		<div class="right">
+		<!-- <div class="right">
 			<div id="chatdiv">
 				<div id="chat"></div>
 				<textarea rows="1" id="chattext"></textarea>
 			</div>
 	   		<button onclick="openchat()"> open chat</button>
-	    </div>
+	    </div> -->
 		</div> <!-- /container -->
 
 	</div>
@@ -99,6 +100,29 @@ public class HelloWorld
 	</div>
 
 	
+
+
+
+<div class="chat_bar">
+	<div class="open_chat">
+		<a href="#">Open Chat</a>
+	</div>
+	<div class="close_chat">
+		<a href="#">Close Chat</a>
+	</div>
+	<div class="chat_content">
+		<div class="chat_messages scrollbar-macosx">
+			<div class="pix_items">
+				<div id="chatdiv">
+					<div id="chat"></div>
+				</div>
+			</div>
+		</div>
+		<textarea rows="1" id="chattext"></textarea>
+	</div>
+</div>
+
+
 	<!-- Javascripts -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
