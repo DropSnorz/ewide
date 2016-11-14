@@ -42,10 +42,6 @@ function loadmessage(){
 			url:"messages",
 			success:function(respond){
 				document.getElementById("chat").innerHTML=respond;
-				chat_end3 = $('.pix_items');
-				height3 = chat_end3[0].scrollHeight;
-				chat_end3.scrollTop(height3);
-				$('.scrollbar-macosx').scrollTop(height3);
 			}
 		});
 	}
@@ -74,7 +70,6 @@ $('body').on('keypress','#chattext', function(e){
     		document.getElementById("chattext").innerHTML=document.getElementById("chattext").value+"\n";
     	}
     	else{
-    		console.log("wut");
     		 var token = $("meta[name='_csrf']").attr("content");
     		 var header = $("meta[name='_csrf_header']").attr("content");
     		 

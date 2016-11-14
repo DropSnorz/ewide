@@ -21,7 +21,7 @@
 	
 	<jsp:invoke fragment="head" />
 </head>
-<body id="ide_page">
+<body id="">
 	<div id="st-container">
 		<nav class="st-menu st-effect-4" id="menu-2"> 
 			<a href="<c:url value="/dashboard"/>" class="menu-projects">
