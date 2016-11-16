@@ -13,9 +13,8 @@ pageEncoding="UTF-8"%>
 <body>
 
 	<!-- Header Template -->
-	<jsp:include page="header.jsp"/>
-	
 
+	
 	
 	<!-- Page Content -->	
 	<div class="container">

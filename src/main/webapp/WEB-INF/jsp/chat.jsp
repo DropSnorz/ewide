@@ -6,6 +6,7 @@
 
 	<div class="messages">
 		<c:set var="date" scope="request" value="${ null}"/>
+		
 		<c:forEach  var="message" items="${messagesList}" >
 			<c:if test="${date!= message.date}">
 				<c:set var="date" scope="request" value="${ message.date}"/>
