@@ -85,5 +85,17 @@ public class ProjectDAO {
       return p;
     }
     
+    /**
+     * set the attribute compiler of a project
+     * @param project (Project)
+     * @param compiler (String)
+     * @return (Project)
+     */
+    public Project setCompiler(Project project, String compiler){
+    	project.setCompiler(compiler);
+    	em.merge(project);
+    	return project;
+    }
+    
 
 }
