@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!doctype html>
 <html>
 <head>
 	<title>EWIDE - Editor</title>
 	<link href="<c:url value="/resources/css/chat.css" />" rel="stylesheet">
+	<link href="<c:url value="/resources/css/jquery.scrollbar.css" />" rel="stylesheet">
 	<meta name="_csrf" content="${_csrf.token}"/>
     <!-- default header name is X-CSRF-TOKEN -->
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
@@ -85,13 +86,13 @@ public class HelloWorld
 			</div>
 				<div id="the_console">Console Output goes here...</div>
 			</div>
-		<div class="right">
+		<!-- <div class="right">
 			<div id="chatdiv">
 				<div id="chat"></div>
 				<textarea rows="1" id="chattext"></textarea>
 			</div>
 	   		<button onclick="openchat()"> open chat</button>
-	    </div>
+	    </div> -->
 		</div> <!-- /container -->
 
 	</div>
@@ -99,6 +100,29 @@ public class HelloWorld
 	</div>
 
 	
+
+
+
+<div class="chat_bar">
+	<div class="open_chat">
+		<a href="#">Open Chat</a>
+	</div>
+	<div class="close_chat">
+		<a href="#">Close Chat</a>
+	</div>
+	<div class="chat_content">
+		<div class="chat_messages scrollbar-macosx">
+			<div class="pix_items">
+				<div id="chatdiv">
+					<div id="chat"></div>
+				</div>
+			</div>
+		</div>
+		<textarea rows="1" id="chattext"></textarea>
+	</div>
+</div>
+
+
 	<!-- Javascripts -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
@@ -109,9 +133,9 @@ public class HelloWorld
 	<script type="text/javascript" src="<c:url value="/resources/js/ace.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/ext-language_tools.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/jquery.scrollbar.js" />"></script>
-	<script src="<c:url value="/resources/js/classie.js" />"></script>
-	<script src="<c:url value="/resources/js/sidebarEffects.js" />"></script>
-	<script src="<c:url value="/resources/js/chat.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/classie.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/sidebarEffects.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/chat.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/custom.js" />"></script>  
 </body>
 </html>

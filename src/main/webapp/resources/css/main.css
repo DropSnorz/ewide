@@ -434,6 +434,7 @@
     /* Header */
     .navbar-inverse { background: #222;border: 0px;border-radius: 0px; }
     .ewide_no_margin { margin: 0px !important;padding: 0px !important; }
+    #ide_page { background:#333; }
     #ide_page .main_nav { margin: 0px !important;padding: 0px !important; }
     nav li { font-family: "Roboto";letter-spacing: .4px;text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15);font-weight: 500; }
     nav .nav>li.active a, nav .nav>li:hover>a { box-shadow: 0px -3px 0px 0px #1274e7 inset !important;-webkit-transition:all .3s ease;background: rgba(255,255,255,0.1) !important;
@@ -563,7 +564,9 @@
     .col-border-right { border-right: 1px solid #ddd; }
     
     .users_table {background: #f9f9f9;border-radius: 2px;padding: 10px !important;overflow: hidden;}
-    .users_table thead { background: #0099e5;color: #fff;box-shadow: none;border: 0px;font-family: "Roboto";font-size: 16px;text-shadow:none !important;}
+    .users_table thead { background: #0099e5;color: #fff;box-shadow: none;border: 0px;font-family: "Roboto";font-size: 17px;text-shadow: 0px !important;-webkit-font-smoothing: antialiased;
+        /* Support for Safari and Chrome. */
+        text-rendering: optimizeLegibility;}
     .users_table thead th { border: 0px !important;border-bottom: 0px solid rgba(0,0,0,0.05) !important;b }
     .users_table tbody td { border: 0px !important;border-bottom: 0px solid rgba(0,0,0,0.05) !important;box-shadow: 0 1px 0 0 rgba(0,0,0,0.1) !important; }
     .users_table .role_col { width: 40%; }

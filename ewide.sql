@@ -1,4 +1,4 @@
-CREATE USER IF NOT EXISTS ‘admin’ PASSWORD admin ADMIN;
+CREATE USER IF NOT EXISTS admin PASSWORD 'admin' ADMIN;
 
 -- -----------------------------------------------------
 -- CLEAR DATABASE
@@ -32,10 +32,9 @@ CREATE TABLE IF NOT EXISTS Project
 projectID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 name VARCHAR(45) NOT NULL,
 compiler VARCHAR(45),
-linkRepo VARCHAR(255) NOT NULL UNIQUE,
 description CLOB,
 fileTree VARCHAR(255) NOT NULL UNIQUE,
-linkMakefile VARCHAR(255) NOT NULL UNIQUE,
+linkMakefile VARCHAR(255) UNIQUE,
 );
 
 -- -----------------------------------------------------
@@ -121,18 +120,17 @@ FOREIGN KEY (projectID) REFERENCES Project(projectID)
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Version
 (
-versionID INT NOT NULL PRIMARY KEY,
+versionID VARCHAR(45) NOT NULL PRIMARY KEY,
 userID INT NOT NULL,
-fileID INT NOT NULL,
+projectID INT NOT NULL,
 version INT NOT NULL DEFAULT 0,
 date DATE NOT NULL,
-text CLOB,
 FOREIGN KEY (userID) REFERENCES User(userID)
  ON DELETE NO ACTION
  ON UPDATE CASCADE,
-FOREIGN KEY (fileID) REFERENCES File(fileID)
+ FOREIGN KEY (projectID) REFERENCES Project(projectID)
  ON DELETE NO ACTION
- ON UPDATE CASCADE
+ ON UPDATE CASCADE,
 );
 
 
