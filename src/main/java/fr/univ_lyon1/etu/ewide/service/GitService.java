@@ -32,7 +32,7 @@ public class GitService {
 	 * @throws GitAPIException : Probleme de creation de repo
 	 * @throws IOException : Probleme d'acces disque
 	 */
-	protected void gitCreate(int projectID) throws IllegalStateException, GitAPIException, IOException {
+	public void gitCreate(int projectID) throws IllegalStateException, GitAPIException, IOException {
 		
 		new File("/GitRepos/" + projectID + "/").mkdirs();			// Creation du repo du projet.
 		File directory = new File("/GitRepos/" + projectID + "/"); 
@@ -50,7 +50,7 @@ public class GitService {
 	 * @throws GitAPIException
 	 * @throws IOException
 	 */
-	protected void gitAdd(int projectID, String fileToCreate, int UserID) throws IllegalStateException, GitAPIException, IOException {
+	public void gitAdd(int projectID, String fileToCreate, int UserID) throws IllegalStateException, GitAPIException, IOException {
 		
 		File directory = new File("/GitRepos/" + projectID + "/");
 		new File("/GitRepos/" + projectID + "/" + fileToCreate).mkdirs(); 							// Creation des repertoires du fichier si nécessaire
@@ -76,7 +76,7 @@ public class GitService {
 	 * @throws NoHeadException
 	 * @throws GitAPIException
 	 */
-	protected String gitGetLastFileVersion(int projectID, String fileToGet) throws IOException, InterruptedException, RevisionSyntaxException, NoHeadException, GitAPIException {
+	public String gitGetLastFileVersion(int projectID, String fileToGet) throws IOException, InterruptedException, RevisionSyntaxException, NoHeadException, GitAPIException {
 
 		System.getenv("PATH"); 															// Recupere la variable d'environnement PATH
 		File directory = new File("/GitRepos/" + projectID + "/");
@@ -127,7 +127,7 @@ public class GitService {
 	 * @throws RevisionSyntaxException
 	 * @throws InterruptedException
 	 */
-	protected String gitCommit(int projectID, String fileToGet, String message, int UserID) throws IllegalStateException, GitAPIException, IOException, RevisionSyntaxException, InterruptedException {
+	public String gitCommit(int projectID, String fileToGet, String message, int UserID) throws IllegalStateException, GitAPIException, IOException, RevisionSyntaxException, InterruptedException {
 		
 		File directory = new File("/GitRepos/" + projectID + "/");		
 		Git git = Git.init().setDirectory( directory ).call();

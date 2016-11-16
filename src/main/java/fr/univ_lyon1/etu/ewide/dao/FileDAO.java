@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import fr.univ_lyon1.etu.ewide.model.File;
 import fr.univ_lyon1.etu.ewide.model.Project;
+import fr.univ_lyon1.etu.ewide.model.Role;
 
 /**
  * Created by Firas on 18/10/2016.
@@ -28,25 +29,28 @@ public class FileDAO {
      * Renvoie une list de tous les Fichiers dans un projet
      * @return liste des fichiers ou null s'il n'existe pas
      */
-	public List<File> getFilesByProject(String project) {
-      TypedQuery<File> query =
-      em.createNamedQuery("File.getFilesByProject", File.class)
-      				.setParameter("project",project);
-      List<File> results = query.getResultList();
-      if(results.isEmpty()){
-          return null;
-      }else{
-          return results;
+	public List<File> getFilesByProject(Project project) {
+      try {
+    	  TypedQuery<File> query =
+		  em.createQuery("SELECT f FROM File f"
+		  		+ "  WHERE f.project=:project",File.class);
+
+		  query.setParameter("project", project);
+		
+		  return query.getResultList();
+      } catch (Exception e) {
+		return null;
       }
+	      
 	}
 	
 	/**
-     * Créée un nouvel fichier
+     * Crï¿½ï¿½e un nouvel fichier
      * @param name
      * @param path
      * @param type
      * @param project
-     * @return le fichier créé
+     * @return le fichier crï¿½ï¿½
      */
     public File createFile(String name, String path, String type, Project project) {
       File f = new File();
@@ -59,13 +63,13 @@ public class FileDAO {
     }
     
     /**
-     * mis à jour un nouvel fichier
+     * mis ï¿½ jour un nouvel fichier
      * @param fileID
      * @param name
      * @param path
      * @param type
      * @param project
-     * @return le fichier mis à jour
+     * @return le fichier mis ï¿½ jour
      */
     public File UpdateFile(int fileID, String name, String path, String type, Project project) {
       File f = new File();
