@@ -47,7 +47,7 @@ public class TaskDAO {
 
 
 		try {
-			TypedQuery<Task> query = em.createQuery("SELECT t FROM Task t JOIN FETCH  t.user WHERE t.project.projectID = :projectId", Task.class);
+			TypedQuery<Task> query = em.createQuery("SELECT t FROM Task t JOIN FETCH  t.user WHERE t.project.projectID = :projectId ORDER BY t.date desc", Task.class);
 			query.setParameter("projectId", projectId);
 			List<Task> result = query.getResultList();
 			return result;
@@ -62,7 +62,8 @@ public class TaskDAO {
 
 
 		try {
-			TypedQuery<Task> query = em.createQuery("SELECT t FROM Task t WHERE t.project.projectID = :projectId AND t.user.userID = :userId", Task.class);
+			TypedQuery<Task> query = em.createQuery("SELECT t FROM Task t WHERE t.project.projectID = :projectId "
+					+ "AND t.user.userID = :userId ORDER BY t.date desc", Task.class);
 			query.setParameter("projectId", projectId);
 			query.setParameter("userId", userId);
 			List<Task> result = query.getResultList();
