@@ -1,9 +1,9 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-<%@attribute name="head" fragment="true"%>
-<%@tag description="Base template tag" pageEncoding="UTF-8"%>
+<%@ attribute name="head" fragment="true"%>
+<%@ tag description="Base template tag" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!doctype html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,11 +16,12 @@
 	<link href="<c:url value="/resources/css/md-icons.css" />" rel="stylesheet">
 	<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
 	<link href="<c:url value="/resources/css/component.css" />" rel="stylesheet">
+	<link href="<c:url value="/resources/css/jquery.scrollbar.css" />" rel="stylesheet">
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/smoothness/jquery-ui.css" />
 	
 	<jsp:invoke fragment="head" />
 </head>
-<body id="ide_page">
+<body id="">
 	<div id="st-container">
 		<nav class="st-menu st-effect-4" id="menu-2"> 
 			<a href="<c:url value="/dashboard"/>" class="menu-projects">

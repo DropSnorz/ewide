@@ -32,13 +32,10 @@ public class Project {
     @Column(name="description")
     protected String description;
 
-    /*@Column(name="linkRepo", unique=true, nullable=false)
-    protected String linkRepo;*/
-
     @Column(name="fileTree", unique=true, nullable=false)
     protected String fileTree;
 
-    @Column(name="linkMakefile", unique=true, nullable=false)
+    @Column(name="linkMakefile", unique=true)
     protected String linkMakefile;
 
     //@OneToMany(mappedBy="project")
