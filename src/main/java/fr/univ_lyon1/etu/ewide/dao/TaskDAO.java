@@ -56,8 +56,22 @@ public class TaskDAO {
 			// TODO Auto-generated catch block
 			return new ArrayList<Task>();
 		}
+	}
+	
+	public List<Task> getTasksByProjectIdAndOwnerId(int projectId, int userId) {
 
 
+		try {
+			TypedQuery<Task> query = em.createQuery("SELECT t FROM Task t WHERE t.project.projectID = :projectId AND t.user.userID = :userId", Task.class);
+			query.setParameter("projectId", projectId);
+			query.setParameter("userId", userId);
+			List<Task> result = query.getResultList();
+			return result;
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return new ArrayList<Task>();
+		}
 
 	}
 

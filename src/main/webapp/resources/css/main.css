@@ -595,6 +595,6 @@
 	.bs-callout-danger {background-color: #fcf2f2; border-color: #dFb5b4;}
 	.bs-callout-warning { background-color: #fefbed; border-color: #f1e7bc;}
 	.bs-callout-info {background-color: #f0f7fd; border-color: #d0e3f0;}
-	.bs-callout-disable {background-color: #f0f7fd; border-color: #d0e3f0;}
-	.bs-callout-success {background-color: #dff0d8; border-color: #00c851;}
+	.bs-callout-disable {background-color: #F0F0F0; border-color: #A7A7A7;}
+	.bs-callout-success {background-color: #00c851; border-color: #00c851;}
 	
