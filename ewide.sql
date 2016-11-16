@@ -120,10 +120,10 @@ FOREIGN KEY (projectID) REFERENCES Project(projectID)
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Version
 (
-versionID VARCHAR(45) NOT NULL PRIMARY KEY,
+version VARCHAR(45) NOT NULL PRIMARY KEY,
 userID INT NOT NULL,
 projectID INT NOT NULL,
-version INT NOT NULL DEFAULT 0,
+versionID INT NOT NULL DEFAULT 0,
 date DATE NOT NULL,
 FOREIGN KEY (userID) REFERENCES User(userID)
  ON DELETE NO ACTION
@@ -142,8 +142,8 @@ FOREIGN KEY (userID) REFERENCES User(userID)
 INSERT INTO USER Values(0001,'zoidberg', 'admin', 'zoidberg@ewide.com', 'zoidberg_directory');
 INSERT INTO USER Values(0002,'fry', 'admin', 'fry@ewide.com', 'fry_directory');
 
-INSERT INTO PROJECT Values(1, 'Projet MULTIMIF', 'compiler', 'multimif_linkrepo', 'unknow','multimif_filetree','multimif_linkmake');
-INSERT INTO PROJECT Values(2, 'Projet IA', 'compiler', 'projet_ia_linkrepo', 'unknow','projet_ia_filetree','projet_ia_linkmake');
+INSERT INTO PROJECT Values(1, 'Projet MULTIMIF', 'compiler', 'unknow','multimif_filetree','multimif_linkmake');
+INSERT INTO PROJECT Values(2, 'Projet IA', 'compiler', 'unknow','projet_ia_filetree','projet_ia_linkmake');
 
 INSERT INTO ROLE Values(1, 1, 1, 'MANAGER');
 INSERT INTO ROLE Values(2, 2, 2, 'MANAGER');
