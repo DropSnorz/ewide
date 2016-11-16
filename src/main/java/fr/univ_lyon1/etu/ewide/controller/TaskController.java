@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -26,6 +27,7 @@ import fr.univ_lyon1.etu.ewide.model.Project;
 import fr.univ_lyon1.etu.ewide.model.Task;
 import fr.univ_lyon1.etu.ewide.model.User;
 import fr.univ_lyon1.etu.ewide.service.AuthenticationUserService;
+import fr.univ_lyon1.etu.ewide.util.ExpressionValidator;
 
 @Controller
 @Transactional
@@ -44,10 +46,30 @@ public class TaskController extends BaseProjectController {
 
 	@PreAuthorize("@userRoleService.isMember(#projectId)")
 	@RequestMapping(value="")
-	public ModelAndView taskList(@PathVariable("projectId") int projectId){
+	public ModelAndView taskList(@PathVariable("projectId") int projectId, 
+			@RequestParam(name="owner", required=false) String owner){
 
 		ModelAndView model = new ModelAndView("task/task-list");
-		List<Task> taskList = taskDAO.getTasksByProjectId(projectId);
+		
+		List<Task> taskList;
+		if(owner != null){
+			if(owner.equals("me")){
+				int userId = authenticationUserService.getCurrentUser().getUserID();
+				taskList = taskDAO.getTasksByProjectIdAndOwnerId(projectId, userId);
+
+			}
+			else if (ExpressionValidator.isInt(owner)){
+				int userId = Integer.parseInt(owner);
+				taskList = taskDAO.getTasksByProjectIdAndOwnerId(projectId, userId);
+
+			}
+			else{
+				taskList = taskDAO.getTasksByProjectId(projectId);
+			}
+		}
+		else{
+			taskList = taskDAO.getTasksByProjectId(projectId);
+		}
 		model.addObject("taskList",taskList);
 		model.addObject("projectId",projectId);
 

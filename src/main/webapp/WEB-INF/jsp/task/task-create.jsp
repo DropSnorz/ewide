@@ -60,6 +60,8 @@
 							<option value="New" <c:if test="${taskState == 'New' }"> selected="selected" </c:if>>New</option>
 							<option value="InProgress" <c:if test="${taskState == 'InProgress' }"> selected="selected" </c:if>>InProgress</option>
 							<option value="Closed" <c:if test="${taskState == 'Closed' }"> selected="selected" </c:if>>Closed</option>
+							<option value="Rejected" <c:if test="${taskState == 'Rejected' }"> selected="selected" </c:if>>Rejected</option>
+							
 						</select>
 					</div>
 				</div>

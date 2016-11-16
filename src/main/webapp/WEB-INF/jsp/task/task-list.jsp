@@ -22,8 +22,16 @@
 
 			<div class="row">
 				<div class="pull-right">
-					<a class="btn btn-primary"
-						href="<c:url value="/project/${projectId}/task/create"/>">	<i class="material-icons md-18 valign">add</i>New task</a>
+					<c:choose>
+						<c:when test="${param['owner'].equalsIgnoreCase('me')}">
+							<a class="btn btn-default" href="<c:url value="/project/${projectId}/task"/>">	<i class="material-icons md-18 valign">visibility</i> Show all tasks</a>
+
+						</c:when>
+						<c:otherwise>
+							<a class="btn btn-default" href="<c:url value="/project/${projectId}/task?owner=me"/>">	<i class="material-icons md-18 valign">visibility_off</i> Only my tasks</a>
+						</c:otherwise>
+					</c:choose>
+					<a class="btn btn-primary" href="<c:url value="/project/${projectId}/task/create"/>">	<i class="material-icons md-18 valign">add</i>New task</a>					
 				</div>
 			</div>
 			<hr>
@@ -31,7 +39,20 @@
 			<c:forEach var="task" items="${taskList}">
 				<div class="row task-row">
 					<div class="col-md-12">
-					<div class="bs-callout bs-callout-info">
+					<c:choose>
+						<c:when test="${task.state.equalsIgnoreCase('New')}">
+							<div class="bs-callout bs-callout-info">
+						</c:when>
+						<c:when test="${task.state.equalsIgnoreCase('Closed')}">
+							<div class="bs-callout bs-callout-disable">
+						</c:when>
+						<c:when test="${task.state.equalsIgnoreCase('Rejected')}">
+							<div class="bs-callout bs-callout-danger">
+						</c:when>
+						<c:otherwise>
+							<div class="bs-callout bs-callout-info">
+						</c:otherwise>
+					</c:choose>
 							<small class="pull-right">On <fmt:formatDate
 									value="${task.date}" pattern="yyyy-MM-dd" /></small>
 							<p>
