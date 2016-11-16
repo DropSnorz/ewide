@@ -1,10 +1,18 @@
 package fr.univ_lyon1.etu.ewide.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.DirectoryIteratorException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -19,13 +27,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import fr.univ_lyon1.etu.ewide.dao.FileDAO;
 import fr.univ_lyon1.etu.ewide.dao.ProjectDAO;
 import fr.univ_lyon1.etu.ewide.service.AuthenticationUserService;
 import fr.univ_lyon1.etu.ewide.service.GitService;
 import fr.univ_lyon1.etu.ewide.service.UserRoleService;
 import fr.univ_lyon1.etu.ewide.dao.RoleDAO;
-import fr.univ_lyon1.etu.ewide.model.File;
 import fr.univ_lyon1.etu.ewide.model.Project;
 import fr.univ_lyon1.etu.ewide.model.Role;
 import fr.univ_lyon1.etu.ewide.model.User;
@@ -116,7 +126,7 @@ public class ProjectController {
     	 ModelAndView model = new ModelAndView("dashboard");
     	 Project project = new Project();
     	 project = projectDAO.getProjectById(projectID);
-    	 List<File> file = fileDAO.getFilesByProject(project);
+    	// List<File> file = fileDAO.getFilesByProject(project);
     	
     	 model.addObject("project", project);
     	 model.setViewName("ide");
@@ -129,18 +139,57 @@ public class ProjectController {
       * @param projectID
       * @return
       */
-     @RequestMapping(value = {"/project/{projectID}/files"},method = RequestMethod.GET)
-     public @ResponseBody List<File> getProjectByNameJSON(@PathVariable("projectID") int projectID){
+    
+     @RequestMapping(value = {"/project/{projectID}/files"},method = RequestMethod.GET, produces="application/json")
+     public @ResponseBody String getProjectByNameJSON(@PathVariable("projectID") int projectID){
     	
     	 Project project = new Project();
     	 project = projectDAO.getProjectById(projectID);
-    	 List<File> file = fileDAO.getFilesByProject(project);
-    	try{
-    		return file;
-    	}catch(Exception e){
-    		return null;
-    	}
+    	 File[] files = new File("GitRepos/"+projectID).listFiles();
+    	 ArrayList<String> test = new ArrayList<String>();
+    	 JSONArray jarr = new JSONArray();
+    	 jarr = tree(files);
+    	 
+    	 return jarr.toString();
     	
+     }
+     
+     public JSONArray tree(File files[]){
+    	 ArrayList<String> liste = new ArrayList<String>() ;
+    	 JSONArray jarr = new JSONArray();
+    	 for (File file: files){
+    		 if (file.isDirectory()){
+    			 if (!file.getName().equals(".git")){
+    				 JSONObject jobj = new JSONObject();
+        	    	 jobj.put("id", file.getPath());
+        	    	 jobj.put("text", file.getName());
+        	    	 
+    				 //tree(file.listFiles());
+    				jobj.put("children", tree(file.listFiles()));
+    				 jarr.put(jobj);
+    			 }
+    				 
+    			 
+    		 }else{
+    		 if (!file.getName().equals(".git")){
+    			 liste.add(file.getName());
+    			 JSONObject jobj = new JSONObject();
+    			 jobj.put("id", file.getPath());
+    	    	 jobj.put("text", file.getName());
+    	    	 jobj.put("icon", "jstree-file");
+				 jarr.put(jobj);
+    		 }
+    		 }
+    		 
+    		 
+    	 }
+    	 
+    	 
+    	// System.out.println(jarr.toString());
+    	 return jarr;
+    	 //return listeFichier;
+    	 //System.out.println(liste);
+    
      }
 
 	
