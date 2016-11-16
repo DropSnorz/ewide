@@ -34,8 +34,8 @@ public class GitService {
 	 */
 	public void gitCreate(int projectID) throws IllegalStateException, GitAPIException, IOException {
 		
-		new File("/GitRepos/" + projectID + "/").mkdirs();			// Creation du repo du projet.
-		File directory = new File("/GitRepos/" + projectID + "/"); 
+		new File("GitRepos/" + projectID + "/").mkdirs();			// Creation du repo du projet.
+		File directory = new File("GitRepos/" + projectID + "/"); 
 		Git.init().setDirectory( directory ).call();				// Creation d'un git pour le repo.
 	}
 	

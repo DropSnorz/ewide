@@ -6,6 +6,7 @@ pageEncoding="UTF-8"%>
 <head>
 	<title>EWIDE - Editor</title>
 	<link href="<c:url value="/resources/css/chat.css" />" rel="stylesheet">
+	<link href="<c:url value="/resources/css/tree/style.css" />" rel="stylesheet">
 	<link href="<c:url value="/resources/css/jquery.scrollbar.css" />" rel="stylesheet">
 	<meta name="_csrf" content="${_csrf.token}"/>
     <!-- default header name is X-CSRF-TOKEN -->
@@ -54,7 +55,7 @@ pageEncoding="UTF-8"%>
 	<div class="container-fluid ide-body">
 		<div class="row">
 			<div class="col-md-2 ewide_no_margin ide-files-list">
-				Files List
+				<div id="tree"></div>
 			</div>
 			<div class="col-md-10 ewide_no_margin">
 				<ul class="nav nav-tabs pix_settings_tab" id="myTab">
@@ -66,10 +67,8 @@ pageEncoding="UTF-8"%>
 				</ul>
 				<div class="tab-content">	
 					<div class="tab-pane active" id="pix_style">
-						<div id="the_code">
-x
+						<div id="code"></div>
 					</div>
-				</div>
 				<div class="tab-pane" id="pix_animation">
 					<div id="the_code_2">
 /* HelloWorld.java
@@ -111,8 +110,8 @@ public class HelloWorld
 		<a href="#">Close Chat</a>
 	</div>
 	<div class="chat_content">
-		<div class="chat_messages scrollbar-macosx">
-			<div class="pix_items">
+		<div class="chat_messages scrollbar-macosx" id="chat_scrollbar">
+			<div class="pix_items" id="chat_inner">
 				<div id="chatdiv">
 					<div id="chat"></div>
 				</div>
@@ -137,5 +136,7 @@ public class HelloWorld
 	<script type="text/javascript" src="<c:url value="/resources/js/sidebarEffects.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/chat.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/custom.js" />"></script>  
+	<script type="text/javascript" src="<c:url value="/resources/js/tree/jstree.min.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/tree/tree.js" />"></script>
 </body>
 </html>
