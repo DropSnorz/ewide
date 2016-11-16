@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import fr.univ_lyon1.etu.ewide.model.Version;
 
 /**
@@ -11,13 +13,15 @@ import fr.univ_lyon1.etu.ewide.model.Version;
  */
 @Entity
 @Table(name="File")
+
 public class File {
 
     @Column(name = "fileID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     protected int fileID;
-
+    
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "projectID", referencedColumnName="projectID")
     protected Project project;

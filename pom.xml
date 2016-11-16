@@ -141,6 +141,7 @@
 	      <artifactId>org.eclipse.jgit.ui</artifactId>
 	      <version>4.5.0.201609210915-r</version>
 	    </dependency>
+	    
 	  <!-- JUnit Test Support -->
 	    <dependency>
 	      <groupId>org.eclipse.jgit</groupId>
@@ -152,6 +153,24 @@
    			 <groupId>com.fasterxml.jackson.jaxrs</groupId>
    			 <artifactId>jackson-jaxrs-base</artifactId>
    			 <version>2.6.1</version>
+		</dependency>
+	    
+	    <dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-api</artifactId>
+		    <version>1.7.21</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-log4j12</artifactId>
+		    <version>1.7.21</version>
+		</dependency>
+		
+		<!-- Jackson JSON Mapper -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.10</version>
 		</dependency>
 	    
 	    <!-- ******* FIN JGIT ******* -->
