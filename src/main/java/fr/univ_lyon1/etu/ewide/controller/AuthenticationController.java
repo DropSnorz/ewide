@@ -79,8 +79,8 @@ public class AuthenticationController {
 
 			}
 			else{
-
-				User user = userDAO.createOrUpdate(form.getEmail(), form.getUsername(), form.getPassword());
+				
+				User user = authenticationUserService.doRegister(form.getEmail(), form.getUsername(), form.getPassword());
 				authenticationUserService.doLogin(user.getMail(), user.getPwd(), request);
 				return "redirect:/dashboard";
 			}
