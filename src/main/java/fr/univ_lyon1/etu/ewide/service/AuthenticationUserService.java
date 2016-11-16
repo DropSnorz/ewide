@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +36,10 @@ public class AuthenticationUserService implements UserDetailsService {
 
 	@Autowired 
 	AuthenticationManager authenticationManager;
+	
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    
 
 	@Transactional(readOnly=true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -51,7 +56,8 @@ public class AuthenticationUserService implements UserDetailsService {
 		fr.univ_lyon1.etu.ewide.model.User user = userDAO.getUserByEmail(spring_user.getUsername());
 		return user;
 	}
-
+	
+	
 	public void doLogin(String username, String password, HttpServletRequest request) {
 
 		try {
@@ -65,6 +71,16 @@ public class AuthenticationUserService implements UserDetailsService {
 		}
 
 	}
+	
+	
+	public fr.univ_lyon1.etu.ewide.model.User doRegister(String email, String username, String password) {
+		
+		String encodedPassword= passwordEncoder.encode(password);
+		fr.univ_lyon1.etu.ewide.model.User user = userDAO.createOrUpdate(email, username, encodedPassword);
+		return user;
+
+	}
+	
 
 	public boolean isCurrentUserLogged(){
 		

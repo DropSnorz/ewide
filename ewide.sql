@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS User
 (
 userID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 username VARCHAR(45) NOT NULL UNIQUE,
-pwd VARCHAR(45) NOT NULL,
+pwd VARCHAR(100) NOT NULL,
 email VARCHAR(45) NOT NULL UNIQUE,
 directory VARCHAR(255) UNIQUE,
 );
@@ -139,12 +139,12 @@ FOREIGN KEY (fileID) REFERENCES File(fileID)
 -- Data samples
 -- -----------------------------------------------------
 
+-- zoidberg password: admin
+INSERT INTO USER Values(0001,'zoidberg', '$2a$10$WzSOqXRoTXA7QkIdhP3hl.2R85JSgG2nGYltG3HC0DftrefgFH5o6', 'zoidberg@ewide.com', 'zoidberg_directory');
+INSERT INTO USER Values(0002,'fry', '$2a$10$WzSOqXRoTXA7QkIdhP3hl.2R85JSgG2nGYltG3HC0DftrefgFH5o6', 'fry@ewide.com', 'fry_directory');
 
-INSERT INTO USER Values(0001,'zoidberg', 'admin', 'zoidberg@ewide.com', 'zoidberg_directory');
-INSERT INTO USER Values(0002,'fry', 'admin', 'fry@ewide.com', 'fry_directory');
-
-INSERT INTO PROJECT Values(1, 'Projet MULTIMIF', 'compiler', 'multimif_linkrepo', 'unknow','multimif_filetree','multimif_linkmake');
-INSERT INTO PROJECT Values(2, 'Projet IA', 'compiler', 'projet_ia_linkrepo', 'unknow','projet_ia_filetree','projet_ia_linkmake');
+INSERT INTO PROJECT Values(1, 'Projet MULTIMIF', 'compiler', 'unknow','multimif_filetree','multimif_linkmake');
+INSERT INTO PROJECT Values(2, 'Projet IA', 'compiler', 'unknow','projet_ia_filetree','projet_ia_linkmake');
 
 INSERT INTO ROLE Values(1, 1, 1, 'MANAGER');
 INSERT INTO ROLE Values(2, 2, 2, 'MANAGER');
