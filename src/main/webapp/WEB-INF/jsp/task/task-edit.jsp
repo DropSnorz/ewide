@@ -62,6 +62,7 @@
 						<select class="form-control" name="taskState" id="taskState">
 							<option value="New" <c:if test="${taskState == 'New' || task.state == 'New' }"> selected="selected" </c:if>>New</option>
 							<option value="InProgress" <c:if test="${taskState == 'InProgress' || task.state == 'InProgress' }"> selected="selected" </c:if>>InProgress</option>
+							<option value="Rejected" <c:if test="${taskState == 'Rejected' || task.state == 'Rejected' }"> selected="selected" </c:if>>Rejected</option>
 							<option value="Closed" <c:if test="${taskState == 'Closed' || task.state == 'Closed' }"> selected="selected" </c:if>>Closed</option>
 						</select>
 					</div>
