@@ -62,8 +62,25 @@ $(function () {
 								'stripes' : true
 							} })
 							.on('changed.jstree', function (e, data) {
-								codeEditor.setValue(data.selected.join(':'));
-								codeEditor.gotoLine(1);
+								var token = $("meta[name='_csrf']").attr("content");
+					    		 var header = $("meta[name='_csrf_header']").attr("content");
+								$.ajax({
+					    			type:"POST",
+					    			url:"files",
+					    			data:"file="+data.selected.join(':'),
+					    		    beforeSend: function(xhr){
+					    		        xhr.setRequestHeader(header, token);
+					    		    },
+					    			success:function(respond){
+					    				var res = $.parseJSON(respond);
+					    				if(res['contents']){
+					    					codeEditor.setValue(res['contents']);
+											codeEditor.gotoLine(1);
+					    				}
+					    			}
+					    		});
+								
+								
 							});
 				}
 			});

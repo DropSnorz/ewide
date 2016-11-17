@@ -159,9 +159,9 @@ public class ProjectController {
      public @ResponseBody String postFileJSON(@RequestParam String file,@PathVariable("projectID") int projectID){
     	 JSONObject jobj = new JSONObject();
     	 try{
-    	 String content = new String(Files.readAllBytes(Paths.get(file)));
-    	 jobj.put("content", content);
-    	 return "test";
+    		 String contents = new String(Files.readAllBytes(Paths.get(file)));
+    		 jobj.put("contents", contents);
+    	 	return jobj.toString();
     	 } catch (IOException e){
     		 
     	 }
