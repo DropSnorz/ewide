@@ -44,6 +44,19 @@ public class CompilerController {
 		projectDAO.setCompiler(project, compiler);
 		return 1;
 	}
+
+	/**
+	 * Return the actual compiler(-tool) of the project
+	 * @param projectID
+	 * @return
+	 */
+	@RequestMapping(name = "getCompiler", value = "/{projectID}/compiler", method = RequestMethod.GET)
+	@PreAuthorize("@userRoleService.isMember(#projectID)")
+	public @ResponseBody String getCompiler(@PathVariable("projectID") int projectID) {
+		Project project = projectDAO.getProjectById(projectID);
+		String compiler = project.getCompiler();
+		return compiler;
+	}
 	
 	
 	/**
