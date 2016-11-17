@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+		 pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <!doctype html>
 <html>
@@ -66,7 +66,7 @@ pageEncoding="UTF-8"%>
 					<li><a href="#" data-target="#pix_animation" data-toggle="tab">File 2</a></li>
 					<li><a href="#" class="ide-add-page" data-target="#pix_style" data-toggle="tab"><i class="material-icons">add</i></a></li>
 				</ul>
-				<div class="tab-content">	
+				<div class="tab-content">
 					<div class="tab-pane active" id="pix_style">
 						<div id="code"></div>
 					</div>
@@ -98,9 +98,6 @@ public class HelloWorld
 	</div>
 	</div>
 	</div>
-
-	
-
 
 
 <div class="chat_bar">
@@ -136,7 +133,7 @@ public class HelloWorld
 	<script type="text/javascript" src="<c:url value="/resources/js/classie.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/sidebarEffects.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/chat.js" />"></script>
-	<script type="text/javascript" src="<c:url value="/resources/js/custom.js" />"></script>  
+	<script type="text/javascript" src="<c:url value="/resources/js/custom.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/tree/jstree.min.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/tree/tree.js" />"></script>
 </body>
