@@ -79,10 +79,10 @@ public class GitService {
 	public String gitGetLastFileVersion(int projectID, String fileToGet) throws IOException, InterruptedException, RevisionSyntaxException, NoHeadException, GitAPIException {
 
 		System.getenv("PATH"); 															// Recupere la variable d'environnement PATH
-		File directory = new File("/GitRepos/" + projectID + "/");
+		File directory = new File("GitRepos/" + projectID + "/");
 		Git git = Git.init().setDirectory( directory ).call();							// Appel du git sur le repetoire du projet
 		
-        Repository repository = new FileRepository("/GitRepos/" + projectID + "/.git");	 
+        Repository repository = new FileRepository("GitRepos/" + projectID + "/.git");	 
         Iterable<RevCommit> revCommits = git.log()
                 .add(repository.resolve("refs/heads/master"))
                 .call();																// Creation d'un objet contenant un it�rateur sur tous les commits du projet
@@ -129,7 +129,7 @@ public class GitService {
 	 */
 	public String gitCommit(int projectID, String fileToGet, String message, int UserID) throws IllegalStateException, GitAPIException, IOException, RevisionSyntaxException, InterruptedException {
 		
-		File directory = new File("/GitRepos/" + projectID + "/");		
+		File directory = new File("GitRepos/" + projectID + "/");		
 		Git git = Git.init().setDirectory( directory ).call();
 		DirCache index = git.add().addFilepattern( fileToGet ).call();	
 		RevCommit commit = git.commit().setMessage( message ).call();

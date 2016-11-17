@@ -1,6 +1,8 @@
 package fr.univ_lyon1.etu.ewide.controller;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.DirectoryIteratorException;
 import java.nio.file.DirectoryStream;
@@ -154,7 +156,12 @@ public class ProjectController {
     	 return jarr.toString();
     	
      }
-     
+     /**
+      * 
+      * @param file contains the file path
+      * @param projectID 
+      * @return jobj the content of the file
+      */
      @RequestMapping(value = {"/project/{projectID}/files"}, method = RequestMethod.POST)
      public @ResponseBody String postFileJSON(@RequestParam String file,@PathVariable("projectID") int projectID){
     	 JSONObject jobj = new JSONObject();
@@ -163,12 +170,55 @@ public class ProjectController {
     		 jobj.put("contents", contents);
     	 	return jobj.toString();
     	 } catch (IOException e){
-    		 
+    		 JSONObject jerror = new JSONObject();
+    		 jerror.put("type", "error");
+    		 jerror.put("message", "Cannot load files");
+    		 return jerror.toString();
     	 }
-    	 return "";
+    	 
     	 
      }
+     /**
+      * 
+      * @param file contains all file modified by user in json format
+      * @param projectID
+      * @return succes or error message
+      */
+     @RequestMapping(value = {"/project/{projectID}/save"}, method = RequestMethod.POST)
+     public @ResponseBody String saveProjectJSON(@RequestParam String file,@PathVariable("projectID") int projectID){
+     	JSONArray jarr = new JSONArray(file);
+     	for (int i = 0; i< jarr.length();++i){
+     		try{
+     		JSONObject jobj = jarr.getJSONObject(i);
+     		User user = authenticationUserSerive.getCurrentUser();
+     		File _file = new File(jobj.get("id").toString());
+     		if (!_file.exists()){
+     			_file.createNewFile();
+     		}
+     		FileWriter fw = new FileWriter(_file);
+     		BufferedWriter bw = new BufferedWriter(fw);
+     		bw.write(jobj.get("content").toString());
+			bw.close();
+     		
+     		GitService git = new GitService();
+     		String filePath = jobj.get("id").toString().replaceAll("GitRepos/"+projectID+"/", "");
+     		// TODO
+     		// Replace the first occurence only !
+     		git.gitCommit(projectID, filePath, "vide", user.getUserID());
+    		 
+     		}catch(Exception e){
+     			JSONObject jerror = new JSONObject();
+     			jerror.put("type", "error");
+     			jerror.put("message", "Cannot load files");
+     			return jerror.toString();
+         	}	
+     	}
+     	JSONObject jsuccess = new JSONObject();
+     	jsuccess.put("type", "success");
+     	jsuccess.put("message", "Commit success");
+		return jsuccess.toString();
      	
+     }
      public JSONArray tree(File files[]){
     	 ArrayList<String> liste = new ArrayList<String>() ;
     	 JSONArray jarr = new JSONArray();
