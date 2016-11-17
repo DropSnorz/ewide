@@ -45,9 +45,13 @@ pageEncoding="UTF-8"%>
 		<div class="container">
 			<a href="#" class="tools-btn">
 				<i class="material-icons">save</i> <span>Sauvegarder</span>
-			</a><a href="#" class="tools-btn">
-				<i class="material-icons">playlist_play</i> <span>Compiler</span>
 			</a>
+			<div class="tools-btn">
+				<i class="material-icons">build</i> <span>Compiler</span>
+			</div>
+			<div class="tools-btn">
+				<i class="material-icons">get app</i> <span>yo</span>
+			</div>
 		</div>
 	</div>
 
