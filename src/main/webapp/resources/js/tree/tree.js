@@ -5,7 +5,9 @@
 
 $(function () {
 	var projectid = $("meta[name='_project_id']").attr("content");
-	//localStorage[projectid]="";
+	
+	localStorage.removeItem(projectid);
+
 	
 			$(window).resize(function () {
 				var h = Math.max($(window).height() - 0, 420);
@@ -115,12 +117,9 @@ $(function () {
 							    		    },
 							    			success:function(respond){
 							    				var res = $.parseJSON(respond);
-							    				if(res['contents']&&res['contents']!=""&&data.node.text){
-							    					
+							    				if(data.node.text){
 							    					var id = $('#myTab').children().length;
 												    var tabId = 'file_' + id;
-												    //if($('#myTab a[fileid="'+data.selected.join(':')+'"]').length != 0){
-												    //alert($('#myTab a[data-fileid="'+data.selected.join(':')+'"]'));
 												    var new_path = data.selected.join(':');
 												    
 												    new_path = new_path.split('\\').join('-');
@@ -129,7 +128,7 @@ $(function () {
 												    	$('#myTab a[data-efileid="'+new_path+'"]').click();
 												    }else{
 												    	$('#myTab').append('<li><a class="file_tab" id="tab_'+data.selected.join(':')+'" data-efileid="'+new_path+'" data-target="#'+tabId+'" data-toggle="tab" href="#">'+data.node.text+'</a></li>');
-													    $('.tab-content').append('<div class="tab-pane" id="' + tabId + '"><div id="code_'+tabId+'"></div></div>');
+													    $('.tab-content').append('<div class="tab-pane" id="' + tabId + '"><div class="code_div" data-filecode="'+new_path+'" id="code_'+tabId+'"></div></div>');
 													    $('#myTab a#tab_'+tabId+'').click();
 													    var filecodeID = "code_"+tabId;
 													    var filecodeArea = $('#'+filecodeID);
@@ -148,7 +147,7 @@ $(function () {
 															;	
 														}
 														
-														filecodeEditor.setValue(res['contents']);
+														filecodeEditor.setValue(""+res['contents']);
 														filecodeEditor.gotoLine(1);
 														var tt =JSON.stringify($('#tree').jstree().get_json());
 														$('#myTab a[data-efileid="'+new_path+'"]').click();
@@ -199,19 +198,41 @@ $(function () {
 	    		 var header = $("meta[name='_csrf_header']").attr("content");
 				var projectid = $("meta[name='_project_id']").attr("content");
 				files = localStorage[projectid];
-				files = files.replace(/\\\\/g, '\\');
-				alert(files);
-				$.ajax({
-	    			type:"POST",
-	    			url:"save",
-	    			data:"file="+files,
-	    		    beforeSend: function(xhr){
-	    		        xhr.setRequestHeader(header, token);
-	    		    },
-	    			success:function(respond){
-						    alert(JSON.stringify(respond));
-	    			}
-	    		});
+				if(files!=null && files!=""){
+					//files = files.replace(/\\\\/g, '\\');
+					//alert(files);
+					var json_files = $.parseJSON(files);
+					for(var i = 0; i < json_files.length; i++) {
+						if(json_files[i]){
+							var new_path = json_files[i].id;
+						    new_path = new_path.split('\\').join('-');
+						    if($('.code_div[data-filecode="'+new_path+'"]').length != 0){
+						    	var filecodeEditor = ace.edit($('.code_div[data-filecode="'+new_path+'"]')[0].id);
+						    	//console.log(filecodeEditor.getValue());
+						    	json_files[i].content = filecodeEditor.getValue();
+						    }
+						    var obj = json_files[i];
+						    console.log(json_files[i].id);	
+						}
+					}
+					//var ff= JSON.parse(files);
+					//console.log(files);
+					var final_res = JSON.stringify(json_files);
+					final_res = final_res.replace(/\\\\/g, '\\');
+					alert(final_res);
+					$.ajax({
+		    			type:"POST",
+		    			url:"save",
+		    			data:"file="+files,
+		    		    beforeSend: function(xhr){
+		    		        xhr.setRequestHeader(header, token);
+		    		    },
+		    			success:function(respond){
+							    alert(JSON.stringify(respond));
+		    			}
+		    		});	
+				}
+				
 			});
 			
 			
