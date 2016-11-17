@@ -223,7 +223,7 @@ $(function () {
 					$.ajax({
 		    			type:"POST",
 		    			url:"save",
-		    			data:"file="+files,
+		    			data:"file="+final_res,
 		    		    beforeSend: function(xhr){
 		    		        xhr.setRequestHeader(header, token);
 		    		    },
