@@ -20,9 +20,9 @@
 		<div class="col-md-6 col-xs-12 col-md-offset-3">
 			<h2 class="text-center"><strong>Change password </strong></h2>
 			<hr>
-			<div id="pwdErrors">
+			<div id="pwdErrors"  style="display:none;" class="alert alert-danger">
 			</div>
-			<div id="pwdValid">
+			<div id="pwdValid" style="display:none;" class="alert alert-success">
 			</div>
 			<div class="form-group">
 				<label for="lastpwd">Actual password :</label>
