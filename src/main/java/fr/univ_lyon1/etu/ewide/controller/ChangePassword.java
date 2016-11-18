@@ -58,7 +58,7 @@ public class ChangePassword {
 	 	}
 	 	//else send error 
 	 	else{
-	 		mapResponse.put("error","your actual password does not match ");
+	 		mapResponse.put("error","Your actual password does not match ");
 	 	}
 	 	
 

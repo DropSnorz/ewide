@@ -10,7 +10,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="shortcut icon"
-		href="<c:url value="resources/images/favicon.ico" />">
+		href="<c:url value="/resources/images/favicon.ico" />">
 	<!-- CSS dependencies -->
 	<link href="<c:url value="/resources/bootstrap/css/bootstrap.css" />" rel="stylesheet">
 	<link href="<c:url value="/resources/css/font-awesome.min.css" />" rel="stylesheet">
@@ -31,10 +31,8 @@
 			</a>
 			<h2 class="icon icon-stack">${project.name}</h2>
 			<ul>
-				<li><a class="icon icon-data" href="#">Wiki</a></li>
 				<li><a class="icon icon-location" href="<c:url value="/project/${project.projectID}"/>">Workspace</a></li>
 				<li><a class="icon icon-data" href="<c:url value="/project/${projectId}/wiki"/>">Wiki</a></li>
-				<li><a class="icon icon-location" href="#">Workspace</a></li>
 				<li><a class="icon icon-study" href="#">Versioning</a></li>
 				<li><a class="icon icon-photo" href="<c:url value="/project/${project.projectID}/users_manager"/>">Members</a></li>
 				<li><a class="icon icon-wallet" href="<c:url value="/project/${project.projectID}/task"/>">Tasks List</a></li>
@@ -48,7 +46,7 @@
 					<i class="material-icons md-36">menu</i>
 				</button>
 			</div>
-			<header> 
+			<header>
 				<nav class="navbar navbar-inverse main_nav">
 					<div class="container">
 						<div class="navbar-header">
@@ -94,7 +92,7 @@
 	</div>
 
 	<!-- Javascripts -->
-	<!-- Placed at the end of the document so the pages load faster -->	
+	<!-- Placed at the end of the document so the pages load faster -->
 	<script type="text/javascript"
 		src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
 	<script type="text/javascript"
@@ -109,7 +107,7 @@
 	<script src="<c:url value="/resources/js/sidebarEffects.js" />"></script>
 	<script type="text/javascript"
 		src="<c:url value="/resources/js/custom.js" />"></script>
-	<script type="text/javascript" src="<c:url value="/resources/js/custom_users.js" />"/></script>    
+	<script type="text/javascript" src="<c:url value="/resources/js/custom_users.js" />"></script>
 
 			<jsp:invoke fragment="javascript" />
 	</body>
