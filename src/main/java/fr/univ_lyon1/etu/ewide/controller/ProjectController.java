@@ -171,37 +171,69 @@ public class ProjectController {
      @RequestMapping(value = {"/project/{projectID}/save"}, method = RequestMethod.POST)
      public @ResponseBody String saveProjectJSON(@RequestParam String file,@PathVariable("projectID") int projectID){
      	String os = System.getProperty("os.name").toLowerCase();
-     	
-    	 JSONArray jarr = new JSONArray(file);
-    	 String filePath;
+     	if (os.contains("win")){
+     		file = file.replace("\\\\", "\\");
+     	}
+    	JSONArray jarr = new JSONArray(file);
      	for (int i = 0; i< jarr.length();++i){
      		try{
-     		JSONObject jobj = jarr.getJSONObject(i);
-     		User user = authenticationUserSerive.getCurrentUser();
-     		File _file = new File(jobj.get("id").toString());
-     		if (!_file.exists()){
-     			_file.createNewFile();
-     		}
-     		FileWriter fw = new FileWriter(_file);
-     		BufferedWriter bw = new BufferedWriter(fw);
-     		bw.write(jobj.get("content").toString());
-			bw.close();
-     		
-     		GitService git = new GitService();
-     		
-     		if(os.contains("win")){
-     			 filePath = jobj.get("id").toString().replace("GitRepos\\"+projectID+"\\", "");
-         	}else{
-         		filePath = jobj.get("id").toString().replace("GitRepos/"+projectID+"/", "");
-         	}
-     		// TODO
-     		// Replace the first occurence only !
-     		git.gitCommit(projectID, filePath, "vide", user.getUserID());
-    		 
+	     		JSONObject jobj = jarr.getJSONObject(i);
+	     		User user = authenticationUserSerive.getCurrentUser();
+	     		File _file = new File(jobj.get("id").toString());
+	     		if(jobj.get("ftype").toString().equals("filetext")){
+    	     		if (!_file.exists()){
+    	     			_file.createNewFile();
+    	     		}
+    	     		FileWriter fw = new FileWriter(_file);
+    	     		BufferedWriter bw = new BufferedWriter(fw);
+    	     		bw.write(jobj.get("content").toString());
+    				bw.close();
+    	     		GitService git = new GitService();
+    	     		String filePath;
+    	     		if (!os.contains("win")){
+    	     			 filePath = jobj.get("id").toString().replaceAll("GitRepos/"+projectID+"/", "");
+    	     		}else{
+    	     			 filePath = jobj.get("id").toString().replaceAll("GitRepos\\"+projectID+"\\", "");	
+    	     		}
+    	     		git.gitCommit(projectID, filePath, "vide", user.getUserID());
+	     		}
+	     		if(jobj.get("ftype").toString().equals("delete")){ // When we delete file or folder
+	     			if (!_file.exists()){
+	     				throw (new Exception ("File doesn't exist"));
+	     			}else{
+	     			if (_file.isDirectory()){ // We must to clean the directory 
+	     					String[]entries = _file.list();
+	     					for(String s: entries){
+	     					    File currentFile = new File(_file.getPath(),s);
+	     					    currentFile.delete();
+	     					}
+	     			}
+	     				_file.delete();
+	     				
+	     			}
+	     		}
+	     		/*
+	     		case "folder": // Create folder 
+	     			if (_file.exists()){
+     					throw (new Exception ("Folder already exists !"));
+     				}
+     				_file.mkdir();
+     				break;
+	     			case "rename": // Rename file or folder
+	     				if (_file.exists()){
+	     					throw (new Exception ("Cannot rename under this name!"));
+	     				}
+	     				_file.renameTo(new File(jobj.get("change").toString()));
+	     		
+	     		
+		     		*/
+	     		// TODO
+	     		// Replace the first occurence only !
+     		 
      		}catch(Exception e){
      			JSONObject jerror = new JSONObject();
      			jerror.put("type", "error");
-     			jerror.put("message", "Cannot load files!");
+     			jerror.put("message", e.getMessage());
      			return jerror.toString();
          	}	
      	}
