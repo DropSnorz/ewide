@@ -128,7 +128,7 @@ public class UserDAO {
 				  		+ " WHERE username LIKE :name and username NOT LIKE :user",User.class);
 				  query.setParameter("name","%"+ name+"%");
 				  query.setParameter("user",user.getUsername());
-				  return (List<User>)query.getResultList();
+				  return query.getResultList();
 			} catch (Exception e) {
 				
 				return null;
