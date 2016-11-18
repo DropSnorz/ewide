@@ -141,15 +141,7 @@ FOREIGN KEY (userID) REFERENCES User(userID)
 INSERT INTO USER Values(0001,'zoidberg', '$2a$10$WzSOqXRoTXA7QkIdhP3hl.2R85JSgG2nGYltG3HC0DftrefgFH5o6', 'zoidberg@ewide.com', 'zoidberg_directory');
 INSERT INTO USER Values(0002,'fry', '$2a$10$WzSOqXRoTXA7QkIdhP3hl.2R85JSgG2nGYltG3HC0DftrefgFH5o6', 'fry@ewide.com', 'fry_directory');
 
-INSERT INTO PROJECT Values(1, 'Projet MULTIMIF', 'compiler', 'unknow','multimif_filetree','multimif_linkmake');
-INSERT INTO PROJECT Values(2, 'Projet IA', 'compiler', 'unknow','projet_ia_filetree','projet_ia_linkmake');
 
 INSERT INTO ROLE Values(1, 1, 1, 'MANAGER');
 INSERT INTO ROLE Values(2, 2, 2, 'MANAGER');
-
-INSERT INTO TASK (taskID, userID, projectID, type, state, text) Values(1,1,1, 'TODO', 'Pending', 'Task 1');
-INSERT INTO TASK (taskID, userID, projectID, type, state, text) Values(2,1,1, 'TODO', 'Pending', 'Task 2');
-INSERT INTO TASK (taskID, userID, projectID, type, state, text) Values(3,1,1, 'TODO', 'Pending', 'Task 3');
-
-INSERT INTO VERSION Values('sdfdsfdfsfzzfzeffzfzfezfze', 2, 2, 1, 2015-06-12 23:59:59);
 
