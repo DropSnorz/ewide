@@ -39,12 +39,8 @@ public class VersionDAO {
      */
 	public Version getVersionByGitID(String commitID) {
         try {
-			TypedQuery<Version> query = em.createQuery("SELECT version FROM Version version "
-					+ "WHERE version.version = :ID", Version.class)
-					.setParameter("ID", commitID);
-			return query.getSingleResult();
+			return em.find(Version.class, commitID);
 		} catch (Exception e) {
-
 			return null;
 		}
     
@@ -59,11 +55,10 @@ public class VersionDAO {
 	public Version getVersionByProjectIDAndVersionID(int projectID, int versionID) {
         try {
 			TypedQuery<Version> query = em.createQuery("SELECT version FROM Version version "
-					+ "WHERE version.projectID = :projectID AND version.versionID : :versionID", Version.class)
+					+ "WHERE version.projectID=:projectID AND version.versionID=:versionID", Version.class)
 					.setParameter("projectID", projectID).setParameter("versionID", versionID);
 			return query.getSingleResult();
 		} catch (Exception e) {
-
 			return null;
 		}
     
@@ -71,19 +66,20 @@ public class VersionDAO {
 	
 	/**
      * Use this function whether you need to know which is the latest version of the project
-     * @param projectID Searched projected ID
+     * @param projectID Searched project
      * @return The latest version number of the project
      */
-	public int getProjectLatestVersionNumber(int projectID) {
+	public int getProjectLatestVersionNumber(Project projectID) {
+		//SELECT p FROM Project p WHERE p.projectID=:projectID
 		//SELECT VERSIONID from VERSION where PROJECTID = 2 order by versionid desc  limit 1 
+		
 		try {
-			TypedQuery<Version> query = em.createQuery("SELECT version FROM Version version "
-					+ "WHERE version.projectID = :projectID ORDER BY versionID DESC LIMIT 1", Version.class)
-					.setParameter("projectID", projectID);
+			TypedQuery<Version> query = em.createQuery("SELECT v FROM Version v WHERE v.project=:projectID ORDER BY v.versionID DESC", Version.class)
+					.setParameter("projectID", projectID).setMaxResults(1);
 			return query.getSingleResult().getVersionID();
 		} catch (Exception e) {
-
-			return 0;
+			System.out.println(e.getMessage());
+			return -1;
 		}
 	}
 	
@@ -97,14 +93,14 @@ public class VersionDAO {
     public Version create(String commitID, Project project, User u) {
     	if(em.find(Version.class, commitID) == null) {
 	    	Version v = new Version();
-    		int lastVersion = getProjectLatestVersionNumber(project.getProjectID());
+    		int lastVersion = getProjectLatestVersionNumber(project);
 			v.setVersion(commitID);
     		v.setUser(u);
 			v.setProject(project);
 			v.setVersionID(lastVersion+1);
 			
 			
-			em.persist(v);  // save in base
+			em.merge(v);  // save in base
 			
 
 			return v;
