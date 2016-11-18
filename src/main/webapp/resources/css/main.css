@@ -599,5 +599,7 @@
 	.bs-callout-warning { background-color: #fefbed; border-color: #f1e7bc;}
 	.bs-callout-info {background-color: #f0f7fd; border-color: #d0e3f0;}
 	.bs-callout-disable {background-color: #F0F0F0; border-color: #A7A7A7;}
-	.bs-callout-success {background-color: #00c851; border-color: #00c851;}
+	.bs-callout-success {background-color: #e2f8d1; border-color: #56de5c;}
+	
+	.footer{height:30px;}
 	

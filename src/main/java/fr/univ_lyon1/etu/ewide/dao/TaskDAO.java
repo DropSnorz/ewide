@@ -45,7 +45,6 @@ public class TaskDAO {
 	 */
 	public List<Task> getTasksByProjectId(int projectId) {
 
-
 		try {
 			TypedQuery<Task> query = em.createQuery("SELECT t FROM Task t JOIN FETCH  t.user WHERE t.project.projectID = :projectId ORDER BY t.date desc", Task.class);
 			query.setParameter("projectId", projectId);
@@ -58,12 +57,52 @@ public class TaskDAO {
 		}
 	}
 	
-	public List<Task> getTasksByProjectIdAndOwnerId(int projectId, int userId) {
+	public List<Task> getTasksByProjectIdAndState(int projectId, String state) {
+
+		try {
+			TypedQuery<Task> query;
+			if(state != null && state.equalsIgnoreCase("active")){
+				query = em.createQuery("SELECT t FROM Task t JOIN FETCH  t.user WHERE t.project.projectID = :projectId "
+						+ "AND NOT t.state = 'Closed' ORDER BY t.date desc", Task.class);
+			}
+			else if(state != null && state.equalsIgnoreCase("inactive")){
+				query = em.createQuery("SELECT t FROM Task  t JOIN FETCH  t.user WHERE t.project.projectID = :projectId "
+						+ "AND t.state = 'Closed' ORDER BY t.date desc", Task.class);
+			}
+			else{
+				query = em.createQuery("SELECT t FROM Task t JOIN FETCH  t.user WHERE t.project.projectID = :projectId ORDER BY t.date desc", Task.class);
+
+			}
+			query.setParameter("projectId", projectId);
+			List<Task> result = query.getResultList();
+			return result;
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return new ArrayList<Task>();
+		}
+	}
+	
+	
+	
+	public List<Task> getTasksByProjectIdAndOwnerId(int projectId, int userId, String state) {
 
 
 		try {
-			TypedQuery<Task> query = em.createQuery("SELECT t FROM Task t WHERE t.project.projectID = :projectId "
-					+ "AND t.user.userID = :userId ORDER BY t.date desc", Task.class);
+			TypedQuery<Task> query;
+			if(state != null && state.equalsIgnoreCase("active")){
+				query = em.createQuery("SELECT t FROM Task t WHERE t.project.projectID = :projectId "
+						+ "AND t.user.userID = :userId AND NOT t.state = 'Closed' ORDER BY t.date desc", Task.class);
+			}
+			else if(state != null && state.equalsIgnoreCase("inactive")){
+				query = em.createQuery("SELECT t FROM Task t WHERE t.project.projectID = :projectId "
+						+ "AND t.user.userID = :userId AND t.state= 'Closed' ORDER BY t.date desc", Task.class);
+			}
+			else{
+				query = em.createQuery("SELECT t FROM Task t WHERE t.project.projectID = :projectId "
+						+ "AND t.user.userID = :userId ORDER BY t.date desc", Task.class);
+				
+			}
 			query.setParameter("projectId", projectId);
 			query.setParameter("userId", userId);
 			List<Task> result = query.getResultList();
@@ -77,13 +116,13 @@ public class TaskDAO {
 	}
 
 	/**
-	 * Créée une nouvelle task
+	 * Crï¿½ï¿½e une nouvelle task
 	 * @param type
 	 * @param state
 	 * @param text
 	 * @param project
 	 * @param date
-	 * @return la task créé
+	 * @return la task crï¿½ï¿½
 	 */
 	public Task create(String type, String state, String text, Project project, Date date) {
 		Task t = new Task();
@@ -115,7 +154,7 @@ public class TaskDAO {
 		
 	}
 	
-	public Task createOrpdate(Task task){
+	public Task createOrUpdate(Task task){
 		
 		em.merge(task);
 		return task;
@@ -124,14 +163,14 @@ public class TaskDAO {
 
 
 	/**
-	 * mis à jour une task
+	 * mis ï¿½ jour une task
 	 * @param taskID
 	 * @param type
 	 * @param state
 	 * @param text
 	 * @param referencedTask
 	 * @param date
-	 * @return la task mis à jour
+	 * @return la task mis ï¿½ jour
 	 */
 	public Task Update(int taskID, String type, String state, String text, Project project, Date date) {
 		Task t = new Task();

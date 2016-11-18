@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -47,28 +48,31 @@ public class TaskController extends BaseProjectController {
 	@PreAuthorize("@userRoleService.isMember(#projectId)")
 	@RequestMapping(value="")
 	public ModelAndView taskList(@PathVariable("projectId") int projectId, 
-			@RequestParam(name="owner", required=false) String owner){
+			@RequestParam(name="owner", required=false) String owner,
+			@RequestParam(name="state", required=false) String state){
 
 		ModelAndView model = new ModelAndView("task/task-list");
-		
+		if(state == null || state.equals("")){
+			state = "active";
+		}
 		List<Task> taskList;
 		if(owner != null){
 			if(owner.equals("me")){
 				int userId = authenticationUserService.getCurrentUser().getUserID();
-				taskList = taskDAO.getTasksByProjectIdAndOwnerId(projectId, userId);
+				taskList = taskDAO.getTasksByProjectIdAndOwnerId(projectId, userId, state);
 
 			}
 			else if (ExpressionValidator.isInt(owner)){
 				int userId = Integer.parseInt(owner);
-				taskList = taskDAO.getTasksByProjectIdAndOwnerId(projectId, userId);
+				taskList = taskDAO.getTasksByProjectIdAndOwnerId(projectId, userId, state);
 
 			}
 			else{
-				taskList = taskDAO.getTasksByProjectId(projectId);
+				taskList = taskDAO.getTasksByProjectIdAndState(projectId, state);
 			}
 		}
 		else{
-			taskList = taskDAO.getTasksByProjectId(projectId);
+			taskList = taskDAO.getTasksByProjectIdAndState(projectId, state);
 		}
 		model.addObject("taskList",taskList);
 		model.addObject("projectId",projectId);
@@ -131,7 +135,6 @@ public class TaskController extends BaseProjectController {
 		Task task = taskDAO.getTaskById(taskId);
 		
 		model.addObject("task", task);
-		
 
 		return model;
 	}
@@ -164,7 +167,7 @@ public class TaskController extends BaseProjectController {
 		task.setType(form.getTaskType());
 		task.setState(form.getTaskState());
 			
-		taskDAO.createOrpdate(task);
+		taskDAO.createOrUpdate(task);
 		
 		redirectAttributes.addFlashAttribute("SUCCESS_MESSAGE", "Task successfully updated !");
 		view.setViewName("redirect:../../task/");
@@ -196,6 +199,19 @@ public class TaskController extends BaseProjectController {
 		
 		redirectAttributes.addFlashAttribute("SUCCESS_MESSAGE", "Task successfully deleted !");
 		return model;
+	}
+	
+	@PreAuthorize("@userRoleService.isMember(#projectId)")
+	@RequestMapping(value="/edit/state", method = RequestMethod.POST)
+	@ResponseBody
+	public String postEditTaskState(@PathVariable("projectId") int projectId,
+			@RequestParam("taskId") int taskId, @RequestParam("state") String state){
+
+		Task task = taskDAO.getTaskById(taskId);
+		task.setState(state);
+		taskDAO.createOrUpdate(task);
+		
+		return state;
 	}
 	
 

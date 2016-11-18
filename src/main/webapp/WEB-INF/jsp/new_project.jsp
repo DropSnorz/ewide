@@ -22,7 +22,7 @@ pageEncoding="UTF-8"%>
 			<form:form post="/newproject" modelAttribute="Project">
 				<div class="form-group">
 					<label for="projectName">Project Name</label>
-					<input type="text" class="form-control" name ="projectName" id="projectName" placeholder="Project Name">
+					<input type="text" class="form-control" name ="projectName" id="projectName" placeholder="Project Name" maxlength="80">
 				</div>
 				<div class="form-group">
 					<label for="projectDesc">Description</label>

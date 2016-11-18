@@ -1,6 +1,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ attribute name="head" fragment="true"%>
+<%@ attribute name="footer" fragment="true"%>
+<%@ attribute name="javascript" fragment="true"%>
 <%@ tag description="Base template tag" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!doctype html>
@@ -27,14 +29,15 @@
 			<a href="<c:url value="/dashboard"/>" class="menu-projects">
 				<i class="material-icons">view_list</i> <span> List projets</span>
 			</a>
-			<h2 class="icon icon-stack">Menu Projet</h2>
+			<h2 class="icon icon-stack">${project.name}</h2>
 			<ul>
+				<li><a class="icon icon-data" href="#">Wiki</a></li>
+				<li><a class="icon icon-location" href="<c:url value="/project/${project.projectID}"/>">Workspace</a></li>
 				<li><a class="icon icon-data" href="<c:url value="/project/${projectId}/wiki"/>">Wiki</a></li>
 				<li><a class="icon icon-location" href="#">Workspace</a></li>
 				<li><a class="icon icon-study" href="#">Versioning</a></li>
-				<li><a class="icon icon-photo" href="<c:url value="/project/${projectId}/users_manager"/>">Utilisateurs</a></li>
-				<li><a class="icon icon-wallet" href="<c:url value="/project/${projectId}/task"/>">Tâches en cours</a></li>
-				<li><a class="icon icon-wallet" href="#">Tâches réalisées</a></li>
+				<li><a class="icon icon-photo" href="<c:url value="/project/${project.projectID}/users_manager"/>">Members</a></li>
+				<li><a class="icon icon-wallet" href="<c:url value="/project/${project.projectID}/task"/>">Tasks List</a></li>
 			</ul>
 		</nav>
 		<!-- Fixed navbar -->
@@ -83,12 +86,15 @@
 			</header>
 			<div class="container-fluid">
 				<jsp:doBody />
+				<div>
+					<jsp:invoke fragment="footer" />
+				</div>
 			</div>
 		</div>
 	</div>
 
 	<!-- Javascripts -->
-	<!-- Placed at the end of the document so the pages load faster -->
+	<!-- Placed at the end of the document so the pages load faster -->	
 	<script type="text/javascript"
 		src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
 	<script type="text/javascript"
@@ -103,6 +109,13 @@
 	<script src="<c:url value="/resources/js/sidebarEffects.js" />"></script>
 	<script type="text/javascript"
 		src="<c:url value="/resources/js/custom.js" />"></script>
+<<<<<<< local
+		
+			<jsp:invoke fragment="javascript" />
+		
+</body>
+=======
 	<script type="text/javascript" src="<c:url value="/resources/js/custom_users.js" />"/></script>    
 	</body>
+>>>>>>> other
 </html>

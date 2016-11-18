@@ -7,7 +7,7 @@ public class TaskForm {
 
 
 	@NotNull
-	@Size(min=2, max=45)
+	@Size(min=2, max=80)
 	private String taskText;
 
 	@Size(max=2000)
