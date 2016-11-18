@@ -35,6 +35,7 @@ compiler VARCHAR(45),
 description CLOB,
 fileTree VARCHAR(255) NOT NULL UNIQUE,
 linkMakefile VARCHAR(255) UNIQUE,
+wiki CLOB
 );
 
 -- -----------------------------------------------------

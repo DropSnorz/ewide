@@ -33,6 +33,8 @@
 			<ul>
 				<li><a class="icon icon-data" href="#">Wiki</a></li>
 				<li><a class="icon icon-location" href="<c:url value="/project/${project.projectID}"/>">Workspace</a></li>
+				<li><a class="icon icon-data" href="<c:url value="/project/${projectId}/wiki"/>">Wiki</a></li>
+				<li><a class="icon icon-location" href="#">Workspace</a></li>
 				<li><a class="icon icon-study" href="#">Versioning</a></li>
 				<li><a class="icon icon-photo" href="<c:url value="/project/${project.projectID}/users_manager"/>">Members</a></li>
 				<li><a class="icon icon-wallet" href="<c:url value="/project/${project.projectID}/task"/>">Tasks List</a></li>
@@ -69,9 +71,9 @@
 							<ul class="nav navbar-nav navbar-right">
 								<li><a href="#" class="dropdown-toggle"
 									data-toggle="dropdown" role="button" aria-haspopup="true"
-									aria-expanded="false">Moi <span class="caret"></span></a>
+									aria-expanded="false">Me <span class="caret"></span></a>
 									<ul class="dropdown-menu">
-										<li><a href="#">Mot de passe</a></li>
+										<li><a href="<c:url value="/changepwd"/>">Change password</a></li>
 										<li role="separator" class="divider"></li>
 										<li><a href="<c:url value="/logout"/>">Sign Out</a></li>
 									</ul>
@@ -107,8 +109,13 @@
 	<script src="<c:url value="/resources/js/sidebarEffects.js" />"></script>
 	<script type="text/javascript"
 		src="<c:url value="/resources/js/custom.js" />"></script>
+<<<<<<< local
 		
 			<jsp:invoke fragment="javascript" />
 		
 </body>
+=======
+	<script type="text/javascript" src="<c:url value="/resources/js/custom_users.js" />"/></script>    
+	</body>
+>>>>>>> other
 </html>

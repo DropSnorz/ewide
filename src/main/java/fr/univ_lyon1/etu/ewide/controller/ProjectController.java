@@ -1,10 +1,21 @@
 package fr.univ_lyon1.etu.ewide.controller;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.DirectoryIteratorException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -19,13 +30,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import fr.univ_lyon1.etu.ewide.dao.FileDAO;
 import fr.univ_lyon1.etu.ewide.dao.ProjectDAO;
 import fr.univ_lyon1.etu.ewide.service.AuthenticationUserService;
 import fr.univ_lyon1.etu.ewide.service.GitService;
 import fr.univ_lyon1.etu.ewide.service.UserRoleService;
 import fr.univ_lyon1.etu.ewide.dao.RoleDAO;
-import fr.univ_lyon1.etu.ewide.model.File;
 import fr.univ_lyon1.etu.ewide.model.Project;
 import fr.univ_lyon1.etu.ewide.model.Role;
 import fr.univ_lyon1.etu.ewide.model.User;
@@ -116,7 +129,7 @@ public class ProjectController {
     	 ModelAndView model = new ModelAndView("dashboard");
     	 Project project = new Project();
     	 project = projectDAO.getProjectById(projectID);
-    	 List<File> file = fileDAO.getFilesByProject(project);
+    	// List<File> file = fileDAO.getFilesByProject(project);
     	
     	 model.addObject("project", project);
     	 model.setViewName("ide");
@@ -129,18 +142,119 @@ public class ProjectController {
       * @param projectID
       * @return
       */
-     @RequestMapping(value = {"/project/{projectID}/files"},method = RequestMethod.GET)
-     public @ResponseBody List<File> getProjectByNameJSON(@PathVariable("projectID") int projectID){
+    
+     @RequestMapping(value = {"/project/{projectID}/files"},method = RequestMethod.GET, produces="application/json")
+     public @ResponseBody String getProjectByNameJSON(@PathVariable("projectID") int projectID){
     	
     	 Project project = new Project();
     	 project = projectDAO.getProjectById(projectID);
-    	 List<File> file = fileDAO.getFilesByProject(project);
-    	try{
-    		return file;
-    	}catch(Exception e){
-    		return null;
-    	}
+    	 File[] files = new File("GitRepos/"+projectID).listFiles();
+    	 ArrayList<String> test = new ArrayList<String>();
+    	 JSONArray jarr = new JSONArray();
+    	 jarr = tree(files);
+    	 
+    	 return jarr.toString();
     	
+     }
+     /**
+      * 
+      * @param file contains the file path
+      * @param projectID 
+      * @return jobj the content of the file
+      */
+     @RequestMapping(value = {"/project/{projectID}/files"}, method = RequestMethod.POST)
+     public @ResponseBody String postFileJSON(@RequestParam String file,@PathVariable("projectID") int projectID){
+    	 JSONObject jobj = new JSONObject();
+    	 try{
+    		 String contents = new String(Files.readAllBytes(Paths.get(file)));
+    		 jobj.put("contents", contents);
+    	 	return jobj.toString();
+    	 } catch (IOException e){
+    		 JSONObject jerror = new JSONObject();
+    		 jerror.put("type", "error");
+    		 jerror.put("message", "Cannot load files");
+    		 return jerror.toString();
+    	 }
+    	 
+    	 
+     }
+     /**
+      * 
+      * @param file contains all file modified by user in json format
+      * @param projectID
+      * @return succes or error message
+      */
+     @RequestMapping(value = {"/project/{projectID}/save"}, method = RequestMethod.POST)
+     public @ResponseBody String saveProjectJSON(@RequestParam String file,@PathVariable("projectID") int projectID){
+     	JSONArray jarr = new JSONArray(file);
+     	for (int i = 0; i< jarr.length();++i){
+     		try{
+     		JSONObject jobj = jarr.getJSONObject(i);
+     		User user = authenticationUserSerive.getCurrentUser();
+     		File _file = new File(jobj.get("id").toString());
+     		if (!_file.exists()){
+     			_file.createNewFile();
+     		}
+     		FileWriter fw = new FileWriter(_file);
+     		BufferedWriter bw = new BufferedWriter(fw);
+     		bw.write(jobj.get("content").toString());
+			bw.close();
+     		
+     		GitService git = new GitService();
+     		String filePath = jobj.get("id").toString().replaceAll("GitRepos/"+projectID+"/", "");
+     		// TODO
+     		// Replace the first occurence only !
+     		git.gitCommit(projectID, filePath, "vide", user.getUserID());
+    		 
+     		}catch(Exception e){
+     			JSONObject jerror = new JSONObject();
+     			jerror.put("type", "error");
+     			jerror.put("message", "Cannot load files");
+     			return jerror.toString();
+         	}	
+     	}
+     	JSONObject jsuccess = new JSONObject();
+     	jsuccess.put("type", "success");
+     	jsuccess.put("message", "Commit success");
+		return jsuccess.toString();
+     	
+     }
+     public JSONArray tree(File files[]){
+    	 ArrayList<String> liste = new ArrayList<String>() ;
+    	 JSONArray jarr = new JSONArray();
+    	 for (File file: files){
+    		 if (file.isDirectory()){
+    			 if (!file.getName().equals(".git")){
+    				 JSONObject jobj = new JSONObject();
+        	    	 jobj.put("id", file.getPath());
+        	    	 jobj.put("text", file.getName());
+        	    	 
+    				 //tree(file.listFiles());
+    				jobj.put("children", tree(file.listFiles()));
+    				 jarr.put(jobj);
+    			 }
+    				 
+    			 
+    		 }else{
+    		 if (!file.getName().equals(".git")){
+    			 liste.add(file.getName());
+    			 JSONObject jobj = new JSONObject();
+    			 jobj.put("id", file.getPath());
+    	    	 jobj.put("text", file.getName());
+    	    	 jobj.put("icon", "jstree-file");
+				 jarr.put(jobj);
+    		 }
+    		 }
+    		 
+    		 
+    	 }
+    	 
+    	 
+    	// System.out.println(jarr.toString());
+    	 return jarr;
+    	 //return listeFichier;
+    	 //System.out.println(liste);
+    
      }
 
 	

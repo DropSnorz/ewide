@@ -53,7 +53,7 @@ public class GitService {
 	public void gitAdd(int projectID, String fileToCreate, int UserID) throws IllegalStateException, GitAPIException, IOException {
 		
 		File directory = new File("/GitRepos/" + projectID + "/");
-		new File("/GitRepos/" + projectID + "/" + fileToCreate).mkdirs(); 							// Creation des repertoires du fichier si nécessaire
+		new File("/GitRepos/" + projectID + "/" + fileToCreate).mkdirs(); 							// Creation des repertoires du fichier si nï¿½cessaire
 		File file = new File("/GitRepos/" + projectID + "/" + fileToCreate); 
 		file.createNewFile();  																		// Creation du fichier en lui-meme
 		Git git = Git.init().setDirectory( directory ).call(); 
@@ -85,7 +85,7 @@ public class GitService {
         Repository repository = new FileRepository("/GitRepos/" + projectID + "/.git");	 
         Iterable<RevCommit> revCommits = git.log()
                 .add(repository.resolve("refs/heads/master"))
-                .call();																// Creation d'un objet contenant un itérateur sur tous les commits du projet
+                .call();																// Creation d'un objet contenant un itï¿½rateur sur tous les commits du projet
         
         Iterator<RevCommit> it = revCommits.iterator();
         StringBuilder text = new StringBuilder();

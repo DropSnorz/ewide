@@ -104,17 +104,13 @@ public class UserDAO {
 	 * @return (User) created or updated User
 	 */
 	public User createOrUpdate(User user) {
-		if(em.find(User.class, user.getUsername())!= null)
+		if(em.find(User.class, user.getUserID())!= null)
 		{
-			em.getTransaction().begin();
 			em.merge(user); // mise a jour
-			em.getTransaction().commit();
 		}
 		else
 		{
-			em.getTransaction().begin();
 			em.persist(user);  // persiste
-			em.getTransaction().commit();
 		}
 		return user;
 	}
