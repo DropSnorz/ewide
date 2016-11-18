@@ -52,9 +52,9 @@ public class GitService {
 	 */
 	public void gitAdd(int projectID, String fileToCreate, int UserID) throws IllegalStateException, GitAPIException, IOException {
 		
-		File directory = new File("/GitRepos/" + projectID + "/");
-		new File("/GitRepos/" + projectID + "/" + fileToCreate).mkdirs(); 							// Creation des repertoires du fichier si n�cessaire
-		File file = new File("/GitRepos/" + projectID + "/" + fileToCreate); 
+		File directory = new File("GitRepos/" + projectID + "/");
+		new File("GitRepos/" + projectID + "/" + fileToCreate).mkdirs(); 							// Creation des repertoires du fichier si n�cessaire
+		File file = new File("GitRepos/" + projectID + "/" + fileToCreate); 
 		file.createNewFile();  																		// Creation du fichier en lui-meme
 		Git git = Git.init().setDirectory( directory ).call(); 
 		DirCache index = git.add().addFilepattern( fileToCreate ).call();

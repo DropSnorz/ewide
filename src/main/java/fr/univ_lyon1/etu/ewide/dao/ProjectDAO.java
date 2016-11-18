@@ -84,6 +84,19 @@ public class ProjectDAO {
       em.merge(p);
       return p;
     }
+
+    /**
+     * mis � jour un projet
+     * @param projectID
+     * @param wiki
+     * @return le projet mis � jour
+     */
+    public Project updateWiki(int projectID, String wiki){
+        Project p = getProjectById(projectID);
+        p.setWiki(wiki);
+        em.merge(p);
+        return p;
+    }
     
     /**
      * set the attribute compiler of a project
