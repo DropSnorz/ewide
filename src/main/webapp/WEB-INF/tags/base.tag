@@ -29,7 +29,7 @@
 			</a>
 			<h2 class="icon icon-stack">Menu Projet</h2>
 			<ul>
-				<li><a class="icon icon-data" href="#">Wiki</a></li>
+				<li><a class="icon icon-data" href="<c:url value="/project/${projectId}/wiki"/>">Wiki</a></li>
 				<li><a class="icon icon-location" href="#">Workspace</a></li>
 				<li><a class="icon icon-study" href="#">Versioning</a></li>
 				<li><a class="icon icon-photo" href="<c:url value="/project/${projectId}/users_manager"/>">Utilisateurs</a></li>
