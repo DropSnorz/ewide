@@ -68,9 +68,9 @@
 							<ul class="nav navbar-nav navbar-right">
 								<li><a href="#" class="dropdown-toggle"
 									data-toggle="dropdown" role="button" aria-haspopup="true"
-									aria-expanded="false">Moi <span class="caret"></span></a>
+									aria-expanded="false">Me <span class="caret"></span></a>
 									<ul class="dropdown-menu">
-										<li><a href="#">Mot de passe</a></li>
+										<li><a href="<c:url value="/changepwd"/>">Change password</a></li>
 										<li role="separator" class="divider"></li>
 										<li><a href="<c:url value="/logout"/>">Sign Out</a></li>
 									</ul>
@@ -103,5 +103,6 @@
 	<script src="<c:url value="/resources/js/sidebarEffects.js" />"></script>
 	<script type="text/javascript"
 		src="<c:url value="/resources/js/custom.js" />"></script>
-</body>
+	<script type="text/javascript" src="<c:url value="/resources/js/custom_users.js" />"/></script>    
+	</body>
 </html>
