@@ -66,12 +66,13 @@
 
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <h1>Page de test git: versions de ${fileName}</h1>
+        <h1>File versions</h1>
         <p>
 	        <table>
 	        	<tr>
 			       <th style="max-width:100px;overflow:hidden;">Version</th>
-			       <th>Date</th>
+			       <th style="max-width:100px; padding-left:15px">Date</th>
+			       <th style="max-width:100px; padding-left:15px">User</th>
 			       <th>Message</th>
 			       <th>Contenu</th>
 			   </tr>
@@ -80,10 +81,11 @@
 						<td style="max-width:100px;overflow:hidden;">
 							${version.version}
 						</td>
-						<td>
+						<td  style="min-width:200px; padding-left:15px;">
 							${version.date}
 						</td>
-						<td>
+						<td>${version.user.mail}</td>
+						<td style="min-width:250px;">
 							${version.comment}
 						</td>
 						<td>
