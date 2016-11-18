@@ -41,7 +41,7 @@ $(function () {
 							    'data' : [
 							       {
 							         'text' : 'Project Name',
-							         'id'   : 'GitRepos\\'+projectid,
+							         'id'   : 'GitRepos/'+projectid,
 							         //'parent' : '',      
 							         'state' : {
 							           'opened' : true,
@@ -87,7 +87,7 @@ $(function () {
 											"action"			: function (data) {
 												var inst = $.jstree.reference(data.reference),
 													obj = inst.get_node(data.reference);
-												var parentpath = inst.get_path(obj,'\\',true)+"\\";
+												var parentpath = inst.get_path(obj,'/',true)+"/";
 												inst.create_node(obj, { type : "file" }, "last", function (new_node) {
 													inst.set_id(new_node, parentpath+new_node.text);
 													
