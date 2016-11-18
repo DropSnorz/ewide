@@ -109,13 +109,8 @@
 	<script src="<c:url value="/resources/js/sidebarEffects.js" />"></script>
 	<script type="text/javascript"
 		src="<c:url value="/resources/js/custom.js" />"></script>
-<<<<<<< local
-		
-			<jsp:invoke fragment="javascript" />
-		
-</body>
-=======
 	<script type="text/javascript" src="<c:url value="/resources/js/custom_users.js" />"/></script>    
+
+			<jsp:invoke fragment="javascript" />
 	</body>
->>>>>>> other
 </html>
