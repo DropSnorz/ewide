@@ -91,31 +91,34 @@ $(function () {
 												inst.create_node(obj, { type : "file" }, "last", function (new_node) {
 													inst.set_id(new_node, parentpath+new_node.text);
 													
-													if( localStorage.getItem(projectid) !== null && localStorage.getItem(projectid) !== "" ) {
-														var pfiles =  JSON.parse(localStorage[projectid]);
-														item = {};
-														var exist = false;
-														for (var i=0 ; i <pfiles.length ; i++){
-															if(pfiles[i].id==new_node.id){
-																exist=true;
-																pfiles[i].content="";
-															}
-														}
-														if(!exist){
-															item ["id"] = new_node.id;
-															item ["content"] = "";
-															pfiles.push(item);
-														}
-														
-														localStorage[projectid]=JSON.stringify(pfiles);
-													}else{
-														item = {};
-														item ["id"] = new_node.id;
-														item ["content"] = "";
-														var pfiles = [];
-														pfiles.push(item);
-														localStorage[projectid]=JSON.stringify(pfiles);
-													}
+													updateLocal(projectid, new_node.id, "");
+													
+//													if( localStorage.getItem(projectid) !== null && localStorage.getItem(projectid) !== "" ) {
+//														var pfiles =  JSON.parse(localStorage[projectid]);
+//														item = {};
+//														var exist = false;
+//														for (var i=0 ; i <pfiles.length ; i++){
+//															if(pfiles[i].id==new_node.id){
+//																exist=true;
+//																pfiles[i].content="";
+//															}
+//														}
+//														if(!exist){
+//															item ["id"] = new_node.id;
+//															item ["content"] = "";
+//															pfiles.push(item);
+//														}
+//														
+//														localStorage[projectid]=JSON.stringify(pfiles);
+//													}else{
+//														item = {};
+//														item ["id"] = new_node.id;
+//														item ["content"] = "";
+//														var pfiles = [];
+//														pfiles.push(item);
+//														localStorage[projectid]=JSON.stringify(pfiles);
+//													}
+													
 													//setTimeout(function () { 
 													//	inst.edit(new_node);
 													//},0);
@@ -142,7 +145,19 @@ $(function () {
 							'plugins' : ['dnd','sort','types','contextmenu','unique'] 
 							})
 							.on('rename_node.jstree', function (e, data) {
+								var inst = $.jstree.reference(data.reference);
+								var parentpath = inst.get_path($('#'+data.parent),'\\',true)+"\\";
+								alert(parentpath);
+								//console.log(data.original);
+								alert(data.node.id);
 								alert(data.text);
+							})
+							.on('delete_node.jstree', function (e, data) {
+								//alert(projectid);
+								//alert(data.node.id);
+								data.node.type="deleted";
+								//console.log(data.node);
+								updateLocal(projectid,data.node.id,"", "delete");
 							})
 							.on('create_node.jstree', function (e, data) {
 								
@@ -152,7 +167,7 @@ $(function () {
 					    		 var header = $("meta[name='_csrf_header']").attr("content");
 					    		 var projectid = $("meta[name='_project_id']").attr("content");
 					    		 console.log(data.node);
-					    		 if(data.node&&data.node.icon==="jstree-file"){
+					    		 if(data.node&&data.node.icon==="jstree-file" && data.node.type!="deleted"){
 					    			 $.ajax({
 							    			type:"POST",
 							    			url:"files",
@@ -200,32 +215,32 @@ $(function () {
 														filecodeEditor.gotoLine(1);
 														var tt =JSON.stringify($('#tree').jstree().get_json());
 														$('#myTab a[data-efileid="'+new_path+'"]').click();
-														
-														if( localStorage.getItem(projectid) !== null && localStorage.getItem(projectid) !== "" ) {
-															var pfiles =  JSON.parse(localStorage[projectid]);
-															item = {};
-															var exist = false;
-															for (var i=0 ; i <pfiles.length ; i++){
-																if(pfiles[i].id==data.selected.join(':')){
-																	exist=true;
-																	pfiles[i].content=res['contents'];
-																}
-															}
-															if(!exist){
-																item ["id"] = data.selected.join(':');
-																item ["content"] = res['contents'];
-																pfiles.push(item);
-															}
-															
-															localStorage[projectid]=JSON.stringify(pfiles);															
-														}else{
-															item = {};
-															item ["id"] = data.selected.join(':');
-															item ["content"] = res['contents'];
-															var pfiles = [];
-															pfiles.push(item);
-															localStorage[projectid]=JSON.stringify(pfiles);
-														}
+														updateLocal(projectid, data.selected.join(':'), res['contents']);
+//														if( localStorage.getItem(projectid) !== null && localStorage.getItem(projectid) !== "" ) {
+//															var pfiles =  JSON.parse(localStorage[projectid]);
+//															item = {};
+//															var exist = false;
+//															for (var i=0 ; i <pfiles.length ; i++){
+//																if(pfiles[i].id==data.selected.join(':')){
+//																	exist=true;
+//																	pfiles[i].content=res['contents'];
+//																}
+//															}
+//															if(!exist){
+//																item ["id"] = data.selected.join(':');
+//																item ["content"] = res['contents'];
+//																pfiles.push(item);
+//															}
+//															
+//															localStorage[projectid]=JSON.stringify(pfiles);															
+//														}else{
+//															item = {};
+//															item ["id"] = data.selected.join(':');
+//															item ["content"] = res['contents'];
+//															var pfiles = [];
+//															pfiles.push(item);
+//															localStorage[projectid]=JSON.stringify(pfiles);
+//														}
 														//localStorage[projectid] = res['contents'];
 														//console.log(tt);
 												    }
@@ -289,21 +304,36 @@ $(function () {
 			});
 		});
 
-function updateLocal(projectid, item_id, item_content){
-	var pfiles =  JSON.parse(localStorage[projectid]);
-	item = {};
-	var exist = false;
-	for (var i=0 ; i <pfiles.length ; i++){
-		if(pfiles[i].id==item_id){
-			exist=true;
-			pfiles[i].content = item_content;
+function updateLocal(projectid, item_id, item_content, item_type = "filetext"){
+	//alert(item_type);
+	if( localStorage.getItem(projectid) !== null && localStorage.getItem(projectid) !== "" ) {
+		var pfiles =  JSON.parse(localStorage[projectid]);
+		item = {};
+		var exist = false;
+		for (var i=0 ; i <pfiles.length ; i++){
+			if(pfiles[i].id==item_id){
+				exist=true;
+				pfiles[i].content = item_content;
+				pfiles[i].ftype = item_type;
+			}
 		}
-	}
-	if(!exist){
+		if(!exist){
+			item["id"] = item_id;
+			item["content"] = item_content;
+			item["ftype"] = item_type;
+//			item["change"] = "changetext";
+			pfiles.push(item);
+		}
+		
+		localStorage[projectid]=JSON.stringify(pfiles);
+	}else{
+		item = {};
 		item ["id"] = item_id;
 		item ["content"] = item_content;
+		item["ftype"] = item_type;
+//		item["change"] = "changetext";
+		var pfiles = [];
 		pfiles.push(item);
+		localStorage[projectid]=JSON.stringify(pfiles);
 	}
-	
-	localStorage[projectid]=JSON.stringify(pfiles);
 }
