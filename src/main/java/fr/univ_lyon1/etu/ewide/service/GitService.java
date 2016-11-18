@@ -66,9 +66,9 @@ public class GitService {
 		/* Commit 0 pushed to the database */
 		
 		RevCommit commit = git.commit().setMessage( "Project #" + projectID + " repository creation." ).call();
-		User u = authenticationUserService.getCurrentUser();
-		Project p = projectDAO.getProjectById(projectID);
-		Version version0 = versionDAO.create(commit.name(), p, 0, u);
+		User user = authenticationUserService.getCurrentUser();
+		Project project = projectDAO.getProjectById(projectID);
+		Version version0 = versionDAO.create(commit.name(), project, user, 0);
 	}
 	
 	/**
@@ -90,8 +90,11 @@ public class GitService {
 		file.createNewFile();  																		// Creation du fichier en lui-meme
 		Git git = Git.init().setDirectory( directory ).call(); 
 		DirCache index = git.add().addFilepattern( fileToCreate ).call();
+		
 		RevCommit commit = git.commit().setMessage( "Nouveau fichier" + fileToCreate  ).call(); 	// Commit d'une nouvelle version du projet avec le fichier vide.
-
+		User user = authenticationUserService.getCurrentUser();
+		Project project = projectDAO.getProjectById(projectID);
+		Version version0 = versionDAO.create(commit.name(), project, user);
 	}
 	
 	/**

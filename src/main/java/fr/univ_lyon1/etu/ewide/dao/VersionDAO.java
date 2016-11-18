@@ -121,7 +121,7 @@ public class VersionDAO {
      * @param versionID Forced version ID
      * @return the newly created Version, null if the commitID already exists.
      */
-    public Version create(String commitID, Project project, int versionID, User u) {
+    public Version create(String commitID, Project project,  User u, int versionID) {
     		Version v = new Version();
     		
     		v.setVersion(commitID);
@@ -133,6 +133,7 @@ public class VersionDAO {
 				em.merge(v);  // save in base
 				return v;
 	    	 } catch (Exception e) {
+	    		 System.out.println(e.getMessage());
 	    		 return null;
 	    	 }
 

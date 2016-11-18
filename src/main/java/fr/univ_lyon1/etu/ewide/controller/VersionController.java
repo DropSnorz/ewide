@@ -47,8 +47,8 @@ public class VersionController {
 	private GitService gitService;
 	
 	@RequestMapping(value="/project/{projectID}/versions", params = {"filename", "ext"}, method = RequestMethod.GET)
-	protected String gitVersions(ModelMap Model, @PathVariable("projectID") int projectID, @RequestParam(value = "filename") String fileName, @RequestParam(value = "ext") String extension) throws Exception {
-		
+	public String gitVersions(ModelMap Model, @PathVariable("projectID") int projectID, @RequestParam(value = "filename") String fileName, @RequestParam(value = "ext") String extension) throws Exception {
+
 		System.getenv("PATH");
 		File directory = new File("/GitRepos/" + projectID + "/");
 		Git git = Git.init().setDirectory( directory ).call();																			// Ouverture du repo
