@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.errors.RevisionSyntaxException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,7 +132,7 @@ public class ProjectController {
     	 Project project = new Project();
     	 project = projectDAO.getProjectById(projectID);
     	// List<File> file = fileDAO.getFilesByProject(project);
-    	
+    	 
     	 model.addObject("project", project);
     	 model.setViewName("ide");
     	 return model;
@@ -149,7 +150,7 @@ public class ProjectController {
     	
     	 Project project = new Project();
     	 project = projectDAO.getProjectById(projectID);
-    	 File[] files = new File("GitRepos/"+projectID).listFiles();
+    	 File[] files = new File(git.getReposPath()+projectID).listFiles();
     	 ArrayList<String> test = new ArrayList<String>();
     	 JSONArray jarr = new JSONArray();
     	 jarr = tree(files);
@@ -202,10 +203,10 @@ public class ProjectController {
 			bw.close();
      		
      		GitService git = new GitService();
-     		String filePath = jobj.get("id").toString().replaceAll("GitRepos/"+projectID+"/", "");
+     		String filePath = jobj.get("id").toString().replaceAll(git.getReposPath()+projectID+"/", "");
      		// TODO
      		// Replace the first occurence only !
-     		git.gitCommit(projectID, filePath, "vide", user.getUserID());
+     		git.gitCommit(projectID, filePath, "vide");
     		 
      		}catch(Exception e){
      			JSONObject jerror = new JSONObject();

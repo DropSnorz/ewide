@@ -1,6 +1,7 @@
 package fr.univ_lyon1.etu.ewide.controller;
 
 import fr.univ_lyon1.etu.ewide.dao.UserDAO;
+import fr.univ_lyon1.etu.ewide.dao.VersionDAO;
 import fr.univ_lyon1.etu.ewide.dao.RoleDAO;
 import fr.univ_lyon1.etu.ewide.model.Version;
 import fr.univ_lyon1.etu.ewide.service.GitService;
@@ -44,6 +45,9 @@ public class VersionController {
 	private UserDAO userDAO;
 	
 	@Autowired
+	private VersionDAO versionDAO;
+	
+	@Autowired
 	private GitService gitService;
 	
 	@RequestMapping(value="/project/{projectID}/versions", params = {"filename", "ext"}, method = RequestMethod.GET)
@@ -78,9 +82,17 @@ public class VersionController {
     		int result = process.waitFor();
     		
     		if (! text.toString().contains("fatal: Path '" + fileName + "." + extension + "' exists on disk, but not in '" + revCommit.getName() + "'.")) {
-    			String dateAsText = new SimpleDateFormat("dd-MM-yyyy \n HH:mm:ss").format(new Date(revCommit.getCommitTime() * 1000L));
-    			User user = userDAO.getUserByUsername("zoidberg");
-    			versions_list.add( new Version(0,user, revCommit.getName(), dateAsText, revCommit.getFullMessage(), text.toString()) ); // Ajout de la version générée à la liste des versions
+    			System.out.println(revCommit.getName());
+    			
+    			Version version = versionDAO.getVersionByGitID(revCommit.getName());
+    			if (version != null) {
+    				System.out.println(version.getUser().getMail());
+    				version.setDate( new SimpleDateFormat("dd-MM-yyyy \n HH:mm:ss").format(new Date(revCommit.getCommitTime() * 1000L)));
+					version.setComment(revCommit.getFullMessage());
+					version.setContent(text.toString());
+					
+					versions_list.add( version ); // Ajout de la version générée à la liste des versions*/
+    			}
     		}
     	}
         if (! versions_list.isEmpty()){
