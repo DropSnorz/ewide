@@ -1,6 +1,11 @@
 package fr.univ_lyon1.etu.ewide.controller;
 
+import fr.univ_lyon1.etu.ewide.dao.UserDAO;
+import fr.univ_lyon1.etu.ewide.dao.RoleDAO;
 import fr.univ_lyon1.etu.ewide.model.Version;
+import fr.univ_lyon1.etu.ewide.service.GitService;
+
+import fr.univ_lyon1.etu.ewide.model.User;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,8 +16,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,19 +36,27 @@ import org.eclipse.jgit.revwalk.RevCommit;
  * @author Steven
  *
  */
+@Transactional
 @Controller
 public class VersionController {
 	
-	@RequestMapping(value="/versions/{projectID}", params = {"filename", "ext"}, method = RequestMethod.GET)
+	@Autowired
+	private UserDAO userDAO;
+	
+	@Autowired
+	private GitService gitService;
+	
+	@RequestMapping(value="/project/{projectID}/versions", params = {"filename", "ext"}, method = RequestMethod.GET)
 	protected String gitVersions(ModelMap Model, @PathVariable("projectID") int projectID, @RequestParam(value = "filename") String fileName, @RequestParam(value = "ext") String extension) throws Exception {
+		
 		System.getenv("PATH");
 		File directory = new File("/GitRepos/" + projectID + "/");
-		Git git = Git.init().setDirectory( directory ).call();																		// Ouverture du repo
+		Git git = Git.init().setDirectory( directory ).call();																			// Ouverture du repo
 		
         Repository repository = new FileRepository("/GitRepos/" + projectID + "/.git");													
         Iterable<RevCommit> revCommits = git.log()
                 .add(repository.resolve("refs/heads/master"))
-                .call();																											// Creation d'un iterateur sur les versions du projet
+                .call();																												// Creation d'un iterateur sur les versions du projet
         List<Version> versions_list = new ArrayList<Version>();																			// Objet voue a contenir la liste des version du fichier
         for(RevCommit revCommit : revCommits){
         	
@@ -62,11 +76,11 @@ public class VersionController {
 
     		s.close();
     		int result = process.waitFor();
-    		System.out.print("fatal: Path '" + fileName + "." + extension + "' exists on disk, but not in '" + revCommit.getName() + "'.");
     		
     		if (! text.toString().contains("fatal: Path '" + fileName + "." + extension + "' exists on disk, but not in '" + revCommit.getName() + "'.")) {
-    			String dateAsText = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date(revCommit.getCommitTime() * 1000L));
-    			versions_list.add( new Version(0,"UserName bidon", revCommit.getName(), dateAsText, revCommit.getFullMessage(), text.toString()) ); // Ajout de la version générée à la liste des versions
+    			String dateAsText = new SimpleDateFormat("dd-MM-yyyy \n HH:mm:ss").format(new Date(revCommit.getCommitTime() * 1000L));
+    			User user = userDAO.getUserByUsername("zoidberg");
+    			versions_list.add( new Version(0,user, revCommit.getName(), dateAsText, revCommit.getFullMessage(), text.toString()) ); // Ajout de la version générée à la liste des versions
     		}
     	}
         if (! versions_list.isEmpty()){

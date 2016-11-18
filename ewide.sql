@@ -124,7 +124,6 @@ version VARCHAR(45) NOT NULL PRIMARY KEY,
 userID INT NOT NULL,
 projectID INT NOT NULL,
 versionID INT NOT NULL DEFAULT 0,
-date DATE NOT NULL,
 FOREIGN KEY (userID) REFERENCES User(userID)
  ON DELETE NO ACTION
  ON UPDATE CASCADE,
@@ -151,4 +150,6 @@ INSERT INTO ROLE Values(2, 2, 2, 'MANAGER');
 INSERT INTO TASK (taskID, userID, projectID, type, state, text) Values(1,1,1, 'TODO', 'Pending', 'Task 1');
 INSERT INTO TASK (taskID, userID, projectID, type, state, text) Values(2,1,1, 'TODO', 'Pending', 'Task 2');
 INSERT INTO TASK (taskID, userID, projectID, type, state, text) Values(3,1,1, 'TODO', 'Pending', 'Task 3');
+
+INSERT INTO VERSION Values('sdfdsfdfsfzzfzeffzfzfezfze', 2, 2, 1, 2015-06-12 23:59:59);
 

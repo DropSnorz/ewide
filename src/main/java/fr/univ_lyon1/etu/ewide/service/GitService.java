@@ -13,7 +13,16 @@ import org.eclipse.jgit.errors.RevisionSyntaxException;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import fr.univ_lyon1.etu.ewide.dao.ProjectDAO;
+import fr.univ_lyon1.etu.ewide.dao.VersionDAO;
+import fr.univ_lyon1.etu.ewide.model.Project;
+import fr.univ_lyon1.etu.ewide.model.User;
+import fr.univ_lyon1.etu.ewide.model.Version;
 
 /**
  * Created by Steven on 14/11/2016.
@@ -21,7 +30,22 @@ import org.springframework.stereotype.Component;
 
 @Component("gitService")
 public class GitService {
+
+	@Autowired
+	VersionDAO versionDAO;
 	
+	@Autowired
+	ProjectDAO projectDAO;
+	
+	@Autowired
+	AuthenticationUserService authenticationUserService;
+	
+	private String gitReposPath = "";
+	
+	public String getReposPath(){
+		System.getenv("HOME");
+		return gitReposPath;
+	}
 	
 	/**
 	 * 
@@ -32,11 +56,19 @@ public class GitService {
 	 * @throws GitAPIException : Probleme de creation de repo
 	 * @throws IOException : Probleme d'acces disque
 	 */
+	
 	public void gitCreate(int projectID) throws IllegalStateException, GitAPIException, IOException {
 		
 		new File("/GitRepos/" + projectID + "/").mkdirs();			// Creation du repo du projet.
 		File directory = new File("/GitRepos/" + projectID + "/"); 
-		Git.init().setDirectory( directory ).call();				// Creation d'un git pour le repo.
+		Git git = Git.init().setDirectory( directory ).call();				// Creation d'un git pour le repo.
+		
+		/* Commit 0 pushed to the database */
+		
+		RevCommit commit = git.commit().setMessage( "Project #" + projectID + " repository creation." ).call();
+		User u = authenticationUserService.getCurrentUser();
+		Project p = projectDAO.getProjectById(projectID);
+		Version version0 = versionDAO.create(commit.name(), p, 0, u);
 	}
 	
 	/**
@@ -53,7 +85,7 @@ public class GitService {
 	public void gitAdd(int projectID, String fileToCreate, int UserID) throws IllegalStateException, GitAPIException, IOException {
 		
 		File directory = new File("/GitRepos/" + projectID + "/");
-		new File("/GitRepos/" + projectID + "/" + fileToCreate).mkdirs(); 							// Creation des repertoires du fichier si nécessaire
+		new File("/GitRepos/" + projectID + "/" + fileToCreate).mkdirs(); 							// Creation des repertoires du fichier si nï¿½cessaire
 		File file = new File("/GitRepos/" + projectID + "/" + fileToCreate); 
 		file.createNewFile();  																		// Creation du fichier en lui-meme
 		Git git = Git.init().setDirectory( directory ).call(); 
@@ -85,7 +117,7 @@ public class GitService {
         Repository repository = new FileRepository("/GitRepos/" + projectID + "/.git");	 
         Iterable<RevCommit> revCommits = git.log()
                 .add(repository.resolve("refs/heads/master"))
-                .call();																// Creation d'un objet contenant un itérateur sur tous les commits du projet
+                .call();																// Creation d'un objet contenant un itï¿½rateur sur tous les commits du projet
         
         Iterator<RevCommit> it = revCommits.iterator();
         StringBuilder text = new StringBuilder();
@@ -114,26 +146,26 @@ public class GitService {
 	
 	/**
 	 * 
-	 * Commit du fichier du projet passes en parametres.
+	 * Commit the file of a project given as a parameter.
 	 * 
 	 * @param projectID : ID du projet a commiter
 	 * @param fileToGet	: Nom du dernier fichier modifie
 	 * @param message : Message tape par l'utilisateur en guise de commentaire
 	 * @param UserID : ID de l'User auteur du commit
-	 * @return La derniere version sauvegardee du fichier, si tout s'est passe correctement.
+	 * @return La derniere version du projet, si tout s'est passe correctement.
 	 * @throws IllegalStateException
 	 * @throws GitAPIException
 	 * @throws IOException
 	 * @throws RevisionSyntaxException
 	 * @throws InterruptedException
 	 */
-	public String gitCommit(int projectID, String fileToGet, String message, int UserID) throws IllegalStateException, GitAPIException, IOException, RevisionSyntaxException, InterruptedException {
+	public RevCommit gitCommit(int projectID, String fileToGet, String message, int UserID) throws IllegalStateException, GitAPIException, IOException, RevisionSyntaxException, InterruptedException {
 		
 		File directory = new File("/GitRepos/" + projectID + "/");		
 		Git git = Git.init().setDirectory( directory ).call();
 		DirCache index = git.add().addFilepattern( fileToGet ).call();	
 		RevCommit commit = git.commit().setMessage( message ).call();
 
-		return gitGetLastFileVersion(projectID, fileToGet);
+		return commit;
 	}
 }
