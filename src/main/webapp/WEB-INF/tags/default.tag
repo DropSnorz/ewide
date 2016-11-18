@@ -92,4 +92,4 @@
 		src="<c:url value="/resources/js/custom.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/pwd.js" />"/></script>   
 </body>
-</html>
+</html>;
