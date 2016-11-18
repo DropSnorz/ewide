@@ -77,13 +77,13 @@ public class TaskDAO {
 	}
 
 	/**
-	 * Créée une nouvelle task
+	 * CrÃ©Ã©e une nouvelle task
 	 * @param type
 	 * @param state
 	 * @param text
 	 * @param project
 	 * @param date
-	 * @return la task créé
+	 * @return la task crÃ©Ã©
 	 */
 	public Task create(String type, String state, String text, Project project, Date date) {
 		Task t = new Task();
@@ -124,14 +124,14 @@ public class TaskDAO {
 
 
 	/**
-	 * mis à jour une task
+	 * mise Ã  jour une task
 	 * @param taskID
 	 * @param type
 	 * @param state
 	 * @param text
 	 * @param referencedTask
 	 * @param date
-	 * @return la task mis à jour
+	 * @return la task mise Ã  jour
 	 */
 	public Task Update(int taskID, String type, String state, String text, Project project, Date date) {
 		Task t = new Task();
