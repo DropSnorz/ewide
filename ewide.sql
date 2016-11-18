@@ -99,24 +99,6 @@ FOREIGN KEY (referencedTask) REFERENCES Task(taskID)
 );
 
 -- -----------------------------------------------------
--- Table File
--- -----------------------------------------------------
-
-
-
-CREATE TABLE IF NOT EXISTS File
-(
-fileID INT NOT NULL PRIMARY KEY,
-projectID INT NOT NULL,
-name VARCHAR(45) NOT NULL,
-path  VARCHAR(255) NOT NULL UNIQUE,
-type VARCHAR(45) NOT NULL,
-FOREIGN KEY (projectID) REFERENCES Project(projectID)
- ON DELETE NO ACTION
- ON UPDATE CASCADE,
-);
-
--- -----------------------------------------------------
 -- Table Version
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Version

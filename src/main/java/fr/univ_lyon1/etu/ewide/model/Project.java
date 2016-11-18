@@ -46,9 +46,6 @@ public class Project {
     @OneToMany(mappedBy="project")
     protected List<Task> tasks;
 
-    @OneToMany(mappedBy="project")
-    protected List<File> files;
-
     @Lob
     @Column(name="wiki")
     protected String wiki;
@@ -155,14 +152,6 @@ public class Project {
 
 	public void setTasks(List<Task> tasks) {
 		this.tasks = tasks;
-	}
-
-	public List<File> getFiles() {
-		return files;
-	}
-
-	public void setFiles(List<File> files) {
-		this.files = files;
 	}
 
     public String getWiki() {

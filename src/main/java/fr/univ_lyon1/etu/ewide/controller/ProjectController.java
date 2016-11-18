@@ -4,25 +4,17 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.DirectoryIteratorException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,14 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import fr.univ_lyon1.etu.ewide.dao.FileDAO;
 import fr.univ_lyon1.etu.ewide.dao.ProjectDAO;
 import fr.univ_lyon1.etu.ewide.service.AuthenticationUserService;
 import fr.univ_lyon1.etu.ewide.service.GitService;
-import fr.univ_lyon1.etu.ewide.service.UserRoleService;
 import fr.univ_lyon1.etu.ewide.dao.RoleDAO;
 import fr.univ_lyon1.etu.ewide.model.Project;
 import fr.univ_lyon1.etu.ewide.model.Role;
@@ -118,9 +105,7 @@ public class ProjectController {
 		 	return "redirect:/dashboard";
 			     
 	 }
-	 
-	 @Autowired
-		public  FileDAO fileDAO;
+
 	 /*
 	  * Display the editor
 	  */
@@ -129,7 +114,6 @@ public class ProjectController {
     	 ModelAndView model = new ModelAndView("dashboard");
     	 Project project = new Project();
     	 project = projectDAO.getProjectById(projectID);
-    	// List<File> file = fileDAO.getFilesByProject(project);
     	
     	 model.addObject("project", project);
     	 model.setViewName("ide");
