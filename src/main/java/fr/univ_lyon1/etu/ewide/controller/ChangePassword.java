@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,9 @@ public class ChangePassword {
 
 	@Autowired
 	AuthenticationUserService authenticationUserService;
+	
+    @Autowired
+    PasswordEncoder passwordEncoder;
 	
 	/**
 	 * @return view to change the password
@@ -50,7 +54,7 @@ public class ChangePassword {
 		User user = authenticationUserService.getCurrentUser();
 	 	
 	 	//if the last password is great
-	 	if(user.getPwd().equals(lastpwd)){
+	 	if(passwordEncoder.matches(lastpwd,user.getPwd())){
 	 		user.setPwd(newpwd);
 	 		userDAO.createOrUpdate(user);
 	 		mapResponse.put("success","Your password was successfully changed");
