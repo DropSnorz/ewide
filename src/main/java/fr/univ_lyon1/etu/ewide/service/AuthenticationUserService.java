@@ -46,6 +46,9 @@ public class AuthenticationUserService implements UserDetailsService {
 
 		fr.univ_lyon1.etu.ewide.model.User user = userDAO.getUserByEmail(username);
 		List<GrantedAuthority> authorities = buildUserAuthority();
+		if(user == null){
+			throw new UsernameNotFoundException(username);
+		}
 		return buildUserForAuthentication(user, authorities);
 	}
 
