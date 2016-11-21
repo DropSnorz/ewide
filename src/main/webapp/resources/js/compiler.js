@@ -81,9 +81,14 @@ valideCompiler.onclick=function(){
 	}
 	//put in base the compilation configuration
 	if(compilo!=null){
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajax({
 			type:"POST",
 			url:"setcompiler",
+			beforeSend: function(xhr){
+				xhr.setRequestHeader(header, token);
+			},
 			data:"compiler="+compilo+"&mainfile="+mainfile,
 			success:function(respond){
 				modalCompil.style.display = "none";
