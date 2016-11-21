@@ -32,7 +32,11 @@ configureCompiler.onclick=function(){
 		var array=compilerString.split(' ');
 		document.getElementById("mainfileCompil").checked=true;
 		document.getElementById("language").value=array[0];
-		document.getElementById("commandCompil").value=compilerString.replace(array[0], '');
+		if(array[0]=="mvn"){
+			document.getElementById("mvncommand").value=compilerString.replace(array[0], '');
+		}else{
+			document.getElementById("commandCompil").value=compilerString.replace(array[0], '');
+		}
 	}
 	modalCompil.style.display = "block";
 }
@@ -69,7 +73,11 @@ valideCompiler.onclick=function(){
 		
 	}
 	else{
-		mainfile="";
+		if(compilo=="mvn"){
+			mainfile=document.getElementById("mvncommand").value;
+		}else{
+			mainfile="";
+		}
 	}
 	//put in base the compilation configuration
 	if(compilo!=null){
@@ -90,6 +98,7 @@ valideCompiler.onclick=function(){
  */
 var compilation=document.getElementById("compilation");
 compilation.onclick=function(){
+	document.getElementById("the_console").innerHTML="loading compilation ... ";
 	$.ajax({
 		type:"GET",
 		url:"compile",

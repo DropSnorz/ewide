@@ -94,7 +94,8 @@
 						<label for="inputEmail" class="sr-only">Email address</label>
 						<input name="email" type="email" id="email" class="form-control" placeholder="Email address"><br>
 						<label for="inputPassword" class="sr-only">Password</label>
-						<input name="password" type="password" id="password" class="form-control" placeholder="Password">
+						<input name="password" type="password" id="password" class="form-control" placeholder="Password"><br>
+						<input name="confirmpassword" type="password" id="confirmpassword" class="form-control" placeholder="Confirm password">
 						<br>
 						<button class="btn btn-lg btn-success btn-block pix-btn-primary" name="submit" type="submit">Sign Up</button>
 					</form:form>

@@ -52,7 +52,7 @@
 				<i class="material-icons" id="btnConfigure" >build</i> <span>Configure</span>
 			</a>
 			<a href="#" class="tools-btn" id="compilation">
-				<i class="material-icons">play_arrow</i> <span>Compiler</span>
+				<i class="material-icons">play_arrow</i> <span>Compile</span>
 			</a>
 			<a href="#" class="tools-btn" id="resultCompilation">
 				<i class="material-icons">get_app</i> <span>Download result</span>
@@ -124,7 +124,8 @@
 					<input id="make" type="radio" name="compilo" value="make"> Makefile</br>
 				</div>
 				<div class="borderCompil">
-					<input id="maven" type="radio" name="compilo" value="maven"> Maven<br/>
+					<input id="maven" type="radio" name="compilo" value="mvn"> Maven
+					<input type="text" id="mvncommand" placeholder="actions maven"><br>
 				</div>
 				<div class="borderCompil">
 					<input id="mainfileCompil" type="radio" name="compilo" value="cmd"> Command : 
