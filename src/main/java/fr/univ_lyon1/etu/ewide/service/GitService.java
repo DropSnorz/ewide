@@ -48,19 +48,28 @@ public class GitService {
 	/*** Use this function to get the path where git is supposed to store repos files.
 	 * 
 	 *  
-	 *  ******* ******* ******* ******* ******* ******* ******* ******* ******* ******* ****** 										
-	 *  ******  WINDOWS USERS: UNCOMMENT THE APPROPRIATED LINE AND COMMENT LINUX PATH *******
-	 *  ******* ******* ******* ******* ******* ******* ******* ******* ******* ******* ******
+	 *  ******* ******* ******* ******* ******* ******* ******* ******* ******* ******* ****** *************									
+	 *  ******  COMMENT THE APPROPRIATED LINES IF THE OS DETECTION WAS TO FAIL.          *************
+	 *  ******* ******* ******* ******* ******* ******* ******* ******* ******* ******* ****** *************
 	 *  
 	 * @return GitRepos path on drive
 	 * 
 	 * ***/
 	public String getReposPath(){
-		String env = System.getenv("HOME");
-		/** LINUX PATH: HOME DIRECTORY OF THE CURRENT USER **/
-		//return env + "/GitRepos/";
+		String os = System.getProperty("os.name").toLowerCase();
+     	if (os.contains("win")){
+     		return "/GitRepos/";
+     	}
+     	else {
+     		String env = System.getenv("HOME");
+     		return env + "/GitRepos/";
+     	}
+		
+		/** LINUX PATH: HOME DIRECTORY OF THE CURRENT USER 
+     	String env = System.getenv("HOME");
+ 		return env + "/GitRepos/"; **/
 		/** WINDOWS PATH: HDD ROOT (C:/ for instance)**/
-		return "/GitRepos/";
+		//return "/GitRepos/";
 	}
 	
 	/**
