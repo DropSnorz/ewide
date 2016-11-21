@@ -10,7 +10,7 @@
 <t:base>
 
 <jsp:attribute name="head">
-<title>EWIDE - Edit task</title>    
+<title>EWIDE - Edit task</title>
 </jsp:attribute>
 
 
@@ -38,7 +38,7 @@
 			
 					<div class="form-group">
 						<label for="taskText">Task label</label>
-						<input type="text" class="form-control" name="taskText" id="taskText" placeholder="Task label" value="${taskText}${task.text}">
+						<input type="text" class="form-control" name="taskText" id="taskText" placeholder="Task label" value="${taskText}${task.text}" maxlength="80">
 					</div>
 					
 					<div class="form-group">
@@ -60,10 +60,14 @@
 						<label for="taskState">State</label>
 					
 						<select class="form-control" name="taskState" id="taskState">
-							<option value="New" <c:if test="${taskState == 'New' || task.state == 'New' }"> selected="selected" </c:if>>New</option>
-							<option value="InProgress" <c:if test="${taskState == 'InProgress' || task.state == 'InProgress' }"> selected="selected" </c:if>>InProgress</option>
-							<option value="Rejected" <c:if test="${taskState == 'Rejected' || task.state == 'Rejected' }"> selected="selected" </c:if>>Rejected</option>
-							<option value="Closed" <c:if test="${taskState == 'Closed' || task.state == 'Closed' }"> selected="selected" </c:if>>Closed</option>
+						  <optgroup label="Active">
+								<option value="New" <c:if test="${taskState == 'New' || task.state == 'New' }"> selected="selected" </c:if>>New</option>
+								<option value="InProgress" <c:if test="${taskState == 'InProgress' || task.state == 'InProgress' }"> selected="selected" </c:if>>In Progress</option>
+								<option value="Rejected" <c:if test="${taskState == 'Rejected' || task.state == 'Rejected' }"> selected="selected" </c:if>>Rejected</option>
+							</optgroup>
+							<optgroup label="Inactive">
+								<option value="Closed" <c:if test="${taskState == 'Closed' || task.state == 'Closed' }"> selected="selected" </c:if>>Closed</option>
+							</optgroup>
 						</select>
 					</div>
 				</div>
@@ -72,7 +76,7 @@
 					<button class="btn btn-lg btn-success btn-block pix-btn-primary" type="submit">Confirm</button>
 				</div>
 				<div class="col-md-3">
-					<a class="btn btn-lg btn-danger btn-block pix-btn-primary" href="../../task">Cancel</a>
+					<a class="btn btn-lg btn-danger btn-block pix-btn-primary" href="#" onclick=" window.history.back();">Cancel</a>
 				</div>				
 			</form:form>
 		</div>

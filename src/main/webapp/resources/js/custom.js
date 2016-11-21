@@ -95,14 +95,6 @@ $( window ).load(function() {
 	  
 	});
 });
-
-
-$(document).ready(function() {
-    setTimeout(function() {
-        $(".alert-status").alert('close');
-    }, 2000);
-});
-
 		
 function pix_ripple(e, elm) {
 		//$(".ripple").remove();

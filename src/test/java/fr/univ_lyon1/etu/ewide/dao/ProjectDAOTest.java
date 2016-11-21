@@ -1,5 +1,6 @@
 package fr.univ_lyon1.etu.ewide.dao;
 
+import fr.univ_lyon1.etu.ewide.model.Project;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,14 +14,19 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.junit.Assert.*;
 
 /**
- * Created by Maud on 18/10/2016.
- */
+ * Created by Mathilde on 18/10/2016.
+ *  Test class for ProjectDao
+ *//*
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/test/test-context.xml"})
 @TransactionConfiguration(transactionManager="transactionManager")
 @Transactional
 public class ProjectDAOTest {
 
+    /**
+     *  DAO for tests, autowired with Spring
+     *  Test class for ProjectDAO
+    *//*
     @Autowired
     ProjectDAO dao;
 
@@ -33,10 +39,33 @@ public class ProjectDAOTest {
     public void tearDown() throws Exception {
 
     }
-
+/*
     @Test
-    public void getAllProjects() throws Exception {
+    public void shouldGetAllProjects() throws Exception {
 
     }
 
-}
+    @Test
+    public void shouldCreateProject() {
+        Project p = new Project();
+        p.setProjectID(20);
+        p.setName("Project ++");
+        p.setLinkRepo("Repertoire, par ici");
+        p.setFileTree("L'arboresence est ici");
+        p.setDescription("Je suis une description");
+        p.setCompiler("compile");
+
+        dao.createProject(p);
+    }
+
+    @Test
+    public void shouldUpdateFile(){
+
+    }
+
+    @Test
+    public void shouldGetProjectById(){
+        Project p;
+        p = dao.getProjectById(1);
+    }
+}*/

@@ -45,7 +45,7 @@ import fr.univ_lyon1.etu.ewide.service.AuthenticationUserService;
 public class UsersManagerController {
 	
 	@Autowired
-	AuthenticationUserService authenticationUserSerive;
+	AuthenticationUserService authenticationUserService;
 	
 	 @Autowired
 	 public  UserDAO usersDAO;
@@ -70,7 +70,7 @@ public class UsersManagerController {
 	 public ModelAndView usersManager(ModelMap Model, @PathVariable("projectID") int projectID) throws IOException{
 	     
 		 	List<User> listUsers = usersDAO.getAllUsersByProjectID(projectID);
-		 	User user = authenticationUserSerive.getCurrentUser();
+		 	User user = authenticationUserService.getCurrentUser();
 		 	Role role=roleDAO.getRoleByUserIdAndProjectId(user.getUserID(), projectID);
 	        ModelAndView model = new ModelAndView("usersmanager");
 	        
@@ -83,6 +83,7 @@ public class UsersManagerController {
 	        //list of users with their role
 	        model.addObject("listUsers", listUsers);
 	        model.setViewName("usersmanager");
+			model.addObject("projectId",projectID);
 	        return model;
 	    }
 	 
@@ -101,7 +102,7 @@ public class UsersManagerController {
 		 
 		 	ModelAndView model = new ModelAndView("usersmanager");
 		 
-		 	User user1 = authenticationUserSerive.getCurrentUser();
+		 	User user1 = authenticationUserService.getCurrentUser();
 		 	Role role=roleDAO.getRoleByUserIdAndProjectId(user1.getUserID(), projectID);
 	        
 	        //set of roles that exist (for the select)
@@ -136,6 +137,7 @@ public class UsersManagerController {
 		 	}
 		 	List<User> listUsers = usersDAO.getAllUsersByProjectID(projectID);
 	        model.addObject("listUsers", listUsers);
+			model.addObject("projectId",projectID);
 	        model.setViewName("usersmanager");
 			return model;
 	 }
@@ -148,7 +150,7 @@ public class UsersManagerController {
 	 @RequestMapping(value="/users",method=RequestMethod.GET)
 	 @ResponseBody
 	 public ArrayList<User> autocompleteusers(@RequestParam String username){
-		 User user = authenticationUserSerive.getCurrentUser();
+		 User user = authenticationUserService.getCurrentUser();
 		 ArrayList<User> listUsers = (ArrayList<User>) usersDAO.getUsersStartedwith(username,user);
 		 return  listUsers;
 		 
@@ -165,7 +167,6 @@ public class UsersManagerController {
 	 @RequestMapping(value="/{projectID}/adduser", method=RequestMethod.POST)
 	 @ResponseBody
 	 @PreAuthorize("@userRoleService.isManager(#projectID)")
-	 //TODO return not finished
 	 public User adduser(@RequestParam String username, @PathVariable("projectID") int projectID, Role role){
 		 User user = usersDAO.getUserByUsername(username);
 		 Project project=projectDAO.getProjectById(projectID);

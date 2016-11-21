@@ -14,8 +14,6 @@ import java.util.List;
 	@NamedQuery(name="Project.getProjectById", query="SELECT p FROM Project p WHERE p.projectID=:projectID"),
 })
 public class Project {
-	
-	
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,9 +46,9 @@ public class Project {
     @OneToMany(mappedBy="project")
     protected List<Task> tasks;
 
-    @OneToMany(mappedBy="project")
-    protected List<File> files;
-
+    @Lob
+    @Column(name="wiki")
+    protected String wiki;
 
     /**
      * retourne l'id du projet
@@ -156,13 +154,13 @@ public class Project {
 		this.tasks = tasks;
 	}
 
-	public List<File> getFiles() {
-		return files;
-	}
+    public String getWiki() {
+        return wiki;
+    }
 
-	public void setFiles(List<File> files) {
-		this.files = files;
-	}
+    public void setWiki(String wiki) {
+        this.wiki = wiki;
+    }
     
     
 }
