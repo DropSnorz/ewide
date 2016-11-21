@@ -83,7 +83,6 @@ public class ProjectController {
 			 Role role,
 			   ModelMap model) {
 		 User user = authenticationUserSerive.getCurrentUser();
-		 GitService git = new GitService();
 		 // Assign many attributes
 		 project.setName(projectName);
 		 project.setDescription(projectDesc);
@@ -192,7 +191,12 @@ public class ProjectController {
     	     		BufferedWriter bw = new BufferedWriter(fw);
     	     		bw.write(jobj.get("content").toString());
     				bw.close();
-    	     		String filePath = jobj.get("id").toString().replaceAll(git.getReposPath()+projectID+"/", "");
+    				String filePath = jobj.get("id").toString();
+    		    	if (os.contains("win")){
+    		    		filePath = filePath.replace("\\\\", "\\");
+    		    		filePath = filePath.replace("\\", "/");
+    		     	}
+    	     		filePath = filePath.replaceAll(git.getReposPath()+projectID+"/", "");
     	     		
     	     		
     	     		git.gitCommit(projectID, filePath, "vide");

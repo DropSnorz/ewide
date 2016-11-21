@@ -58,7 +58,7 @@ public class GitService {
 	public String getReposPath(){
 		String os = System.getProperty("os.name").toLowerCase();
      	if (os.contains("win")){
-     		return "/GitRepos/";
+     		return "GitRepos/";
      	}
      	else {
      		String env = System.getenv("HOME");
