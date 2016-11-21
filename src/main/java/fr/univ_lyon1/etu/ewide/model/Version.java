@@ -1,21 +1,49 @@
 package fr.univ_lyon1.etu.ewide.model;
 
+/**
+ * Created by Steven on 14/11/2016.
+ */
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name="Version")
 public class Version {
 
+	@Column(name = "version")
+    @Id
+    protected String version;
 	
-	public int versionID;
+	@Column(name="versionID", nullable=false) 
+	protected int versionID;
 
-    public String user;
-
-    public String version;
-
-    public String date;
-
-    public String comment;
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userID", referencedColumnName="userID")
+	protected User user;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "projectID", referencedColumnName="projectID")
+	protected Project project;
+	
+	@Transient 
+    protected String date;
     
-    public String content;
+    @Transient 
+    protected String comment;
     
-    public Version(int versionID, String User, String version, String date, String comment, String content){
+    @Transient 
+    protected String content;
+    
+    public Version(){}
+    
+    public Version(int versionID, User User, String version, String date, String comment, String content){
     	this.versionID = versionID;
     	this.user = User;
     	this.version = version;
@@ -32,11 +60,11 @@ public class Version {
 		this.versionID = versionID;
 	}
 
-	public String getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(String user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
@@ -71,6 +99,16 @@ public class Version {
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+	
+	
     
     
 

@@ -41,6 +41,9 @@ public class ProjectController {
 
 	@Autowired	
 	public RoleDAO roleDAO;
+	
+	@Autowired
+	public GitService git;
 	/*
 	 * Display all projects of the user connected
 	 */
@@ -132,7 +135,7 @@ public class ProjectController {
     	
     	 Project project = new Project();
     	 project = projectDAO.getProjectById(projectID);
-    	 File[] files = new File("GitRepos/"+projectID).listFiles();
+    	 File[] files = new File(git.getReposPath()+projectID).listFiles();
     	 ArrayList<String> test = new ArrayList<String>();
     	 JSONArray jarr = new JSONArray();
     	 jarr = tree(files);
@@ -189,16 +192,13 @@ public class ProjectController {
     	     		BufferedWriter bw = new BufferedWriter(fw);
     	     		bw.write(jobj.get("content").toString());
     				bw.close();
-    	     		GitService git = new GitService();
-    	     		String filePath;
-    	     		 filePath = jobj.get("id").toString().replaceAll("GitRepos/"+projectID+"/", "");
-//    	     		if (!os.contains("win")){
-//    	     			 filePath = jobj.get("id").toString().replaceAll("GitRepos/"+projectID+"/", "");
-//    	     		}else{
+    	     		String filePath = jobj.get("id").toString().replaceAll(git.getReposPath()+projectID+"/", "");
+    	     		
+    	     		
+    	     		git.gitCommit(projectID, filePath, "vide");
 //    	     			filePath = jobj.get("id").toString().replaceAll("GitRepos/"+projectID+"/", "");
 //    	     			 //filePath = jobj.get("id").toString().replaceAll("GitRepos\\"+projectID+"\\", "");	
 //    	     		}
-    	     		git.gitCommit(projectID, filePath, "vide", user.getUserID());
 	     		}
 	     		if(jobj.get("ftype").toString().equals("delete")){ // When we delete file or folder
 	     			if (!_file.exists()){
