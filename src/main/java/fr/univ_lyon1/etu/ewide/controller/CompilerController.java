@@ -1,11 +1,12 @@
 package fr.univ_lyon1.etu.ewide.controller;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.zip.*;
 
+import org.h2.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,8 @@ import fr.univ_lyon1.etu.ewide.dao.ProjectDAO;
 import fr.univ_lyon1.etu.ewide.model.Project;
 import fr.univ_lyon1.etu.ewide.service.AuthenticationUserService;
 
+import javax.servlet.http.HttpServletResponse;
+
 @Transactional
 @Controller
 @RequestMapping(value="/project")
@@ -30,7 +33,9 @@ public class CompilerController {
 	@Autowired
 	AuthenticationUserService authenticationUserSerive;
 	
-	
+	private static final int BUFFER_SIZE = 2048;
+
+
 	/**
 	 * add the command to the compiler project attribute
 	 * @param compiler (String)
@@ -47,15 +52,66 @@ public class CompilerController {
 
 	/**
 	 * Return the actual compiler(-tool) of the project
-	 * @param projectID
-	 * @return
+	 * @param projectID of the project
+	 * @return compiler in string object
 	 */
 	@RequestMapping(name = "getCompiler", value = "/{projectID}/compiler", method = RequestMethod.GET)
 	@PreAuthorize("@userRoleService.isMember(#projectID)")
 	public @ResponseBody String getCompiler(@PathVariable("projectID") int projectID) {
 		Project project = projectDAO.getProjectById(projectID);
 		String compiler = project.getCompiler();
+		//System.out.println("Compilateur du projet : " + compiler);
 		return compiler;
+	}
+
+	/**
+	 * Send zipped project to the client
+	 * @param response
+	 * @param projectID the int ID of the desired project
+	 * @throws IOException
+	 */
+	@RequestMapping(name = "getZippedProject", value = "/{projectID}/resultfiles", produces = "application/zip", method = RequestMethod.GET)
+	@PreAuthorize("@userRoleService.isMember(#projectID)")
+	public void getZippedProject(HttpServletResponse response, @PathVariable("projectID") int projectID) throws IOException{
+
+		// Project directory
+		String env = System.getenv("HOME");
+		//TODO changer le chemin en dur
+		String projectPath = env + ".EWIDE/GitRepos/" + projectID + "/";
+
+		// Temporary directory for zip storage
+		String temp = "/tmp/EWIDE/";
+		File tmp = new File(temp);
+		if(tmp.mkdir())
+			System.out.println("Directory created");
+		else
+			System.out.println("Directory already exists");
+
+		// zip path
+		String fullpath = temp + projectID + ".zip";
+		File downloadFile = new File(fullpath);
+		FileInputStream inputStream = new FileInputStream(downloadFile);
+
+		// set response headers
+		response.setStatus(HttpServletResponse.SC_OK);
+		response.addHeader("Content-Disposition", "attachment; filename=\"" + projectID + ".zip\"");
+		response.setContentLength((int) downloadFile.length());
+		response.setContentType("application/zip");
+
+		// get output stream
+		OutputStream outputStream = response.getOutputStream();
+
+		byte[] buffer = new byte[BUFFER_SIZE];
+		int bytesRead = -1;
+
+		// Write bytes from file stream to the output stream
+		while ((bytesRead = inputStream.read(buffer)) != -1) {
+			outputStream.write(buffer, 0, bytesRead);
+		}
+
+		inputStream.close();
+		outputStream.close();
+
 	}
 	
 	
