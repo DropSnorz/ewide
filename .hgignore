@@ -1,0 +1,10 @@
+syntax: glob
+bin/**
+target
+.project
+.classpath
+.idea
+.settings
+*.iml
+*.orig
+out

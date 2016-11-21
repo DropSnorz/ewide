@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dataset>
+<dataset>
+	<!--<User userID="1"
+		  username="zoidberg"
+		  pwd="admin"
+		  email="zoidberg@ewide.com"
+		  directory="zoidberg_directory" />
+	<User userID="2"
+		  username="fry"
+		  pwd="admin"
+		  email="fry@ewide.com"
+		  directory="fry_directory" />-->
+	<!--<User userID="10"
+		  username="plop2"
+		  pwd="admin"
+		  mail="plop2@ewide.com" />
+	<Project projectID="1"
+			 name="Projet MULTIMIF"
+			 compiler="compiler"
+			 description="unknow"
+			 filetree="multimif_filetree"
+			 linkMakefile="multimif_linkmake" />
+	<Project projectID="2"
+			 name="Projet IA"
+			 compiler="compiler"
+			 description="unknow"
+			 filetree="project_ia_filetree"
+			 linkMakefile="project_ia_linkmake" />
+	<Role roleID="1"
+		  userID="1"
+		  projectID="1"
+		  role="MANAGER" />
+	<Role roleID="2"
+		  userID="2"
+		  projectID="2"
+		  role="MANAGER" />
+	<Task taskID="1"
+		  userID="1"
+		  projectID="1"
+		  type="TODO"
+		  description="Pending"
+		  referencedTask="Task 1"
+		  date="" />
+	<Task taskID="2"
+		  userID="1"
+		  projectID="1"
+		  type="TODO"
+		  description="Pending"
+		  referencedTask="Task 2"
+		  date="" />
+	<Task taskID="3"
+		  userID="1"
+		  projectID="1"
+		  type="TODO"
+		  description="Pending"
+		  referencedTask="Task 3"
+		  date="" />	 -->
+    
+</dataset>
