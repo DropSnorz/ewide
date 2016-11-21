@@ -16,6 +16,10 @@ public class RegisterForm {
     @NotNull
     @Size(min=2, max=30)
     private String password;
+    
+    @NotNull
+    @Size(min=2,max=30)
+    private String confirmpassword;
 
 	public String getUsername() {
 		return username;
@@ -39,6 +43,13 @@ public class RegisterForm {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getConfirmpassword() {
+		return confirmpassword;
+	}
+
+	public void setConfirmpassword(String password) {
+		this.confirmpassword = password;
 	}
     
     

@@ -84,10 +84,16 @@ public class AuthenticationController {
 
 			}
 			else{
-				
-				User user = authenticationUserService.doRegister(form.getEmail(), form.getUsername(), form.getPassword());
-				authenticationUserService.doLogin(user.getMail(), user.getPwd(), request);
-				return "redirect:/dashboard";
+				if(form.getConfirmpassword().equals(form.getPassword())){
+					User user = authenticationUserService.doRegister(form.getEmail(), form.getUsername(), form.getPassword());
+					authenticationUserService.doLogin(user.getMail(), user.getPwd(), request);
+					return "redirect:/dashboard";
+				}
+				else{
+					bindingResult.rejectValue("password", "password_wrong", "Password do not match");
+
+					return "login";
+				}
 			}
 		}
 	}

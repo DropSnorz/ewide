@@ -26,7 +26,7 @@
 			</div>
 			<div class="form-group">
 				<label for="lastpwd">Actual password :</label>
-				<input class="form-control" type="password" id="lastpwd" name="lastpwd" placeholder="last password" >
+				<input class="form-control" type="password" id="lastpwd" name="lastpwd" value="" placeholder="last password" >
 				<br>
 				<label for="newpwd">New password :</label>
 				<input class="form-control" type="password" id="newpwd" name="newpwd" placeholder="new password" >
