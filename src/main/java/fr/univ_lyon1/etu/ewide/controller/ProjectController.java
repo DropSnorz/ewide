@@ -4,26 +4,17 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.DirectoryIteratorException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.errors.RevisionSyntaxException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,14 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import fr.univ_lyon1.etu.ewide.dao.FileDAO;
 import fr.univ_lyon1.etu.ewide.dao.ProjectDAO;
 import fr.univ_lyon1.etu.ewide.service.AuthenticationUserService;
 import fr.univ_lyon1.etu.ewide.service.GitService;
-import fr.univ_lyon1.etu.ewide.service.UserRoleService;
 import fr.univ_lyon1.etu.ewide.dao.RoleDAO;
 import fr.univ_lyon1.etu.ewide.model.Project;
 import fr.univ_lyon1.etu.ewide.model.Role;
@@ -52,8 +38,6 @@ public class ProjectController {
 	@Autowired
 	AuthenticationUserService authenticationUserSerive;
 	
-	@Autowired
-	private GitService git;
 
 	@Autowired	
 	public RoleDAO roleDAO;
@@ -96,6 +80,7 @@ public class ProjectController {
 			 Role role,
 			   ModelMap model) {
 		 User user = authenticationUserSerive.getCurrentUser();
+		 GitService git = new GitService();
 		 // Assign many attributes
 		 project.setName(projectName);
 		 project.setDescription(projectDesc);
@@ -120,9 +105,7 @@ public class ProjectController {
 		 	return "redirect:/dashboard";
 			     
 	 }
-	 
-	 @Autowired
-		public  FileDAO fileDAO;
+
 	 /*
 	  * Display the editor
 	  */
@@ -131,8 +114,7 @@ public class ProjectController {
     	 ModelAndView model = new ModelAndView("dashboard");
     	 Project project = new Project();
     	 project = projectDAO.getProjectById(projectID);
-    	// List<File> file = fileDAO.getFilesByProject(project);
-    	 
+    	
     	 model.addObject("project", project);
     	 model.setViewName("ide");
     	 return model;
@@ -150,7 +132,7 @@ public class ProjectController {
     	
     	 Project project = new Project();
     	 project = projectDAO.getProjectById(projectID);
-    	 File[] files = new File(git.getReposPath()+projectID).listFiles();
+    	 File[] files = new File("GitRepos/"+projectID).listFiles();
     	 ArrayList<String> test = new ArrayList<String>();
     	 JSONArray jarr = new JSONArray();
     	 jarr = tree(files);
@@ -188,30 +170,70 @@ public class ProjectController {
       */
      @RequestMapping(value = {"/project/{projectID}/save"}, method = RequestMethod.POST)
      public @ResponseBody String saveProjectJSON(@RequestParam String file,@PathVariable("projectID") int projectID){
-     	JSONArray jarr = new JSONArray(file);
+     	String os = System.getProperty("os.name").toLowerCase();
+     	if (os.contains("win")){
+     		file = file.replace("\\\\", "\\");
+     	}
+    	JSONArray jarr = new JSONArray(file);
      	for (int i = 0; i< jarr.length();++i){
      		try{
-     		JSONObject jobj = jarr.getJSONObject(i);
-     		User user = authenticationUserSerive.getCurrentUser();
-     		File _file = new File(jobj.get("id").toString());
-     		if (!_file.exists()){
-     			_file.createNewFile();
-     		}
-     		FileWriter fw = new FileWriter(_file);
-     		BufferedWriter bw = new BufferedWriter(fw);
-     		bw.write(jobj.get("content").toString());
-			bw.close();
-     		
-     		GitService git = new GitService();
-     		String filePath = jobj.get("id").toString().replaceAll(git.getReposPath()+projectID+"/", "");
-     		// TODO
-     		// Replace the first occurence only !
-     		git.gitCommit(projectID, filePath, "vide");
-    		 
+	     		JSONObject jobj = jarr.getJSONObject(i);
+	     		User user = authenticationUserSerive.getCurrentUser();
+	     		File _file = new File(jobj.get("id").toString());
+	     		if(jobj.get("ftype").toString().equals("filetext")){
+    	     		if (!_file.exists()){
+    	     			_file.createNewFile();
+    	     		}
+    	     		FileWriter fw = new FileWriter(_file);
+    	     		BufferedWriter bw = new BufferedWriter(fw);
+    	     		bw.write(jobj.get("content").toString());
+    				bw.close();
+    	     		GitService git = new GitService();
+    	     		String filePath;
+    	     		if (!os.contains("win")){
+    	     			 filePath = jobj.get("id").toString().replaceAll("GitRepos/"+projectID+"/", "");
+    	     		}else{
+    	     			 filePath = jobj.get("id").toString().replaceAll("GitRepos\\"+projectID+"\\", "");	
+    	     		}
+    	     		git.gitCommit(projectID, filePath, "vide", user.getUserID());
+	     		}
+	     		if(jobj.get("ftype").toString().equals("delete")){ // When we delete file or folder
+	     			if (!_file.exists()){
+	     				throw (new Exception ("File doesn't exist"));
+	     			}else{
+	     			if (_file.isDirectory()){ // We must to clean the directory 
+	     					String[]entries = _file.list();
+	     					for(String s: entries){
+	     					    File currentFile = new File(_file.getPath(),s);
+	     					    currentFile.delete();
+	     					}
+	     			}
+	     				_file.delete();
+	     				
+	     			}
+	     		}
+	     		/*
+	     		case "folder": // Create folder 
+	     			if (_file.exists()){
+     					throw (new Exception ("Folder already exists !"));
+     				}
+     				_file.mkdir();
+     				break;
+	     			case "rename": // Rename file or folder
+	     				if (_file.exists()){
+	     					throw (new Exception ("Cannot rename under this name!"));
+	     				}
+	     				_file.renameTo(new File(jobj.get("change").toString()));
+	     		
+	     		
+		     		*/
+	     		// TODO
+	     		// Replace the first occurence only !
+     		 
      		}catch(Exception e){
      			JSONObject jerror = new JSONObject();
      			jerror.put("type", "error");
-     			jerror.put("message", "Cannot load files");
+     			jerror.put("message", e.getMessage());
      			return jerror.toString();
          	}	
      	}

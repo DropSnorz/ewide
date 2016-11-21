@@ -29,7 +29,7 @@
 					<button class="btn btn-lg btn-success btn-block pix-btn-primary" type="submit">Confirm</button>
 				</div>
 				<div class="col-md-3">
-					<a class="btn btn-lg btn-danger btn-block pix-btn-primary" href="../../task">Cancel</a>
+					<a class="btn btn-lg btn-danger btn-block pix-btn-primary" href="#" onclick="window.history.back();">Cancel</a>
 				</div>				
 			</form:form>
 		</div>

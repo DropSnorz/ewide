@@ -1,20 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!doctype html>
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EWIDE - Users manager</title>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+
+
+<t:base>
+
+<jsp:attribute name="head">
+	<title>EWIDE - Users Manager</title>    
 	<meta name="_csrf" content="${_csrf.token}"/>
     <!-- default header name is X-CSRF-TOKEN -->
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
-</head>
-<body>
+</jsp:attribute>
 
-	<!-- Header Template -->
-	<jsp:include page="header.jsp"/>
-	
+<jsp:body>
 	
 	<!-- Page Content -->	
 	<div class="container">
@@ -83,12 +85,6 @@ pageEncoding="UTF-8"%>
 			<br>
 		</div>
 	</div>
-	
-	<!-- Javascripts -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.2.js" />"/></script>
-	<script type="text/javascript" src="<c:url value="/resources/js/jquery-ui.js" />"/></script>    
-	<script type="text/javascript" src="<c:url value="/resources/bootstrap/js/bootstrap.js" />"/></script>    
-	<script type="text/javascript" src="<c:url value="/resources/js/custom_users.js" />"/></script>    
-</body>
-</html>
+
+</jsp:body>
+</t:base>

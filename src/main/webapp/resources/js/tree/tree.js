@@ -8,7 +8,7 @@ $(function () {
 	
 	localStorage.removeItem(projectid);
 
-	
+
 			$(window).resize(function () {
 				var h = Math.max($(window).height() - 0, 420);
 				var h = 400;
@@ -36,35 +36,34 @@ $(function () {
 				type:"GET",
 				url:"files",
 				success:function(respond){
-//					var temp_files = [];
-//					$(jQuery.parseJSON(JSON.stringify(respond))).each(function() {  
-//						item = {};
-//						item ["id"] = this.fileID;
-//						item ["text"] = this.name+"."+this.type;
-//						item ["icon"] = "jstree-file";
-//				        temp_files.push(item);
-//					});
-//					
-//					files = temp_files;
-//					console.log(JSON.stringify(files));
 					$('#tree')
 							.jstree({ 'core' : {
 							    'data' : [
 							       {
 							         'text' : 'Project Name',
+							         'id'   : 'GitRepos/'+projectid,
+							         //'parent' : '',      
 							         'state' : {
 							           'opened' : true,
 							           'selected' : true
 							         },
 							         'children' : respond
 							      }
-							    ]
-							},
-							'force_text' : true,
-							'themes' : {
-								'responsive' : true,
-								'variant' : 'small',
-								'stripes' : true
+							    ],
+							    'check_callback' : function(o, n, p, i, m) {
+									if(m && m.dnd && m.pos !== 'i') { return false; }
+									if(o === "move_node" || o === "copy_node" || o === "create_node") {
+									//if(o === "move_node" || o === "copy_node") {
+										if(this.get_node(n).parent === this.get_node(p).id) { return false; }
+									}
+									return true;
+								},
+								'force_text' : true,
+								'themes' : {
+									'responsive' : true,
+									'variant' : 'small',
+									'stripes' : true
+								}
 							},
 							'contextmenu' : {
 								'items' : function(node) {
@@ -79,7 +78,7 @@ $(function () {
 												var inst = $.jstree.reference(data.reference),
 													obj = inst.get_node(data.reference);
 												inst.create_node(obj, { type : "default" }, "last", function (new_node) {
-													setTimeout(function () { inst.edit(new_node); },0);
+													//setTimeout(function () { inst.edit(new_node); },0);
 												});
 											}
 										},
@@ -88,9 +87,43 @@ $(function () {
 											"action"			: function (data) {
 												var inst = $.jstree.reference(data.reference),
 													obj = inst.get_node(data.reference);
+												var parentpath = inst.get_path(obj,'/',true)+"/";
 												inst.create_node(obj, { type : "file" }, "last", function (new_node) {
-													setTimeout(function () { inst.edit(new_node); },0);
+													inst.set_id(new_node, parentpath+new_node.text);
+													
+													updateLocal(projectid, new_node.id, "");
+													
+//													if( localStorage.getItem(projectid) !== null && localStorage.getItem(projectid) !== "" ) {
+//														var pfiles =  JSON.parse(localStorage[projectid]);
+//														item = {};
+//														var exist = false;
+//														for (var i=0 ; i <pfiles.length ; i++){
+//															if(pfiles[i].id==new_node.id){
+//																exist=true;
+//																pfiles[i].content="";
+//															}
+//														}
+//														if(!exist){
+//															item ["id"] = new_node.id;
+//															item ["content"] = "";
+//															pfiles.push(item);
+//														}
+//														
+//														localStorage[projectid]=JSON.stringify(pfiles);
+//													}else{
+//														item = {};
+//														item ["id"] = new_node.id;
+//														item ["content"] = "";
+//														var pfiles = [];
+//														pfiles.push(item);
+//														localStorage[projectid]=JSON.stringify(pfiles);
+//													}
+													
+													//setTimeout(function () { 
+													//	inst.edit(new_node);
+													//},0);
 												});
+												
 											}
 										}
 									};
@@ -100,14 +133,41 @@ $(function () {
 									return tmp;
 								}
 							},
-							'plugins' : ['state','dnd','sort','types','contextmenu','unique'] }
-							)
+							'types' : {
+								'default' : { 'icon' : 'folder' },
+								'file' : { 'valid_children' : [], 'icon' : 'jstree-file' }
+							},
+							'unique' : {
+								'duplicate' : function (name, counter) {
+									return name + ' ' + counter;
+								}
+							},
+							'plugins' : ['dnd','sort','types','contextmenu','unique'] 
+							})
+							.on('rename_node.jstree', function (e, data) {
+								var inst = $.jstree.reference(data.reference);
+								var parentpath = inst.get_path($('#'+data.parent),'\\',true)+"\\";
+								alert(parentpath);
+								//console.log(data.original);
+								alert(data.node.id);
+								alert(data.text);
+							})
+							.on('delete_node.jstree', function (e, data) {
+								//alert(projectid);
+								//alert(data.node.id);
+								data.node.type="deleted";
+								//console.log(data.node);
+								updateLocal(projectid,data.node.id,"", "delete");
+							})
+							.on('create_node.jstree', function (e, data) {
+								
+							})
 							.on('changed.jstree', function (e, data) {
 								var token = $("meta[name='_csrf']").attr("content");
 					    		 var header = $("meta[name='_csrf_header']").attr("content");
 					    		 var projectid = $("meta[name='_project_id']").attr("content");
-					    		 
-					    		 if(data.node){
+					    		 console.log(data.node);
+					    		 if(data.node&&data.node.icon==="jstree-file" && data.node.type!="deleted"){
 					    			 $.ajax({
 							    			type:"POST",
 							    			url:"files",
@@ -146,37 +206,41 @@ $(function () {
 															    .height(400)
 															;	
 														}
-														
-														filecodeEditor.setValue(""+res['contents']);
+														if(res['contents']&&res['contents']!=""){
+															filecodeEditor.setValue(""+res['contents']);
+														}else{
+															filecodeEditor.setValue("");
+														}
+															
 														filecodeEditor.gotoLine(1);
 														var tt =JSON.stringify($('#tree').jstree().get_json());
 														$('#myTab a[data-efileid="'+new_path+'"]').click();
-														
-														if( localStorage.getItem(projectid) !== null && localStorage.getItem(projectid) !== "" ) {
-															var pfiles =  JSON.parse(localStorage[projectid]);
-															item = {};
-															var exist = false;
-															for (var i=0 ; i <pfiles.length ; i++){
-																if(pfiles[i].id==data.selected.join(':')){
-																	exist=true;
-																	pfiles[i].content=res['contents'];
-																}
-															}
-															if(!exist){
-																item ["id"] = data.selected.join(':');
-																item ["content"] = res['contents'];
-																pfiles.push(item);
-															}
-															
-															localStorage[projectid]=JSON.stringify(pfiles);															
-														}else{
-															item = {};
-															item ["id"] = data.selected.join(':');
-															item ["content"] = res['contents'];
-															var pfiles = [];
-															pfiles.push(item);
-															localStorage[projectid]=JSON.stringify(pfiles);
-														}
+														updateLocal(projectid, data.selected.join(':'), res['contents']);
+//														if( localStorage.getItem(projectid) !== null && localStorage.getItem(projectid) !== "" ) {
+//															var pfiles =  JSON.parse(localStorage[projectid]);
+//															item = {};
+//															var exist = false;
+//															for (var i=0 ; i <pfiles.length ; i++){
+//																if(pfiles[i].id==data.selected.join(':')){
+//																	exist=true;
+//																	pfiles[i].content=res['contents'];
+//																}
+//															}
+//															if(!exist){
+//																item ["id"] = data.selected.join(':');
+//																item ["content"] = res['contents'];
+//																pfiles.push(item);
+//															}
+//															
+//															localStorage[projectid]=JSON.stringify(pfiles);															
+//														}else{
+//															item = {};
+//															item ["id"] = data.selected.join(':');
+//															item ["content"] = res['contents'];
+//															var pfiles = [];
+//															pfiles.push(item);
+//															localStorage[projectid]=JSON.stringify(pfiles);
+//														}
 														//localStorage[projectid] = res['contents'];
 														//console.log(tt);
 												    }
@@ -189,8 +253,14 @@ $(function () {
 								
 								
 							});
-				}
+					
+				},
+				error: function (xhr, ajaxOptions, thrownError) {
+		          alert(xhr.status);
+		          alert(thrownError);
+		        }
 			});
+				
 			
 			$('#save_project').click(function(e){
 				var files = "";
@@ -215,10 +285,8 @@ $(function () {
 						    console.log(json_files[i].id);	
 						}
 					}
-					//var ff= JSON.parse(files);
-					//console.log(files);
 					var final_res = JSON.stringify(json_files);
-					final_res = final_res.replace(/\\\\/g, '\\');
+					//final_res = final_res.replace(/\\\\/g, '\\');
 					alert(final_res);
 					$.ajax({
 		    			type:"POST",
@@ -234,28 +302,38 @@ $(function () {
 				}
 				
 			});
-			
-			
-//			$('#tree')
-//				.jstree({ 'core' : {
-//				    'data' : [
-//				       {
-//				         'text' : 'Project Name',
-//				         'state' : {
-//				           'opened' : true,
-//				           'selected' : true
-//				         },
-//				         'children' : [
-//				           { 'text' : 'Child 1' },
-//				           'Child 2'
-//				         ]
-//				      }
-//				    ]
-//				},
-//				'force_text' : true,
-//				'themes' : {
-//					'responsive' : true,
-//					'variant' : 'small',
-//					'stripes' : true
-//				} });
 		});
+
+function updateLocal(projectid, item_id, item_content, item_type = "filetext"){
+	//alert(item_type);
+	if( localStorage.getItem(projectid) !== null && localStorage.getItem(projectid) !== "" ) {
+		var pfiles =  JSON.parse(localStorage[projectid]);
+		item = {};
+		var exist = false;
+		for (var i=0 ; i <pfiles.length ; i++){
+			if(pfiles[i].id==item_id){
+				exist=true;
+				pfiles[i].content = item_content;
+				pfiles[i].ftype = item_type;
+			}
+		}
+		if(!exist){
+			item["id"] = item_id;
+			item["content"] = item_content;
+			item["ftype"] = item_type;
+//			item["change"] = "changetext";
+			pfiles.push(item);
+		}
+		
+		localStorage[projectid]=JSON.stringify(pfiles);
+	}else{
+		item = {};
+		item ["id"] = item_id;
+		item ["content"] = item_content;
+		item["ftype"] = item_type;
+//		item["change"] = "changetext";
+		var pfiles = [];
+		pfiles.push(item);
+		localStorage[projectid]=JSON.stringify(pfiles);
+	}
+}

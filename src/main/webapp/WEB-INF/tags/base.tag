@@ -1,6 +1,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ attribute name="head" fragment="true"%>
+<%@ attribute name="footer" fragment="true"%>
+<%@ attribute name="javascript" fragment="true"%>
 <%@ tag description="Base template tag" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!doctype html>
@@ -8,7 +10,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="shortcut icon"
-		href="<c:url value="resources/images/favicon.ico" />">
+		href="<c:url value="/resources/images/favicon.ico" />">
 	<!-- CSS dependencies -->
 	<link href="<c:url value="/resources/bootstrap/css/bootstrap.css" />" rel="stylesheet">
 	<link href="<c:url value="/resources/css/font-awesome.min.css" />" rel="stylesheet">
@@ -27,14 +29,13 @@
 			<a href="<c:url value="/dashboard"/>" class="menu-projects">
 				<i class="material-icons">view_list</i> <span> List projets</span>
 			</a>
-			<h2 class="icon icon-stack">Menu Projet</h2>
+			<h2 class="icon icon-stack">${project.name}</h2>
 			<ul>
-				<li><a class="icon icon-data" href="#">Wiki</a></li>
-				<li><a class="icon icon-location" href="#">Workspace</a></li>
+				<li><a class="icon icon-location" href="<c:url value="/project/${project.projectID}"/>">Workspace</a></li>
+				<li><a class="icon icon-data" href="<c:url value="/project/${projectId}/wiki"/>">Wiki</a></li>
 				<li><a class="icon icon-study" href="#">Versioning</a></li>
-				<li><a class="icon icon-photo" href="<c:url value="/project/${projectId}/users_manager"/>">Utilisateurs</a></li>
-				<li><a class="icon icon-wallet" href="<c:url value="/project/${projectId}/task"/>">Tâches en cours</a></li>
-				<li><a class="icon icon-wallet" href="#">Tâches réalisées</a></li>
+				<li><a class="icon icon-photo" href="<c:url value="/project/${project.projectID}/users_manager"/>">Members</a></li>
+				<li><a class="icon icon-wallet" href="<c:url value="/project/${project.projectID}/task"/>">Tasks List</a></li>
 			</ul>
 		</nav>
 		<!-- Fixed navbar -->
@@ -45,7 +46,7 @@
 					<i class="material-icons md-36">menu</i>
 				</button>
 			</div>
-			<header> 
+			<header>
 				<nav class="navbar navbar-inverse main_nav">
 					<div class="container">
 						<div class="navbar-header">
@@ -68,9 +69,9 @@
 							<ul class="nav navbar-nav navbar-right">
 								<li><a href="#" class="dropdown-toggle"
 									data-toggle="dropdown" role="button" aria-haspopup="true"
-									aria-expanded="false">Moi <span class="caret"></span></a>
+									aria-expanded="false">Me <span class="caret"></span></a>
 									<ul class="dropdown-menu">
-										<li><a href="#">Mot de passe</a></li>
+										<li><a href="<c:url value="/changepwd"/>">Change password</a></li>
 										<li role="separator" class="divider"></li>
 										<li><a href="<c:url value="/logout"/>">Sign Out</a></li>
 									</ul>
@@ -83,6 +84,9 @@
 			</header>
 			<div class="container-fluid">
 				<jsp:doBody />
+				<div>
+					<jsp:invoke fragment="footer" />
+				</div>
 			</div>
 		</div>
 	</div>
@@ -103,5 +107,8 @@
 	<script src="<c:url value="/resources/js/sidebarEffects.js" />"></script>
 	<script type="text/javascript"
 		src="<c:url value="/resources/js/custom.js" />"></script>
-</body>
+	<script type="text/javascript" src="<c:url value="/resources/js/custom_users.js" />"></script>
+
+			<jsp:invoke fragment="javascript" />
+	</body>
 </html>

@@ -5,11 +5,26 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 
-<t:base>
 
+<c:set var="baseUrl" value="/project/${projectId}/task" />
+
+
+<t:base>
 <jsp:attribute name="head">
-<title>EWIDE - Tasks</title>    
+<title>EWIDE - Tasks</title>  
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>  
 </jsp:attribute>
+
+<jsp:attribute name="footer">
+<div class="footer">
+</div>
+</jsp:attribute>
+
+<jsp:attribute name="javascript">
+	<script type="text/javascript" src="<c:url value="/resources/js/task.js" />"></script>
+</jsp:attribute>
+
 
 <jsp:body>
 	<!-- Page Content -->
@@ -21,18 +36,35 @@
 			</h1>
 
 			<div class="row">
-				<div class="pull-right">
+				<div class="dropdown col-md-3">
+			  		<button class="btn btn-default dropdown-toggle" type="button" id="state-dropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+			    		<c:choose>
+							<c:when test="${param['state'].equalsIgnoreCase('inactive')}">
+								Inactive
+							</c:when>
+							<c:otherwise>
+								Active
+							</c:otherwise>
+						</c:choose>
+			    		<span class="caret"></span>
+  					</button>
+					  <ul class="dropdown-menu" aria-labelledby="state-dropDown">
+					    <li><a href="<c:url value="${baseUrl}"><c:param name="state" value="active"/><c:param name="owner" value="${param['owner']}" /></c:url>">Active</a></li>
+					    <li><a href="<c:url value="${baseUrl}"><c:param name="state" value="inactive"/><c:param name="owner" value="${param['owner']}" /></c:url>">Inactive</a></li>
+					  </ul>
+				</div>
+				<span class="pull-right">
 					<c:choose>
 						<c:when test="${param['owner'].equalsIgnoreCase('me')}">
-							<a class="btn btn-default" href="<c:url value="/project/${projectId}/task"/>">	<i class="material-icons md-18 valign">visibility</i> Show all tasks</a>
-
+							<a class="btn btn-default" href="<c:url value="${baseUrl}"></c:url>">	<i class="material-icons md-18 valign">visibility</i> Show all tasks</a>
 						</c:when>
 						<c:otherwise>
-							<a class="btn btn-default" href="<c:url value="/project/${projectId}/task?owner=me"/>">	<i class="material-icons md-18 valign">visibility_off</i> Only my tasks</a>
+							<a class="btn btn-default" 
+							href="<c:url value="${baseUrl}"><c:param name="state" value="${param['state']}"/><c:param name="owner" value="me" /></c:url>">	<i class="material-icons md-18 valign">visibility_off</i> Only my tasks</a>
 						</c:otherwise>
 					</c:choose>
 					<a class="btn btn-primary" href="<c:url value="/project/${projectId}/task/create"/>">	<i class="material-icons md-18 valign">add</i>New task</a>					
-				</div>
+				</span>
 			</div>
 			<hr>
 			<div class="col-md-12">
@@ -41,16 +73,20 @@
 					<div class="col-md-12">
 					<c:choose>
 						<c:when test="${task.state.equalsIgnoreCase('New')}">
-							<div class="bs-callout bs-callout-info">
+							<div class="bs-callout bs-callout-info task-card" data-task="${task.taskID}" data-state="${task.state}">
 						</c:when>
+						<c:when test="${task.state.equalsIgnoreCase('InProgress')}">
+							<div class="bs-callout bs-callout-success task-card" data-task="${task.taskID}" data-state="${task.state}">
+						</c:when>
+	
 						<c:when test="${task.state.equalsIgnoreCase('Closed')}">
-							<div class="bs-callout bs-callout-disable">
+							<div class="bs-callout bs-callout-disable task-card" data-task="${task.taskID}" data-state="${task.state}">
 						</c:when>
 						<c:when test="${task.state.equalsIgnoreCase('Rejected')}">
-							<div class="bs-callout bs-callout-danger">
+							<div class="bs-callout bs-callout-danger task-card" data-task="${task.taskID}" data-state="${task.state}">
 						</c:when>
 						<c:otherwise>
-							<div class="bs-callout bs-callout-info">
+							<div class="bs-callout bs-callout-info task-card" data-task="${task.taskID}" data-state="${task.state}">
 						</c:otherwise>
 					</c:choose>
 							<small class="pull-right">On <fmt:formatDate
@@ -74,9 +110,11 @@
 								<a class="nav-link"
 									href="<c:url value="/project/${projectId}/task/${task.taskID}/edit"/>"><i
 									class="material-icons md-16 valign">edit</i>Edit</a> 
-								<a class="nav-link"
-									href="<c:url value="/project/${projectId}/task/${task.taskID}/resolve"/>"><i
-									class="material-icons md-16 valign">done</i>Resolve</a> 
+								<c:if test="${!task.state.equalsIgnoreCase('CLOSED') }">
+									<a class="nav-link task-resolve-link"
+										href="#" data-task="${task.taskID}"><i
+										class="material-icons md-16 valign icon-link">done</i><span class="text-link">Close</span></a> 
+								</c:if>
 								<a class="nav-link"
 									href="<c:url value="/project/${projectId}/task/${task.taskID}/delete"/>"><i
 									class="material-icons md-16 valign">delete</i>Delete</a>
@@ -89,4 +127,7 @@
 		</div>
 	</div>
 </jsp:body>
-	</t:base>
+
+</t:base>
+	
+	

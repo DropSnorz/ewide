@@ -23,7 +23,7 @@
 		</a>
 		<h2 class="icon icon-stack">Menu Projet</h2>
 		<ul>
-			<li><a class="icon icon-data" href="#">Wiki</a></li>
+			<li><a class="icon icon-data" href="<c:url value="/project/${project.projectID}/wiki"/>">Wiki</a></li>
 			<li><a class="icon icon-location" href="#">Workspace</a></li>
 			<li><a class="icon icon-study" href="#">Versioning</a></li>
 			<li><a class="icon icon-photo" href="<c:url value="/project/${project.projectID}/users_manager"/>">Utilisateurs</a></li>
@@ -45,7 +45,7 @@
 	
 	<div class="ide-tools">
 		<div class="container">
-			<a href="#" class="tools-btn">
+			<a href="#" class="tools-btn" id="save_project">
 				<i class="material-icons">save</i> <span>Save</span>
 			</a>
 			<a href="#" class="tools-btn" id="configureCompiler">

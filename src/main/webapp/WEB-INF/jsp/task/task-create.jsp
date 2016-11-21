@@ -37,7 +37,7 @@
 			
 					<div class="form-group">
 						<label for="taskText">Task label</label>
-						<input type="text" class="form-control" name="taskText" id="taskText" placeholder="Task label" value="${taskText}">
+						<input type="text" class="form-control" name="taskText" id="taskText" placeholder="Task label" value="${taskText}" maxlength="80">
 					</div>
 					
 					<div class="form-group">
@@ -57,11 +57,14 @@
 						<label for="taskState">State</label>
 					
 						<select class="form-control" name="taskState" id="taskState">
+						<optgroup label="Active">
 							<option value="New" <c:if test="${taskState == 'New' }"> selected="selected" </c:if>>New</option>
 							<option value="InProgress" <c:if test="${taskState == 'InProgress' }"> selected="selected" </c:if>>InProgress</option>
 							<option value="Closed" <c:if test="${taskState == 'Closed' }"> selected="selected" </c:if>>Closed</option>
+						</optgroup>
+						<optgroup label="Inactive">
 							<option value="Rejected" <c:if test="${taskState == 'Rejected' }"> selected="selected" </c:if>>Rejected</option>
-							
+						</optgroup>
 						</select>
 					</div>
 				</div>
@@ -70,7 +73,7 @@
 					<button class="btn btn-lg btn-success btn-block pix-btn-primary" type="submit">Confirm</button>
 				</div>
 				<div class="col-md-3">
-					<a class="btn btn-lg btn-danger btn-block pix-btn-primary" href="../task">Cancel</a>
+					<a class="btn btn-lg btn-danger btn-block pix-btn-primary" href="#" onclick=" window.history.back();">Cancel</a>
 				</div>				
 			</form:form>
 		</div>

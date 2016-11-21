@@ -104,17 +104,13 @@ public class UserDAO {
 	 * @return (User) created or updated User
 	 */
 	public User createOrUpdate(User user) {
-		if(em.find(User.class, user.getUsername())!= null)
+		if(em.find(User.class, user.getUserID())!= null)
 		{
-			em.getTransaction().begin();
 			em.merge(user); // mise a jour
-			em.getTransaction().commit();
 		}
 		else
 		{
-			em.getTransaction().begin();
 			em.persist(user);  // persiste
-			em.getTransaction().commit();
 		}
 		return user;
 	}
@@ -132,7 +128,7 @@ public class UserDAO {
 				  		+ " WHERE username LIKE :name and username NOT LIKE :user",User.class);
 				  query.setParameter("name","%"+ name+"%");
 				  query.setParameter("user",user.getUsername());
-				  return (List<User>)query.getResultList();
+				  return query.getResultList();
 			} catch (Exception e) {
 				
 				return null;
