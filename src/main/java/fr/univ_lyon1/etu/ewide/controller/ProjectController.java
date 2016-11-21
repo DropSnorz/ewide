@@ -176,6 +176,7 @@ public class ProjectController {
      	String os = System.getProperty("os.name").toLowerCase();
      	if (os.contains("win")){
      		file = file.replace("\\\\", "\\");
+     		file = file.replace("\\","/");
      	}
     	JSONArray jarr = new JSONArray(file);
      	for (int i = 0; i< jarr.length();++i){
@@ -191,12 +192,9 @@ public class ProjectController {
     	     		BufferedWriter bw = new BufferedWriter(fw);
     	     		bw.write(jobj.get("content").toString());
     				bw.close();
-    	     		String filePath;
-    	     		if (!os.contains("win")){
-    	     			 filePath = jobj.get("id").toString().replaceAll(git.getReposPath()+projectID+"/", "");
-    	     		}else{
-    	     			 filePath = jobj.get("id").toString().replaceAll("GitRepos\\"+projectID+"\\", "");	
-    	     		}
+    	     		String filePath = jobj.get("id").toString().replaceAll(git.getReposPath()+projectID+"/", "");
+    	     		
+    	     		
     	     		git.gitCommit(projectID, filePath, "vide");
 	     		}
 	     		if(jobj.get("ftype").toString().equals("delete")){ // When we delete file or folder
