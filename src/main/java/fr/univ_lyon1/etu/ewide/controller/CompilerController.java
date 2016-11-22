@@ -159,7 +159,8 @@ public class CompilerController {
 
 		Process proc;
 		try {
-			proc = Runtime.getRuntime().exec(compiler);
+			// Execute compiling process with same env as the JVM but in the project directory
+			proc = Runtime.getRuntime().exec(compiler, null, new File(folder));
 
 			// Read the output
 
