@@ -8,21 +8,16 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.AbortedByHookException;
-import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
-import org.eclipse.jgit.api.errors.NoMessageException;
-import org.eclipse.jgit.api.errors.UnmergedPathsException;
-import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.errors.RevisionSyntaxException;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import fr.univ_lyon1.etu.ewide.dao.ProjectDAO;
 import fr.univ_lyon1.etu.ewide.dao.VersionDAO;
 import fr.univ_lyon1.etu.ewide.model.Project;
@@ -58,7 +53,7 @@ public class GitService {
 	public String getReposPath(){
 		String os = System.getProperty("os.name").toLowerCase();
      	if (os.contains("win")){
-     		return "/GitRepos/";
+     		return "GitRepos/";
      	}
      	else {
      		String env = System.getenv("HOME");
@@ -69,7 +64,7 @@ public class GitService {
      	String env = System.getenv("HOME");
  		return env + "/GitRepos/"; **/
 		/** WINDOWS PATH: HDD ROOT (C:/ for instance)**/
-		//return "/GitRepos/";
+		//return "GitRepos/";
 	}
 	
 	/**
@@ -221,16 +216,26 @@ public class GitService {
 
  		process.waitFor();
 		
- 		System.out.println(getReposPath()+projectID+"/"+fileToGet);
- 		System.out.println(text.toString());
 		FileWriter fw = new FileWriter(getReposPath()+projectID+"/"+fileToGet);
  		BufferedWriter bw = new BufferedWriter(fw);
  		bw.write(text.toString());
 		bw.close();
 		
-		DirCache index = git.add().addFilepattern( fileToGet ).call();
-		RevCommit commit = git.commit().setMessage( "Rollback to version " + version ).call();
+		return gitCommit(projectID,fileToGet,"Version "+ version + " restored");
+	}
+	
+	public RevCommit gitRename(int projectID, String fileToRename, String newFullPath) throws IllegalStateException, GitAPIException, IOException, InterruptedException{
+		File directory = new File(getReposPath() + projectID + "/");		
+		Git git = Git.init().setDirectory( directory ).call();
 		
-		return commit;
+		StringBuilder text = new StringBuilder();
+		ProcessBuilder builder = new ProcessBuilder( "git", "mv", directory + fileToRename, directory + newFullPath); // Appel a git pour recuperer le fichier
+ 		builder.directory( directory.getAbsoluteFile() );
+ 		builder.redirectErrorStream(true);
+ 		Process process =  builder.start();
+ 		process.waitFor();
+ 		
+ 		git.add().addFilepattern( newFullPath ).call();
+		return git.commit().setMessage( "Renamed " + fileToRename + " to " + newFullPath ).call();
 	}
 }
