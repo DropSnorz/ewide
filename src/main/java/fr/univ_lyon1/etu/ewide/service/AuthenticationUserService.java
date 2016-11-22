@@ -79,7 +79,7 @@ public class AuthenticationUserService implements UserDetailsService {
 	public fr.univ_lyon1.etu.ewide.model.User doRegister(String email, String username, String password) {
 		
 		String encodedPassword= passwordEncoder.encode(password);
-		fr.univ_lyon1.etu.ewide.model.User user = userDAO.createOrUpdate(email, username, encodedPassword);
+		fr.univ_lyon1.etu.ewide.model.User user = userDAO.createUser(email, username, encodedPassword);
 		return user;
 
 	}

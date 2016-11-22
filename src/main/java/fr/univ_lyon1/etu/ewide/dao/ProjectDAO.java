@@ -52,8 +52,8 @@ public class ProjectDAO {
      * @return le projet cr��
      */
 	@Transactional(propagation = Propagation.REQUIRED)
-    public void createProject(Project project) {	
-      em.persist(project);   
+    public void createProject(Project project) {
+        em.persist(project);
     }
 	
 	 /**
