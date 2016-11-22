@@ -5,57 +5,77 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
 <t:base>
 
 <jsp:attribute name="head">
-	<title>EWIDE - Create task</title>    
+	<title>File versions - EWIDE</title>    
 </jsp:attribute>
 
 <jsp:body>
 
-    <div class="container theme-showcase" role="main">
-
-      <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <h1>File versions</h1>
-        <p>
-	        <table>
-	        	<tr>
-			       <th style="max-width:100px;overflow:hidden;">Version</th>
-			       <th style="max-width:100px; padding-left:15px">Date</th>
-			       <th style="max-width:100px; padding-left:15px">User</th>
-			       <th>Message</th>
-			       <th>Contenu</th>
-			   </tr>
-	        	<c:forEach var="version" items="${versions_list}" >
-					<tr>
-						<td style="max-width:100px;overflow:hidden;">
-							${version.version}
-						</td>
-						<td  style="min-width:200px; padding-left:15px;">
-							${version.date}
-						</td>
-						<td>${version.user.mail}</td>
-						<td style="min-width:250px;">
-							${version.comment}
-						</td>
-						<td>
-							${version.content}
-						</td>
-					</tr>
-			    </c:forEach>
-		  </table>
-	  </p>
+    <div class="container">
+		<div class="col-md-6 col-xs-12 col-md-offset-3">
+			<c:if test="${versionRestored!=null}"><div>Successfully restored ${fileName} to version ${versionRestored}</div></c:if>
+			<h1 class="text-center"><strong>File versions</strong></h1>
+		       		
+					<table class="table users_table">
+						<thead>
+							<tr>
+								<th>Number #</th>
+								<th class="text-center">Date</th>
+								<th class="text-center">User</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							
+								<c:forEach var="version" items="${versions_list}" >
+									<tr data-toggle="collapse" data-target="#version_${version.versionID}">
+										<td class="">
+											<b>${version.versionID}</b>
+										</td>
+										<td  class="text-center">
+											${version.date}
+										</td>
+										<td class="text-center">
+											${version.user.username}
+										</td>
+										<td><i class="material-icons">add_box</i></td>
+									</tr>
+					    		</c:forEach>
+						    
+						</tbody>
+					</table>
+					<c:forEach var="version" items="${versions_list}" >
+						<div id="version_${version.versionID}" class="collapse" style="margin-bottom:20px;">
+							<div style="position:relative;">
+								<h3 class="text-center">Version #${version.versionID} details: </h3>
+								<button style="right:0; top:0; position:absolute;" class="btn btn-primary" data-toggle="collapse" data-target="#version_${version.versionID}"><i class="material-icons">clear</i></button>
+								
+							</div>
+							<div style="position:relative;" >
+								<b>Comment:</b><br/>
+								${version.comment}
+							</div>
+							<div style="position:relative;" >
+								<b>Content:</b><br/>
+								<pre>${version.content}</pre>
+							</div>
+							<div class="text-center">
+			
+							<a href=<spring:url value="/project/${projectId}/versions/{fileName}/restore/${version.version}">
+									<spring:param name="fileName" value="${fileName}" />
+									</spring:url> >
+									<button class="btn btn-success" style="margin-top:20px">Restore this version</button>
+							</a>
+							</div>
+						</div>
+					</c:forEach>
+		  </div>
       </div>
-      <div>
-	      <c:forEach var="project" items="${projectList}" >
-	        	<a href="${project.name}"> ${project.name }</a>  <br />                 
-	       </c:forEach>
-       </div>
-
-    </div> <!-- /container -->
 	
 </jsp:body>
 </t:base>
