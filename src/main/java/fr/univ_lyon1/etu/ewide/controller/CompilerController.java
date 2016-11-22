@@ -3,6 +3,9 @@ package fr.univ_lyon1.etu.ewide.controller;
 import java.io.*;
 import java.net.URLDecoder;
 
+import fr.univ_lyon1.etu.ewide.util.ZipUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -94,8 +97,12 @@ public class CompilerController {
 
 		// Project directory
 		String env = System.getenv("HOME");
-		//TODO changer le chemin en dur
-		String projectPath = env + ".EWIDE/GitRepos/" + projectID + "/";
+		String os = System.getProperty("os.name").toLowerCase();
+		String projectPath;
+		if (os.contains("win"))
+			projectPath = "GitRepos/" + projectID + "/";
+		else
+			projectPath = env + "/GitRepos/" + projectID + "/";
 
 		// Temporary directory for zip storage
 		String temp = "/tmp/EWIDE/";
@@ -106,8 +113,10 @@ public class CompilerController {
 			System.out.println("Directory already exists");
 
 		// zip path
-		String fullpath = temp + projectID + ".zip";
-		File downloadFile = new File(fullpath);
+		String zipPath = temp + projectID + ".zip";
+		// zip the project
+		ZipUtil.zipDir(projectPath, zipPath);
+		File downloadFile = new File(zipPath);
 		FileInputStream inputStream = new FileInputStream(downloadFile);
 
 		// set response headers
@@ -142,18 +151,31 @@ public class CompilerController {
 	@RequestMapping(value ="/{projectID}/compile", method = RequestMethod.GET)
 	@PreAuthorize("@userRoleService.isMember(#projectID)")
 	public @ResponseBody String compile(@PathVariable("projectID") int projectID){
-		//get the compiler of the project
+		// Logger
+		Logger logger = LoggerFactory.getLogger(CompilerController.class);
+
+		// get the compiler of the project
 		Project project = projectDAO.getProjectById(projectID);
 		String compiler = project.getCompiler();
-		// TODO changer le chemin en dur
-		//get the path
+
+		if(compiler.equals("")) {
+			logger.error("Error: No compiler set for project {}", projectID);
+			return "No compiler set. Set one before compiling";
+		}
+
+		// get the path
 		String env = System.getenv("HOME");
-		String folder = env + "/GitRepos/" + projectID + "/";
-		//console output to be returned
+		String os = System.getProperty("os.name").toLowerCase();
+		String folder;
+		if (os.contains("win"))
+			folder = "GitRepos/" + projectID + "/";
+		else
+			folder = env + "/GitRepos/" + projectID + "/";
+		// console output to be returned
 		String ret = "$ " + compiler + "\n";
 		
-		System.out.println(folder);
-		System.out.println(ret);
+		logger.info("Working on directory {}", folder);
+		logger.info("Compiling project %s with {}", project.getName(), project.getCompiler());
 
 		// Compiling process
 
@@ -169,7 +191,6 @@ public class CompilerController {
 
 			String line;
 			while((line = reader.readLine()) != null) {
-				System.out.print(line + "\n");
 				ret += (line + "\n");
 			}
 
@@ -178,9 +199,11 @@ public class CompilerController {
 			return ret;
 		} catch (IOException e) {
 			e.printStackTrace();
+			logger.error("Error: Cannot launch compiling process", e);
 			return "Error: Cannot launch compiling process";
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			logger.error("Error: InterruptedException", e);
 			return "Error: InterruptedException";
 		}
 

@@ -9,7 +9,7 @@
 	<name>ewide Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
-  	
+
 	<dependencies>
 		<!-- JUnit -->
 		<dependency>
@@ -88,12 +88,11 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-       		 <groupId>javax.servlet.jsp</groupId>
-       		 <artifactId>jsp-api</artifactId>
-       		 <version>2.1</version>
-       		 <scope>provided</scope>
-   		 </dependency>
-
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
@@ -138,67 +137,62 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.6.11</version>
 		</dependency>
-
-		
-	<!-- ****** JSON ****** -->
-	<dependency>
-	    <groupId>org.json</groupId>
-	    <artifactId>json</artifactId>
-	    <version>20160810</version>
-	</dependency>
-	<!-- ****** JGIT ****** -->
-				
-	<!-- Core Library -->
-	    <dependency>		
-	      <groupId>org.eclipse.jgit</groupId>
-	      <artifactId>org.eclipse.jgit</artifactId>
-	      <version>4.5.0.201609210915-r</version>
-	    </dependency>
-	  <!-- Smart HTTP Servlet -->
-	    <dependency>
-	      <groupId>org.eclipse.jgit</groupId>
-	      <artifactId>org.eclipse.jgit.http.server</artifactId>
-	      <version>4.5.0.201609210915-r</version>
-	    </dependency>
-	  <!-- AWT UI Helpers -->
-	    <dependency>
-	      <groupId>org.eclipse.jgit</groupId>
-	      <artifactId>org.eclipse.jgit.ui</artifactId>
-	      <version>4.5.0.201609210915-r</version>
-	    </dependency>
-	    
-	  <!-- JUnit Test Support -->
-	    <dependency>
-	      <groupId>org.eclipse.jgit</groupId>
-	      <artifactId>org.eclipse.jgit.junit</artifactId>
-	      <version>4.5.0.201609210915-r</version>
-	    </dependency>
-	    
-	    <dependency>
-   			 <groupId>com.fasterxml.jackson.jaxrs</groupId>
-   			 <artifactId>jackson-jaxrs-base</artifactId>
-   			 <version>2.6.1</version>
+		<!-- JSON -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20160810</version>
 		</dependency>
-	    
-	    <dependency>
-		    <groupId>org.slf4j</groupId>
-		    <artifactId>slf4j-api</artifactId>
-		    <version>1.7.21</version>
+
+		<!-- ****** JGIT ****** -->
+
+		<!-- Core Library -->
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit</artifactId>
+			<version>4.5.0.201609210915-r</version>
+		</dependency>
+		<!-- Smart HTTP Servlet -->
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit.http.server</artifactId>
+			<version>4.5.0.201609210915-r</version>
+		</dependency>
+		<!-- AWT UI Helpers -->
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit.ui</artifactId>
+			<version>4.5.0.201609210915-r</version>
+		</dependency>
+		<!-- JUnit Test Support -->
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit.junit</artifactId>
+			<version>4.5.0.201609210915-r</version>
 		</dependency>
 		<dependency>
-    		<groupId>org.slf4j</groupId>
-		    <artifactId>slf4j-log4j12</artifactId>
-		    <version>1.7.21</version>
+			<groupId>com.fasterxml.jackson.jaxrs</groupId>
+			<artifactId>jackson-jaxrs-base</artifactId>
+			<version>2.6.1</version>
 		</dependency>
-		
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.21</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.21</version>
+		</dependency>
 		<!-- Jackson JSON Mapper -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.10</version>
 		</dependency>
-	    
-	    <!-- ******* FIN JGIT ******* -->
+		<!-- ******* FIN JGIT ******* -->
 	</dependencies>
 
 	<build>
