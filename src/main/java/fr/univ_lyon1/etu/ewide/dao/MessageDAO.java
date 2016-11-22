@@ -12,6 +12,9 @@ import org.springframework.stereotype.Repository;
 import fr.univ_lyon1.etu.ewide.model.Message;
 import fr.univ_lyon1.etu.ewide.model.Project;
 import fr.univ_lyon1.etu.ewide.model.User;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by Firas on 18/10/2016.

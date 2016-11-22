@@ -72,13 +72,14 @@ public class UserDAO {
      * @param password (String)
      * @return (User) created or updated User
      */
-    public User createOrUpdate(String email, String username, String password) {
-      User u = new User();
-      u.setUsername(username);
-      u.setMail(email);
-      u.setPwd(password);
-      em.merge(u);
-      return u;
+    public User createUser(String email, String username, String password) {
+		User u = new User();
+    	u.setUsername(username);
+     	u.setMail(email);
+     	u.setPwd(password);
+		em.persist(u);  // persiste
+
+    	return u;
     }
 
     /**
@@ -103,14 +104,9 @@ public class UserDAO {
 	 * @param (User) 
 	 * @return (User) created or updated User
 	 */
-	public User createOrUpdate(User user) {
-		if(em.find(User.class, user.getUserID())!= null)
-		{
+	public User updateUser(User user) {
+		if(em.find(User.class, user.getUserID())!= null) {
 			em.merge(user); // mise a jour
-		}
-		else
-		{
-			em.persist(user);  // persiste
 		}
 		return user;
 	}

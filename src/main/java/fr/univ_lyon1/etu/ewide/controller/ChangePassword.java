@@ -56,7 +56,7 @@ public class ChangePassword {
 	 	//if the last password is great
 	 	if(passwordEncoder.matches(lastpwd,user.getPwd())){
 	 		user.setPwd(newpwd);
-	 		userDAO.createOrUpdate(user);
+	 		userDAO.updateUser(user);
 	 		mapResponse.put("success","Your password was successfully changed");
 	 		
 	 	}
