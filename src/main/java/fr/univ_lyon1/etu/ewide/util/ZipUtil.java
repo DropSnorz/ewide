@@ -15,7 +15,7 @@ public class ZipUtil {
      * @param nameZipFile final zip name string
      * @throws IOException if both params are Null, or if dirName link to a non existent directory
      */
-    public void zipDir(String dirName, String nameZipFile) throws IOException {
+    public static void zipDir(String dirName, String nameZipFile) throws IOException {
         File file = new File(nameZipFile);
         if(file.createNewFile())
             System.out.println(nameZipFile + " already exists, replacing...");
@@ -33,7 +33,7 @@ public class ZipUtil {
      * @param zip
      * @throws IOException
      */
-    private void addFolderToZip(String path, String srcFolder, ZipOutputStream zip) throws IOException {
+    private static void addFolderToZip(String path, String srcFolder, ZipOutputStream zip) throws IOException {
         File folder = new File(srcFolder);
         if (folder.list().length == 0) {
             addFileToZip(path , srcFolder, zip, true);
@@ -58,7 +58,7 @@ public class ZipUtil {
      * @param flag
      * @throws IOException
      */
-    private void addFileToZip(String path, String srcFile, ZipOutputStream zip, boolean flag) throws IOException {
+    private static void addFileToZip(String path, String srcFile, ZipOutputStream zip, boolean flag) throws IOException {
         File folder = new File(srcFile);
         if (flag) {
             zip.putNextEntry(new ZipEntry(path + "/" +folder.getName() + "/"));
