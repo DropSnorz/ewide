@@ -1,20 +1,13 @@
 package fr.univ_lyon1.etu.ewide.controller;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.zip.*;
+import java.net.URLDecoder;
 
-import org.h2.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import fr.univ_lyon1.etu.ewide.dao.ProjectDAO;
 import fr.univ_lyon1.etu.ewide.model.Project;
@@ -55,7 +48,7 @@ public class CompilerController {
 	 * @param projectID of the project
 	 * @return compiler in string object
 	 */
-	@RequestMapping(name = "getCompiler", value = "/{projectID}/compiler", method = RequestMethod.GET)
+	@RequestMapping(name = "getCompiler", value = "/{projectID}/getcompiler", method = RequestMethod.GET)
 	@PreAuthorize("@userRoleService.isMember(#projectID)")
 	public @ResponseBody String getCompiler(@PathVariable("projectID") int projectID) {
 		Project project = projectDAO.getProjectById(projectID);
@@ -65,7 +58,32 @@ public class CompilerController {
 	}
 
 	/**
-	 * Send zipped project to the client
+	 * Set the compiler command line
+	 * @param projectID id of the project you want to set
+	 * @param compiler
+	 * @param params command line needed to compile in the form of "compiler=foo&mainfile=bar"
+	 */
+	@RequestMapping(value = "/{projectID}/setcompiler", method = RequestMethod.POST)
+	@PreAuthorize("@userRoleService.isMember(#projectID)")
+	public @ResponseBody void setCompiler (
+			@PathVariable("projectID") int projectID,
+			/*@RequestBody String requestBody*/
+			@RequestParam(value = "compiler") String compiler,
+			@RequestParam(value = "mainfile") String params) {
+
+		Project project = projectDAO.getProjectById(projectID);
+
+		try {
+			projectDAO.setCompiler(project, compiler + " " + URLDecoder.decode(params, "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		return;
+	}
+
+	/**
+	 * Send zipped project to the client. The zip file is stored in /tmp/EWIDE/
 	 * @param response
 	 * @param projectID the int ID of the desired project
 	 * @throws IOException
@@ -120,37 +138,53 @@ public class CompilerController {
 	 * @param projectID (int)
 	 * @return (String)
 	 */
-	//TODO
-	/*
+
 	@RequestMapping(value ="/{projectID}/compile", method = RequestMethod.GET)
 	@PreAuthorize("@userRoleService.isMember(#projectID)")
 	public @ResponseBody String compile(@PathVariable("projectID") int projectID){
 		//get the compiler of the project
-		Project project=projectDAO.getProjectById(projectID);
+		Project project = projectDAO.getProjectById(projectID);
 		String compiler = project.getCompiler();
+		// TODO changer le chemin en dur
 		//get the path
-		String folder=project.getFileTree();
+		String env = System.getenv("HOME");
+		String folder = env + "/GitRepos/" + projectID + "/";
+		//console output to be returned
+		String ret = "$ " + compiler + "\n";
 		
 		System.out.println(folder);
+		System.out.println(ret);
 
-	    Process proc = Runtime.getRuntime().exec();
+		// Compiling process
 
-	        // Read the output
+		Process proc;
+		try {
+			// Execute compiling process with same env as the JVM but in the project directory
+			proc = Runtime.getRuntime().exec(compiler, null, new File(folder));
 
-	        BufferedReader reader =  
-	              new BufferedReader(new InputStreamReader(proc.getInputStream()));
+			// Read the output
 
-	        String line = "";
-	        while((line = reader.readLine()) != null) {
-	            System.out.print(line + "\n");
-	        }
+			BufferedReader reader =
+					new BufferedReader(new InputStreamReader(proc.getInputStream()));
 
-	        proc.waitFor();   
+			String line;
+			while((line = reader.readLine()) != null) {
+				System.out.print(line + "\n");
+				ret += (line + "\n");
+			}
 
-	    }
-		return null;
+			ret += "Process returned value " + proc.waitFor() + "\n";
+
+			return ret;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Error: Cannot launch compiling process";
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			return "Error: InterruptedException";
+		}
+
 	}
-	*/
-	
+
 	
 }

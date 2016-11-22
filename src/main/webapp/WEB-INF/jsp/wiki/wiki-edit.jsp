@@ -10,14 +10,21 @@
 
 <jsp:attribute name="head">
     <title>EWIDE - Edit Wiki</title>
-    <script type="text/javascript" src="<c:url value="/resources/js/ckeditor/ckeditor.js" />"></script>
 </jsp:attribute>
+<jsp:attribute name="javascript">
+    <script type="text/javascript" src="<c:url value="/resources/js/ckeditor/ckeditor.js" />"></script>
+    <script type="text/javascript">
+    window.onload = function(e){
+        CKEDITOR.replace( 'wikiText');
 
+    };
+    </script>
+</jsp:attribute>
 
     <jsp:body>
         <!-- Page Content -->
           <div class="container">
-            <div class="col-md-6 col-xs-12 col-md-offset-3">
+            <div class="col-md-8 col-xs-12 col-md-offset-2">
                 <h1 class="text-center"><strong>Edit Wiki</strong></h1>
                 <hr>
 
@@ -38,9 +45,6 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <textarea id="wikiText" name="wikiText">&lt;p&gt;${wikiText}${wiki}&lt;/p&gt;</textarea>
-                            <script type="text/javascript">
-                                CKEDITOR.replace( 'wikiText');
-                            </script>
                         </div>
                        </div>
 
