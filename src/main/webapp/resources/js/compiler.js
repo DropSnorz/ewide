@@ -16,9 +16,9 @@ closeConfigure.onclick = function() {
 }
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-    if (event.target == modalCompil) {
-    	modalCompil.style.display = "none";
-    }
+	if (event.target == modalCompil) {
+		modalCompil.style.display = "none";
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -27,37 +27,44 @@ window.onclick = function(event) {
  */
 var configureCompiler=document.getElementById("configureCompiler");
 configureCompiler.onclick=function(){
-	var compilerString=testCompilerExist();
+	var compilerString=null;
+	$.ajax({
+		type:"GET",
+		url:"getcompiler",
+		async:false,
+		success:function(respond){
+			if(respond.length>0){
+				compilerString= respond;
+			}
+			else
+				compilerString= null;
+		}
+	});
 	if(compilerString!=null){
 		var array=compilerString.split(' ');
-		document.getElementById("mainfileCompil").checked=true;
-		document.getElementById("language").value=array[0];
 		if(array[0]=="mvn"){
 			document.getElementById("mvncommand").value=compilerString.replace(array[0], '');
-		}else{
-			document.getElementById("commandCompil").value=compilerString.replace(array[0], '');
+			document.getElementById("maven").checked=true;
+			document.getElementById("commandCompil").value="";
+		}
+		else{
+			if(array[0]=="make"){
+				document.getElementById("maven").checked=true;
+				document.getElementById("mvncommand").value="";
+				document.getElementById("commandCompil").value="";
+
+			}else{
+				document.getElementById("mainfileCompil").checked=true;
+				document.getElementById("language").value=array[0];
+				document.getElementById("mvncommand").value="";
+				document.getElementById("commandCompil").value=compilerString.replace(array[0], '');
+			}
 		}
 	}
 	modalCompil.style.display = "block";
 }
 
-/**
- * this function return null if there isn't a compiler in the data base
- * else return a string
- */
-function testCompilerExist(){
-	$.ajax({
-		type:"GET",
-		url:"getcompiler",
-		success:function(respond){
-			if(respond.lenght>0)
-				return respond;
-			else 
-				return null;
-		}
-	});
-	return null;
-}
+
 //----------------------------------------------------------------------------
 /**
  * post the request to configure the compiler
@@ -70,7 +77,7 @@ valideCompiler.onclick=function(){
 	if(compilo=="cmd"){
 		compilo=$("#language").val();
 		mainfile=document.getElementById("commandCompil").value;
-		
+
 	}
 	else{
 		if(compilo=="mvn"){
@@ -86,10 +93,10 @@ valideCompiler.onclick=function(){
 		$.ajax({
 			type:"POST",
 			url:"setcompiler",
+			data:"compiler="+compilo+"&mainfile="+mainfile,
 			beforeSend: function(xhr){
 				xhr.setRequestHeader(header, token);
 			},
-			data:"compiler="+compilo+"&mainfile="+mainfile,
 			success:function(respond){
 				modalCompil.style.display = "none";
 			}
@@ -128,9 +135,7 @@ resultCompilation.onclick=function(){
 		type:"GET",
 		url:"resultfiles",
 		success:function(respond){
-			console.log("oui");
 		}
 	});
 }
-
 

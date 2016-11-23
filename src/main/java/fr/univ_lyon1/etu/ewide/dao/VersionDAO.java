@@ -134,5 +134,23 @@ public class VersionDAO {
 
 			
     }
+    
+    /**
+     * Returns all the versions of the desired project
+     * @param projectID (int)
+     * @return (List<Version>) 
+     */
+    public List<Version> getAllVersionsByProjectID(int projectID){
+    	TypedQuery<Version> query =
+    			em.createQuery("SELECT version FROM Version version "
+    					+ "WHERE version.projectID = :projectID ORDER BY versionID DESC", Version.class)
+    					.setParameter("projectID", projectID);
+    		      List<Version> results = query.getResultList();
+    		      if(results.isEmpty()){
+    		          return null;
+    		      }else{
+    		          return results;
+    		      }
+    }
 
 }

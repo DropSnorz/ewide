@@ -22,13 +22,13 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping(value="/project")
 public class CompilerController {
-	
+
 	@Autowired
 	ProjectDAO projectDAO;
-	 
+
 	@Autowired
 	AuthenticationUserService authenticationUserSerive;
-	
+
 	private static final int BUFFER_SIZE = 2048;
 
 
@@ -36,7 +36,7 @@ public class CompilerController {
 	 * add the command to the compiler project attribute
 	 * @param compiler (String)
 	 * @param projectID (int)
-	 * @return 1 
+	 * @return 1
 	 */
 	@RequestMapping(value ="/{projectID}/configCompiler", method = RequestMethod.POST)
 	@PreAuthorize("@userRoleService.isMember(#projectID)")
@@ -68,7 +68,7 @@ public class CompilerController {
 	 */
 	@RequestMapping(value = "/{projectID}/setcompiler", method = RequestMethod.POST)
 	@PreAuthorize("@userRoleService.isMember(#projectID)")
-	public @ResponseBody void setCompiler (
+	public @ResponseBody int setCompiler (
 			@PathVariable("projectID") int projectID,
 			/*@RequestBody String requestBody*/
 			@RequestParam(value = "compiler") String compiler,
@@ -82,7 +82,7 @@ public class CompilerController {
 			e.printStackTrace();
 		}
 
-		return;
+		return 0;
 	}
 
 	/**
@@ -140,8 +140,8 @@ public class CompilerController {
 		outputStream.close();
 
 	}
-	
-	
+
+
 	/**
 	 * this function will return the error or success of the compilation
 	 * @param projectID (int)
@@ -173,7 +173,7 @@ public class CompilerController {
 			folder = env + "/GitRepos/" + projectID + "/";
 		// console output to be returned
 		String ret = "$ " + compiler + "\n";
-		
+
 		logger.info("Working on directory {}", folder);
 		logger.info("Compiling project %s with {}", project.getName(), project.getCompiler());
 
@@ -209,5 +209,5 @@ public class CompilerController {
 
 	}
 
-	
+
 }
