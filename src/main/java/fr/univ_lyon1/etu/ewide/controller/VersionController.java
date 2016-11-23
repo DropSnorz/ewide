@@ -64,7 +64,7 @@ public class VersionController extends BaseProjectController{
         for(RevCommit revCommit : revCommits){
         	
             ProcessBuilder builder = new ProcessBuilder( "git", "show", revCommit.getName() + ":" + fileName); // récupération du fichier passé en URL dans la version pointee par l'iterateur
-    		//System.out.print(revCommit.getName() + ":" + fileName + "." + extension);
+
             builder.directory( directory.getAbsoluteFile() );
     		builder.redirectErrorStream(true);
     		Process process =  builder.start();
@@ -82,11 +82,11 @@ public class VersionController extends BaseProjectController{
     		
     		if (! text.toString().contains("fatal: Path '"+fileName+"' does not exist in '"+ revCommit.getName() +"'." )
     			&& !text.toString().contains("fatal: Path '"+fileName+"' exists on disk, but not in '"+ revCommit.getName() +"'.")){
-    			System.out.println(revCommit.getName());
+    			
     			
     			Version version = versionDAO.getVersionByGitID(revCommit.getName());
     			if (version != null) {
-    				System.out.println(version.getUser().getMail());
+    				
     				version.setDate( new SimpleDateFormat("dd-MM-yyyy \n HH:mm:ss").format(new Date(revCommit.getCommitTime() * 1000L)));
 					version.setComment(revCommit.getFullMessage());
 					version.setContent(text.toString());
