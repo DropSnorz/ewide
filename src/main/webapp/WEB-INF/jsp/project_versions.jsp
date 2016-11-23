@@ -58,11 +58,7 @@
 							</div>
 							<div style="position:relative;" >
 								<b>Comment:</b><br/>
-								${version.comment}
-							</div>
-							<div style="position:relative;" >
-								<b>Content:</b><br/>
-								<pre>${version.content}</pre>
+								<pre>${version.comment}</pre>
 							</div>
 							<div class="text-center">
 			
