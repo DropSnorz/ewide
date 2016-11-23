@@ -50,9 +50,9 @@
 							<span class="pix_edit_test"><strong>EMBEDDED WEB INTEGRATED DEVELOPMENT ENVIRONMENT !</strong></span>
 						</h1>
 						<div><h5 class="pix-dark-green-2 text-center pix-margin-bottom-30 pix-md-width-text">
-							L’EDI web provides you a completed editor with many features to satisfied your development. All the projects 
+							Our web IDE provides you a complete editor, along with many features to aid your developments. All the projects 
 							can be shared to a team with different levels of developers. Moreover, a versioning control is included to secure your development.
-							Don't wait and work in EWIDE !
+							Don't wait and work with EWIDE !
 						</h5></div>
 						<a href="login" class="btn orange-bg btn-xl pix-white btn-flat">
 							<span class="pix_edit_test">

@@ -146,7 +146,10 @@ public class VersionController extends BaseProjectController{
                 .call();
         
         for(RevCommit revCommit : revCommits){
-        	//if (versions_list.)
+        	for(Version v:versions_list) if (v.getVersion().equals(revCommit.getName())) {
+        		v.setDate( new SimpleDateFormat("dd-MM-yyyy \n HH:mm:ss").format(new Date(revCommit.getCommitTime() * 1000L)) );
+        		v.setComment(revCommit.getFullMessage());
+        	}
         }
         
         
