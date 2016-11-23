@@ -183,7 +183,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
+			<artifactId>slf4j-simple</artifactId>
 			<version>1.7.21</version>
 		</dependency>
 		<!-- Jackson JSON Mapper -->
@@ -244,7 +244,7 @@
 			<id>vm_mathilde</id>
 			<properties>
 				<tomcat-server>vm_mathilde</tomcat-server>
-				<tomcat-url>http://192.168.77.24:8080/manager/text</tomcat-url>
+				<tomcat-url>http://192.168.77.24/manager/text</tomcat-url>
 				<tomcat-username>machine</tomcat-username>
 				<tomcat-password>machine</tomcat-password>
 			</properties>
