@@ -172,10 +172,10 @@ public class CompilerController {
 		else
 			folder = env + "/GitRepos/" + projectID + "/";
 		// console output to be returned
-		String ret = "$ " + compiler + "\n";
+		String ret = "<pre>$ " + compiler + "\n";
 
 		logger.info("Working on directory {}", folder);
-		logger.info("Compiling project %s with {}", project.getName(), project.getCompiler());
+		logger.info("Compiling project {} with {}", project.getName(), project.getCompiler());
 
 		// Compiling process
 
@@ -194,7 +194,7 @@ public class CompilerController {
 				ret += (line + "\n");
 			}
 
-			ret += "Process returned value " + proc.waitFor() + "\n";
+			ret += "Process returned value " + proc.waitFor() + "\n</pre>";
 
 			return ret;
 		} catch (IOException e) {
