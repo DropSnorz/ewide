@@ -224,18 +224,18 @@ public class GitService {
 		return gitCommit(projectID,fileToGet,"Version "+ version + " restored");
 	}
 	
-	public RevCommit gitRename(int projectID, String fileToRename, String newFullPath) throws IllegalStateException, GitAPIException, IOException, InterruptedException{
+	public RevCommit gitRename(int projectID, String fileToMove, String newFullPath) throws IllegalStateException, GitAPIException, IOException, InterruptedException{
 		File directory = new File(getReposPath() + projectID + "/");		
 		Git git = Git.init().setDirectory( directory ).call();
 		
 		StringBuilder text = new StringBuilder();
-		ProcessBuilder builder = new ProcessBuilder( "git", "mv", directory + fileToRename, directory + newFullPath); // Appel a git pour recuperer le fichier
+		ProcessBuilder builder = new ProcessBuilder( "git", "mv", directory + fileToMove, directory + newFullPath); // Appel a git pour recuperer le fichier
  		builder.directory( directory.getAbsoluteFile() );
  		builder.redirectErrorStream(true);
  		Process process =  builder.start();
  		process.waitFor();
  		
- 		git.add().addFilepattern( newFullPath ).call();
-		return git.commit().setMessage( "Renamed " + fileToRename + " to " + newFullPath ).call();
+ 		return gitCommit(projectID,newFullPath,"Renamed " + fileToMove + " to " + newFullPath );
+
 	}
 }
