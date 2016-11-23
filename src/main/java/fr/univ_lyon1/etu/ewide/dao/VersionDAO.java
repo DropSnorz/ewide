@@ -54,24 +54,6 @@ public class VersionDAO {
     }
 	
 	/**
-     * Search for a Version in base using a known project ID and the associated "user-friendly" version ID
-     * @param projectID
-     * @param versionID
-     * @return Version object
-     */
-	public Version getVersionByProjectIDAndVersionID(int projectID, int versionID) {
-        try {
-			TypedQuery<Version> query = em.createQuery("SELECT version FROM Version version "
-					+ "WHERE version.projectID=:projectID AND version.versionID=:versionID", Version.class)
-					.setParameter("projectID", projectID).setParameter("versionID", versionID);
-			return query.getSingleResult();
-		} catch (Exception e) {
-			return null;
-		}
-    
-    }
-	
-	/**
      * Use this function whether you need to know which is the latest version of the project
      * @param projectID Searched project
      * @return The latest version number of the project
@@ -148,11 +130,11 @@ public class VersionDAO {
      * @param projectID (int)
      * @return (List<Version>) 
      */
-    public List<Version> getAllVersionsByProjectID(int projectID){
+    public List<Version> getAllVersionsByProject(Project project){
     	TypedQuery<Version> query =
-    			em.createQuery("SELECT version FROM Version version "
-    					+ "WHERE version.projectID = :projectID ORDER BY versionID DESC", Version.class)
-    					.setParameter("projectID", projectID);
+    			em.createQuery("SELECT v FROM Version v join FETCH v.user "
+    					+ "WHERE v.project = :projectID ORDER BY versionID DESC", Version.class)
+    					.setParameter("projectID", project);
     		      List<Version> results = query.getResultList();
     		      if(results.isEmpty()){
     		          return null;
