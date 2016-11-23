@@ -246,8 +246,10 @@ public class ProjectController {
 	     			System.out.println("ok");
 	     			if (!_file.exists())
 	     				throw (new Exception ("File doesn't exists"));
-	     			
+	     			File temp = new File(jobj.get("id").toString());
 	     			_file.renameTo(new File(jobj.get("newpath").toString()));
+	     			temp.delete();
+	     	     			
 	     		}
 	     	
 	     		// TODO
@@ -283,7 +285,7 @@ public class ProjectController {
     				 
     			 
     		 }else{
-    		 if (!file.getName().equals(".git")){
+    		 if (!file.getName().equals(".git") && !file.getName().contains(".class")){
     			 liste.add(file.getName());
     			 JSONObject jobj = new JSONObject();
     			 jobj.put("id", file.getPath());
