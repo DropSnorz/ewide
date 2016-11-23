@@ -29,7 +29,7 @@
 			</a>
 			<h2 class="icon icon-stack">${project.name}</h2>
 			<ul>
-				<li><a class="icon icon-location" href="<c:url value="/project/${project.projectID}"/>">Workspace</a></li>
+				<li><a class="icon icon-location" href="<c:url value="/project/${project.projectID}/ide"/>">Workspace</a></li>
 				<li><a class="icon icon-data" href="<c:url value="/project/${projectId}/wiki"/>">Wiki</a></li>
 				<li><a class="icon icon-study" href="#">Versioning</a></li>
 				<li><a class="icon icon-photo" href="<c:url value="/project/${project.projectID}/users_manager"/>">Members</a></li>
