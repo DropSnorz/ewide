@@ -6,6 +6,8 @@ pageEncoding="UTF-8"%>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="<c:url value="resources/images/favicon.ico" />">
 	<!-- CSS dependencies -->
 	<link href="<c:url value="/resources/bootstrap/css/bootstrap.css" />" rel="stylesheet">
@@ -14,7 +16,7 @@ pageEncoding="UTF-8"%>
 	<link href="<c:url value="/resources/css/md-icons.css" />" rel="stylesheet">
 	<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
 	<link href="<c:url value="/resources/css/component.css" />" rel="stylesheet">
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/smoothness/jquery-ui.css" />
+	<link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">
 	
 </head>
 <body>

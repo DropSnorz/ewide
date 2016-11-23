@@ -21,7 +21,6 @@ $(function () {
 	y += $('.ide-tools')[0].offsetHeight;
 	var z = x-y;
 	var r = document.getElementById('myTab').offsetHeight;
-	//alert(z);
 	$('.ide-body').height(z);
 	$('#tree').height(z);
 	$('#tree').height(z);
@@ -87,7 +86,8 @@ $(function () {
 								}
 							},
 							'contextmenu' : {
-								'items' : function(node) {
+								'items' : 
+								function(node) {
 									var tmp = $.jstree.defaults.contextmenu.items();
 									delete tmp.create.action;
 									tmp.create.label = "New";
@@ -131,6 +131,8 @@ $(function () {
 									}
 									return tmp;
 								}
+								
+								
 							},
 							'types' : {
 								'default' : { 'icon' : 'folder' },
@@ -154,12 +156,14 @@ $(function () {
 							.on('delete_node.jstree', function (e, data) {
 								//alert(projectid);
 								//alert(data.node.id);
+								// TODO switch tab and remove node
+								var new_path = data.node.id;
+							    new_path = new_path.split('\\').join('-');
+								$('#myTab a[data-efileid="'+new_path+'"]').hide();
 								data.node.type="deleted";
-								//console.log(data.node);
 								updateLocal(projectid,data.node.id,"", "delete");
 							})
 							.on('create_node.jstree', function (e, data) {
-								
 							})
 							.on('changed.jstree', function (e, data) {
 								var token = $("meta[name='_csrf']").attr("content");
@@ -220,33 +224,6 @@ $(function () {
 														var tt =JSON.stringify($('#tree').jstree().get_json());
 														$('#myTab a[data-efileid="'+new_path+'"]').click();
 														updateLocal(projectid, data.selected.join(':'), res['contents']);
-//														if( localStorage.getItem(projectid) !== null && localStorage.getItem(projectid) !== "" ) {
-//															var pfiles =  JSON.parse(localStorage[projectid]);
-//															item = {};
-//															var exist = false;
-//															for (var i=0 ; i <pfiles.length ; i++){
-//																if(pfiles[i].id==data.selected.join(':')){
-//																	exist=true;
-//																	pfiles[i].content=res['contents'];
-//																}
-//															}
-//															if(!exist){
-//																item ["id"] = data.selected.join(':');
-//																item ["content"] = res['contents'];
-//																pfiles.push(item);
-//															}
-//															
-//															localStorage[projectid]=JSON.stringify(pfiles);															
-//														}else{
-//															item = {};
-//															item ["id"] = data.selected.join(':');
-//															item ["content"] = res['contents'];
-//															var pfiles = [];
-//															pfiles.push(item);
-//															localStorage[projectid]=JSON.stringify(pfiles);
-//														}
-														//localStorage[projectid] = res['contents'];
-														//console.log(tt);
 												    }
 												    
 							    				}

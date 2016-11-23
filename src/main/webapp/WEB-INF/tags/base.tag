@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ attribute name="head" fragment="true"%>
 <%@ attribute name="footer" fragment="true"%>
@@ -9,18 +8,17 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link rel="shortcut icon"
-		href="<c:url value="/resources/images/favicon.ico" />">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="<c:url value="/resources/images/favicon.ico" />">
 	<!-- CSS dependencies -->
 	<link href="<c:url value="/resources/bootstrap/css/bootstrap.css" />" rel="stylesheet">
-	<link href="<c:url value="/resources/css/font-awesome.min.css" />" rel="stylesheet">
-	<link href="<c:url value="/resources/css/font-awesome.min.css" />" rel="stylesheet">
 	<link href="<c:url value="/resources/css/md-icons.css" />" rel="stylesheet">
 	<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
 	<link href="<c:url value="/resources/css/component.css" />" rel="stylesheet">
 	<link href="<c:url value="/resources/css/jquery.scrollbar.css" />" rel="stylesheet">
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/smoothness/jquery-ui.css" />
-	
+	<link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">
+	<link href="<c:url value="/resources/css/font-awesome.min.css" />" rel="stylesheet">
 	<jsp:invoke fragment="head" />
 </head>
 <body id="">
@@ -93,22 +91,16 @@
 
 	<!-- Javascripts -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script type="text/javascript"
-		src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
-	<script type="text/javascript"
-		src="<c:url value="/resources/js/jquery-ui.js" />"></script>
-	<script type="text/javascript"
-		src="<c:url value="/resources/bootstrap/js/bootstrap.js" />"></script>
-	<script type="text/javascript"
-		src="<c:url value="/resources/js/ace.js" />"></script>
-	<script type="text/javascript"
-		src="<c:url value="/resources/js/jquery.scrollbar.js" />"></script>
-	<script src="<c:url value="/resources/js/classie.js" />"></script>
-	<script src="<c:url value="/resources/js/sidebarEffects.js" />"></script>
-	<script type="text/javascript"
-		src="<c:url value="/resources/js/custom.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.2.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/jquery-ui.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/resources/bootstrap/js/bootstrap.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/ace.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/jquery.scrollbar.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/classie.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/sidebarEffects.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/custom.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/custom_users.js" />"></script>
-
-			<jsp:invoke fragment="javascript" />
+	
+	<jsp:invoke fragment="javascript" />
 	</body>
 </html>
