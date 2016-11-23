@@ -49,6 +49,9 @@
 			<a href="#" class="tools-btn" id="save_project">
 				<i class="material-icons">save</i> <span>Save</span>
 			</a>
+			<a href="#" class="tools-btn" id="previousVersions">
+				<i class="material-icons">history</i> <span>Previous versions</span>
+			</a>
 			<a href="#" class="tools-btn" id="configureCompiler">
 				<i class="material-icons" id="btnConfigure" >build</i> <span>Configure</span>
 			</a>
@@ -173,5 +176,6 @@
 	<script type="text/javascript" src="<c:url value="/resources/js/tree/jstree.min.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/tree/tree.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/compiler.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/previous_versions.js" />"></script>
 </body>
 </html>

@@ -115,25 +115,6 @@ public class TaskDAO {
 
 	}
 
-	/**
-	 * Cr��e une nouvelle task
-	 * @param type
-	 * @param state
-	 * @param text
-	 * @param project
-	 * @param date
-	 * @return la task cr��
-	 */
-	public Task create(String type, String state, String text, Project project, Date date) {
-		Task t = new Task();
-		t.setType(type);
-		t.setState(state);
-		t.setText(text);
-		t.setProject(project);
-		t.setDate(date);
-		em.merge(t);
-		return t;
-	}
 	
 	public Task createTask(Task task) {
 		
