@@ -211,6 +211,7 @@ public class ProjectController {
 	     					for(String s: entries){
 	     					    File currentFile = new File(_file.getPath(),s);
 	     					    currentFile.delete();
+	     					    
 	     					}
 	     			}
 	     				_file.delete();
@@ -224,15 +225,15 @@ public class ProjectController {
      				}
      				_file.mkdir();
 	     		}
-     				/*
-	     			case "rename": // Rename file or folder
-	     				if (_file.exists()){
-	     					throw (new Exception ("Cannot rename under this name!"));
-	     				}
-	     				_file.renameTo(new File(jobj.get("change").toString()));
 	     		
-	     		
-		     		*/
+	     		if(!jobj.get("newpath").toString().equals("")){ // Move file from another location
+	     			System.out.println("ok");
+	     			if (!_file.exists())
+	     				throw (new Exception ("File doesn't exists"));
+	     			
+	     			_file.renameTo(new File(jobj.get("newpath").toString()));
+	     		}
+	     	
 	     		// TODO
 	     		// Replace the first occurence only !
      		 
@@ -272,6 +273,8 @@ public class ProjectController {
     			 jobj.put("id", file.getPath());
     	    	 jobj.put("text", file.getName());
     	    	 jobj.put("icon", "jstree-file");
+    	    	 jobj.put("type", "file");
+    	    	 
 				 jarr.put(jobj);
     		 }
     		 }
