@@ -5,6 +5,12 @@
 
 	
 $( window ).load(function() {
+	
+
+		// Page preloader
+		$('#loader').fadeOut(function(){
+			
+		});
 
 	htmlTextArea = $('#the_code');
 	if(htmlTextArea.length > 0){

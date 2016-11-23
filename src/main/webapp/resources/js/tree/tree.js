@@ -6,9 +6,9 @@
 $( window ).load(function() {
 
 	// Page preloader
-	$('#loader').fadeOut(function(){
-		
-	});
+//	$('#loader').fadeOut(function(){
+//		
+//	});
 });
 $(function () {
 	var projectid = $("meta[name='_project_id']").attr("content");

@@ -694,23 +694,23 @@
 	
 
 	
-	
+
 #loader {
 	position: fixed;
 	left: 0px;
 	top: 0px;
 	width: 100%;
 	height: 100%;
-	background: #262626;
+	background: #eee;
 	z-index: 999999;
 	text-align: center;
 	font-size: 14px;
-	color: #555;
+	color: #777;
 	font-weight: normal;
 	text-transform: uppercase;
 	padding-top:15%;
 }
-
+#ide_page #loader {background: #262626;color: #555;}
 .no-js #loader {
     display: none;
 }
@@ -723,7 +723,9 @@
 }
 
 #loader span {
-	
+	font-family: "Roboto";
+    letter-spacing: .5px;
+    font-size:20px;
 	position: relative;
 	top: 10px;
 	margin-top: 30px;

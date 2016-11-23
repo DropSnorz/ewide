@@ -72,6 +72,14 @@
 		</div>
 	</div>
 
+	<div id="loader">
+		<span>Loading...</span>
+		<div class="spinner">
+			<div class="double-bounce1"></div>
+			<div class="double-bounce2"></div>
+		</div>
+	</div>
+	
 	<!-- Javascripts -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script type="text/javascript"
