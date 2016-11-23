@@ -1,15 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!doctype html>
-<html>
-<head>
-	<title>EWIDE - Dashboard</title>
-</head>
-<body>
 
-	<!-- Header Template -->
-	<jsp:include page="header.jsp"/>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+
+<t:default>
+
+<jsp:attribute name="head">
+	<title>EWIDE - Dashboard</title>    
+	<meta name="_csrf" content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+</jsp:attribute>
+
+	<jsp:body>	
 	
 	<!-- Page Content -->	
      <div class="container">
@@ -37,10 +39,5 @@ pageEncoding="UTF-8"%>
 		</div>
 	</div>
 
-	<!-- Javascripts -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<script type="text/javascript" src="resources/js/jquery-1.11.2.js"></script>
-	<script type="text/javascript" src="resources/js/jquery-ui.js"></script>
-	<script type="text/javascript" src="resources/bootstrap/js/bootstrap.js"></script>
-</body>
-</html>
+</jsp:body>
+</t:default>
