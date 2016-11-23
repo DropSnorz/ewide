@@ -2,10 +2,11 @@ package fr.univ_lyon1.etu.ewide.controller;
 
 import fr.univ_lyon1.etu.ewide.dao.UserDAO;
 import fr.univ_lyon1.etu.ewide.dao.VersionDAO;
+import fr.univ_lyon1.etu.ewide.dao.ProjectDAO;
 import fr.univ_lyon1.etu.ewide.dao.RoleDAO;
 import fr.univ_lyon1.etu.ewide.model.Version;
 import fr.univ_lyon1.etu.ewide.service.GitService;
-
+import fr.univ_lyon1.etu.ewide.model.Project;
 import fr.univ_lyon1.etu.ewide.model.User;
 
 import java.io.File;
@@ -48,10 +49,12 @@ public class VersionController extends BaseProjectController{
 	@Autowired
 	private VersionDAO versionDAO;
 	
+	@Autowired ProjectDAO projectDAO;
+	
 	@Autowired
 	private GitService gitService;
 	
-	public void getVersions(ModelMap model, String fileName, int projectId) throws IOException, IllegalStateException, GitAPIException, InterruptedException{
+	public void getFileVersions(ModelMap model, String fileName, int projectId) throws IOException, IllegalStateException, GitAPIException, InterruptedException{
 		System.getenv("PATH");
 		File directory = new File(gitService.getReposPath()+ projectId + "/");
 		Git git = Git.init().setDirectory( directory ).call();										// Ouverture du repo
@@ -106,7 +109,7 @@ public class VersionController extends BaseProjectController{
 	public String gitVersions(ModelMap model, @PathVariable("projectId") int projectId, @PathVariable(value = "fileName") String fileName) throws Exception {
 		
 		fileName = fileName.replace('?', '/');
-		getVersions(model, fileName, projectId);
+		getFileVersions(model, fileName, projectId);
         
 		return "file_versions";
 
@@ -120,11 +123,38 @@ public class VersionController extends BaseProjectController{
 		fileName = fileName.replace('?', '/');
 		gitService.gitRollBack(projectId, fileName, version);
 		
-		getVersions(model, fileName, projectId);
+		getFileVersions(model, fileName, projectId);
 		
 		
 		mv.addObject("versionRestored", version);
 		return mv;
+	}
+	
+	@RequestMapping(value="/project/{projectId}/versions/display", method = RequestMethod.GET)
+	public String gitProjectVersions(ModelMap model, @PathVariable("projectId") int projectId) throws Exception {
+		
+		Project project = projectDAO.getProjectById(projectId);	
+		List<Version> versions_list = versionDAO.getAllVersionsByProject(project);
+		
+		System.getenv("PATH");
+		File directory = new File(gitService.getReposPath()+ projectId + "/");
+		Git git = Git.init().setDirectory( directory ).call();							// Ouverture du repo
+		
+		Repository repository = new FileRepository(gitService.getReposPath() + projectId + "/.git");		    											
+        Iterable<RevCommit> revCommits = git.log()
+                .add(repository.resolve("refs/heads/master"))
+                .call();
+        
+        for(RevCommit revCommit : revCommits){
+        	//if (versions_list.)
+        }
+        
+        
+		
+		
+			
+		model.addAttribute("versions_list", versions_list);	
+		return "project_versions";
 	}
 	
 }
