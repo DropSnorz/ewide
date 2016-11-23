@@ -37,11 +37,19 @@ public class VersionDAO {
      * @return the desired Version or null if non-existing.
      */
 	public Version getVersionByGitID(String commitID) {
-        try {
+		try {
+			TypedQuery<Version> query = em.createQuery("SELECT v FROM Version v join FETCH v.user WHERE v.version=:commitID", Version.class)
+					.setParameter("commitID", commitID);
+			return query.getSingleResult();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+		/*try {
 			return em.find(Version.class, commitID);
 		} catch (Exception e) {
 			return null;
-		}
+		}*/
     
     }
 	
