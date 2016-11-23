@@ -147,11 +147,14 @@ $(function () {
 							})
 							.on('rename_node.jstree', function (e, data) {
 								var inst = $.jstree.reference(data.reference);
-								var parentpath = inst.get_path($('#'+data.parent),'\\',true)+"\\";
-								alert(parentpath);
+								console.log(inst);
+								//var obj = inst.get_node(data.node.parent);
+								//var parentpath = inst.get_path($('#'+data.parent),'\\',true)+"\\";
+								//alert(data.instance.id);
 								//console.log(data.original);
-								alert(data.node.id);
-								alert(data.text);
+								//alert(data.node.id);
+								//alert(data.node.parent+'/'+data.node.text);
+								updateLocalpath(projectid, data.node.id, data.node.parent+'/'+data.node.text);
 							})
 							.on('delete_node.jstree', function (e, data) {
 								//alert(projectid);
@@ -159,7 +162,19 @@ $(function () {
 								// TODO switch tab and remove node
 								var new_path = data.node.id;
 							    new_path = new_path.split('\\').join('-');
-								$('#myTab a[data-efileid="'+new_path+'"]').hide();
+							    alert($('#myTab a:not(.file_removed)').length);
+							    if($('#myTab a:not(.file_removed)').length != 1){
+							    	$('#myTab a[data-efileid="'+new_path+'"]').addClass('file_removed');
+							    	$('#myTab a[data-efileid="'+new_path+'"]').hide();
+							    	$('#myTab a:not([data-efileid="'+new_path+'"])').click();
+							    }else{
+							    	$('#myTab a[data-efileid="'+new_path+'"]').addClass('file_removed');
+							    	$('#myTab a[data-efileid="'+new_path+'"]').hide();
+							    	$('#myTab a:not([data-efileid="'+new_path+'"])').click();
+							    	$('.welcome_nav_tab').show();
+							    	$('.welcome_nav_tab a,.welcome_nav_tab').click();
+							    }
+								
 								data.node.type="deleted";
 								updateLocal(projectid,data.node.id,"", "delete");
 							})
@@ -181,6 +196,7 @@ $(function () {
 							    			success:function(respond){
 							    				var res = $.parseJSON(respond);
 							    				if(data.node.text){
+							    					$('.welcome_nav_tab a').addClass('file_removed');
 							    					$('.welcome_nav_tab').hide();
 							    					var id = $('#myTab').children().length;
 												    var tabId = 'file_' + id;
@@ -285,7 +301,7 @@ $(function () {
 			});
 		});
 
-function updateLocal(projectid, item_id, item_content, item_type = "filetext"){
+function updateLocal(projectid, item_id, item_content, item_type = "filetext", newpath = ""){
 	//alert(item_type);
 	if( localStorage.getItem(projectid) !== null && localStorage.getItem(projectid) !== "" ) {
 		var pfiles =  JSON.parse(localStorage[projectid]);
@@ -296,13 +312,14 @@ function updateLocal(projectid, item_id, item_content, item_type = "filetext"){
 				exist=true;
 				pfiles[i].content = item_content;
 				pfiles[i].ftype = item_type;
+				pfiles[i].newpath = newpath;
 			}
 		}
 		if(!exist){
 			item["id"] = item_id;
 			item["content"] = item_content;
 			item["ftype"] = item_type;
-//			item["change"] = "changetext";
+			item["newpath"] = newpath;
 			pfiles.push(item);
 		}
 		
@@ -312,9 +329,22 @@ function updateLocal(projectid, item_id, item_content, item_type = "filetext"){
 		item ["id"] = item_id;
 		item ["content"] = item_content;
 		item["ftype"] = item_type;
-//		item["change"] = "changetext";
+		item["newpath"] = newpath;
 		var pfiles = [];
 		pfiles.push(item);
+		localStorage[projectid]=JSON.stringify(pfiles);
+	}
+}
+
+function updateLocalpath(projectid, item_id, newpath = ""){
+	if( localStorage.getItem(projectid) !== null && localStorage.getItem(projectid) !== "" ) {
+		var pfiles =  JSON.parse(localStorage[projectid]);
+		item = {};
+		for (var i=0 ; i <pfiles.length ; i++){
+			if(pfiles[i].id==item_id){
+				pfiles[i].newpath = newpath;
+			}
+		}
 		localStorage[projectid]=JSON.stringify(pfiles);
 	}
 }
