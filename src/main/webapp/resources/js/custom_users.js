@@ -56,7 +56,7 @@ $("#adduser").autocomplete({
 			$.ajax({
 				type:"GET",
 				data:"username="+document.getElementById("adduser").value,
-				url:"/ewide/project/users",
+				url:"users",
 				success:function(respond){
 		            response($.map(respond,function(object){
 		                return{
