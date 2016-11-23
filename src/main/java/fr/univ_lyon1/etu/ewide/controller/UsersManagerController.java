@@ -42,7 +42,7 @@ import fr.univ_lyon1.etu.ewide.service.AuthenticationUserService;
 @Transactional
 @Controller
 @RequestMapping(value="/project")
-public class UsersManagerController {
+public class UsersManagerController extends BaseProjectController{
 	
 	@Autowired
 	AuthenticationUserService authenticationUserService;
@@ -65,9 +65,9 @@ public class UsersManagerController {
 	  * @return view usersmanager
 	  * @throws IOException
 	  */
-	 @RequestMapping(value ="/{projectID}/users_manager", method = RequestMethod.GET)
+	 @RequestMapping(value ="/{projectId}/users_manager", method = RequestMethod.GET)
 	 @PreAuthorize("@userRoleService.isMember(#projectID)")
-	 public ModelAndView usersManager(ModelMap Model, @PathVariable("projectID") int projectID) throws IOException{
+	 public ModelAndView usersManager(ModelMap Model, @PathVariable("projectId") int projectID) throws IOException{
 	     
 		 	List<User> listUsers = usersDAO.getAllUsersByProjectID(projectID);
 		 	User user = authenticationUserService.getCurrentUser();
@@ -164,10 +164,10 @@ public class UsersManagerController {
 	  * @param role (model)
 	  * @return
 	  */
-	 @RequestMapping(value="/{projectID}/adduser", method=RequestMethod.POST)
+	 @RequestMapping(value="/{projectId}/adduser", method=RequestMethod.POST)
 	 @ResponseBody
 	 @PreAuthorize("@userRoleService.isManager(#projectID)")
-	 public User adduser(@RequestParam String username, @PathVariable("projectID") int projectID, Role role){
+	 public User adduser(@RequestParam String username, @PathVariable("projectId") int projectID, Role role){
 		 User user = usersDAO.getUserByUsername(username);
 		 Project project=projectDAO.getProjectById(projectID);
 		 		 
