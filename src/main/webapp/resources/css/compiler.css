@@ -1,0 +1,52 @@
+@CHARSET "ISO-8859-1";
+
+ /* Modal Header */
+.modal-header {
+    padding: 2px 10px;
+    color: white;
+    background-color: #2b82ad;
+}
+
+/* Modal Body */
+.modal-body {padding: 2px 16px;
+		background-color:rgb(240,240,240)}
+
+/* Modal Footer */
+.modal-footer {
+    padding: 2px 10px;
+    background-color: #2b82ad;
+    color: white;
+}
+.modal-btn{
+	background-color:white;
+    color: #2b82ad;
+}
+.borderCompil{
+	padding:3px;
+	margin-bottom:2px;
+}
+/* Modal Content */
+.modal-content {
+	height:280px;
+    position: absolute !important;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 40%;
+    -webkit-border-radius: 8px !important;
+    -moz-border-radius: 8px !important;
+    border-radius: 8px !important; 
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+#hiddenMain{
+	display:none;
+	padding-left:30px;
+	border:2px #fefefe solid;
+	border-radius:10px;
+	padding:7px;
+}
+#the_console{
+	color:white;
+}
+
