@@ -58,7 +58,7 @@
 							</div>
 							<div style="position:relative;" >
 								<b>Comment:</b><br/>
-								${version.comment}
+								<pre>${version.comment}</pre>
 							</div>
 							<div style="position:relative;" >
 								<b>Content:</b><br/>
