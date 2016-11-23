@@ -102,10 +102,9 @@ $(function () {
 												
 												parentpath = parentpath.split('Project Name').join('GitRepos/'+projectid);
 												inst.create_node(obj, { type : "default" }, "last", function (new_node) {
-													//setTimeout(function () { inst.edit(new_node); },0);
 													inst.set_id(new_node, parentpath+new_node.text);
-													
 													updateLocal(projectid, new_node.id, "", "folder");
+													//setTimeout(function () { inst.edit(new_node); },0);
 												});
 											}
 										},
@@ -119,7 +118,11 @@ $(function () {
 												
 												parentpath = parentpath.split('Project Name').join('GitRepos/'+projectid);
 												inst.create_node(obj, { type : "file" }, "last", function (new_node) {
+													while(idLocalExist(projectid,parentpath+new_node.text)){
+														new_node.text = new_node.text + "2";
+													}
 													inst.set_id(new_node, parentpath+new_node.text);
+													
 													updateLocal(projectid, new_node.id, "");
 												});
 												
@@ -148,21 +151,11 @@ $(function () {
 							.on('rename_node.jstree', function (e, data) {
 								var inst = $.jstree.reference(data.reference);
 								console.log(inst);
-								//var obj = inst.get_node(data.node.parent);
-								//var parentpath = inst.get_path($('#'+data.parent),'\\',true)+"\\";
-								//alert(data.instance.id);
-								//console.log(data.original);
-								//alert(data.node.id);
-								//alert(data.node.parent+'/'+data.node.text);
 								updateLocalpath(projectid, data.node.id, data.node.parent+'/'+data.node.text);
 							})
 							.on('delete_node.jstree', function (e, data) {
-								//alert(projectid);
-								//alert(data.node.id);
-								// TODO switch tab and remove node
 								var new_path = data.node.id;
 							    new_path = new_path.split('\\').join('-');
-							    //alert($('#myTab a:not(.file_removed)').length);
 							    if($('#myTab a:not(.file_removed)').length != 1){
 							    	$('#myTab a[data-efileid="'+new_path+'"]').addClass('file_removed');
 							    	$('#myTab a[data-efileid="'+new_path+'"]').hide();
@@ -260,47 +253,61 @@ $(function () {
 				
 			
 			$('#save_project').click(function(e){
-				var files = "";
-				var token = $("meta[name='_csrf']").attr("content");
-	    		 var header = $("meta[name='_csrf_header']").attr("content");
-				var projectid = $("meta[name='_project_id']").attr("content");
-				files = localStorage[projectid];
-				if(files!=null && files!=""){
-					//files = files.replace(/\\\\/g, '\\');
-					//alert(files);
-					var json_files = $.parseJSON(files);
-					for(var i = 0; i < json_files.length; i++) {
-						if(json_files[i]){
-							var new_path = json_files[i].id;
-						    new_path = new_path.split('\\').join('-');
-						    if($('.code_div[data-filecode="'+new_path+'"]').length != 0){
-						    	var filecodeEditor = ace.edit($('.code_div[data-filecode="'+new_path+'"]')[0].id);
-						    	//console.log(filecodeEditor.getValue());
-						    	json_files[i].content = filecodeEditor.getValue();
-						    }
-						    var obj = json_files[i];
-						    console.log(json_files[i].id);	
-						}
-					}
-					var final_res = JSON.stringify(json_files);
-					//final_res = final_res.replace(/\\\\/g, '\\');
-					alert(final_res);
-					$.ajax({
-		    			type:"POST",
-		    			url:"save",
-		    			data:"file="+final_res,
-		    		    beforeSend: function(xhr){
-		    		        xhr.setRequestHeader(header, token);
-		    		    },
-		    			success:function(respond){
-							    alert(JSON.stringify(respond));
-		    			}
-		    		});	
-				}
-				
+				save();
 			});
+			 $(document).bind('keydown', function(event) {
+	                if (event.ctrlKey || event.metaKey) {
+	                    switch (String.fromCharCode(event.which).toLowerCase()) {
+	                    case 's':
+	                        event.preventDefault();
+	                        save();
+	                        return false;
+	                        break;
+	                    }
+	                }
+	           });
+			 
 		});
 
+function save(){
+	var files = "";
+	var token = $("meta[name='_csrf']").attr("content");
+	 var header = $("meta[name='_csrf_header']").attr("content");
+	var projectid = $("meta[name='_project_id']").attr("content");
+	files = localStorage[projectid];
+	if(files!=null && files!=""){
+		//files = files.replace(/\\\\/g, '\\');
+		//alert(files);
+		var json_files = $.parseJSON(files);
+		for(var i = 0; i < json_files.length; i++) {
+			if(json_files[i]){
+				var new_path = json_files[i].id;
+			    new_path = new_path.split('\\').join('-');
+			    if($('.code_div[data-filecode="'+new_path+'"]').length != 0){
+			    	var filecodeEditor = ace.edit($('.code_div[data-filecode="'+new_path+'"]')[0].id);
+			    	//console.log(filecodeEditor.getValue());
+			    	json_files[i].content = filecodeEditor.getValue();
+			    }
+			    var obj = json_files[i];
+			    console.log(json_files[i].id);	
+			}
+		}
+		var final_res = JSON.stringify(json_files);
+		//final_res = final_res.replace(/\\\\/g, '\\');
+		alert(final_res);
+		$.ajax({
+			type:"POST",
+			url:"save",
+			data:"file="+final_res,
+		    beforeSend: function(xhr){
+		        xhr.setRequestHeader(header, token);
+		    },
+			success:function(respond){
+				    alert(JSON.stringify(respond));
+			}
+		});	
+	}
+}
 function updateLocal(projectid, item_id, item_content, item_type = "filetext", newpath = ""){
 	//alert(item_type);
 	if( localStorage.getItem(projectid) !== null && localStorage.getItem(projectid) !== "" ) {
@@ -347,4 +354,16 @@ function updateLocalpath(projectid, item_id, newpath = ""){
 		}
 		localStorage[projectid]=JSON.stringify(pfiles);
 	}
+}
+function idLocalExist(projectid, item_id){
+	if( localStorage.getItem(projectid) !== null && localStorage.getItem(projectid) !== "" ) {
+		var pfiles =  JSON.parse(localStorage[projectid]);
+		item = {};
+		for (var i=0 ; i <pfiles.length ; i++){
+			if(pfiles[i].id==item_id){
+				return true;
+			}
+		}
+	}
+	return false;
 }
