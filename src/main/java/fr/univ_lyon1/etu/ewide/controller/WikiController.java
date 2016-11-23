@@ -20,7 +20,7 @@ import java.io.IOException;
 @Controller
 @Transactional
 @RequestMapping(value="/project/{projectId}/wiki")
-public class WikiController {
+public class WikiController extends BaseProjectController{
 
      /*
 	  * This function allow to create project in the database

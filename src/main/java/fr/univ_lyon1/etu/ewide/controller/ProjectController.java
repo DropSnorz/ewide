@@ -107,7 +107,7 @@ public class ProjectController {
 	 /*
 	  * Display the editor
 	  */
-     @RequestMapping(value = {"/project/{projectID}"}, method = RequestMethod.GET)
+     @RequestMapping(value = {"/project/{projectID}/ide"}, method = RequestMethod.GET)
      @PreAuthorize("@userRoleService.isMember(#projectID)")
      public ModelAndView getProjectByName(@PathVariable("projectID") int projectID){
     	 ModelAndView model = new ModelAndView("dashboard");
