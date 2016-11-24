@@ -37,7 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TaskDAOTest {
 
     /**
-     *  DAO for tests, autowired with Spring
+     *  DAOs for tests, autowired with Spring
      */
     @Autowired
     TaskDAO dao;
@@ -58,40 +58,79 @@ public class TaskDAOTest {
 
     }
 
+    /** Test : Get the task with its ID.
+     *  Not null : check
+     *  Columns expected : check
+     */
     @Test
     public void shouldGetTaskById() throws Exception {
         Task t = dao.getTaskById(1);
         assertThat(t).isNotNull();
         assertThat(t.getText()).isEqualTo("Add project name in pages");
+        assertThat(t.getType()).isEqualTo("TODO");
         assertThat(t.getState()).isEqualTo("New");
     }
 
+    /** Test : Get the tasks of a project.
+     *  Not null : check
+     *  Number of task expected : check
+     *  Result expected when empty : check
+     */
     @Test
-    public void shouldGetTasksByProject() throws Exception {
+    public void shouldGetTasksByProjectId() throws Exception {
         List<Task> list = dao.getTasksByProjectId(1);
         assertThat(list).isNotNull();
         assertThat(list).hasSize(6);
+
+        list = dao.getTasksByProjectId(3);
+        assertThat(list).isNotNull();
+        assertThat(list).isEmpty();
     }
 
-   /* @Test
+    /** Test : Get the tasks active/inactive on a project.
+     *  Not null : check
+     *  Number of task opened expected : check
+     *  Number of task closed expected : check
+     */
+    @Test
     public void shouldGetTasksByProjectIdAndState() throws Exception {
-        List<Task> list = dao.getTasksByProjectIdAndState(1, "New");
+        List<Task> list = dao.getTasksByProjectIdAndState(1, "active");
         assertThat(list).isNotNull();
-        assertThat(list).hasSize(3);
-    }*/
+        assertThat(list).hasSize(5);
 
-    /*@Test
+        list = dao.getTasksByProjectIdAndState(1, "inactive");
+        assertThat(list).isNotNull();
+        assertThat(list).hasSize(1);
+    }
+
+    /** Test : Get the tasks active/inactive on a project for an user.
+     *  Not null : check
+     *  Number of task opened expected : check
+     *  Number of task closed expected : check
+     */
+    @Test
     public void shouldGetTasksByProjectIdAndOwnerId() throws Exception {
-        List<Task> list = dao.getTasksByProjectIdAndOwnerId(1, 1,"New");
+        List<Task> list = dao.getTasksByProjectIdAndOwnerId(1, 3,"active");
         assertThat(list).isNotNull();
         assertThat(list).hasSize(2);
-    }*/
 
+        list = dao.getTasksByProjectIdAndOwnerId(1, 3,"inactive");
+        assertThat(list).isNotNull();
+        assertThat(list).hasSize(1);
+    }
+
+    /** Test : Create a Task.
+     *  Not null : check
+     *  Number of project expected : check
+     */
     @Test
     public void shouldCreateTask() throws Exception {
         Task t = new Task();
         Project p = daoP.getProjectById(1);
         User u = daoU.getUserByUsername("zoidberg");
+        assertThat(p).isNotNull();
+        assertThat(u).isNotNull();
+
         Date d = new Date(1);
         t.setProject(p);
         t.setDate(d);
@@ -99,26 +138,62 @@ public class TaskDAOTest {
         t.setText("Faire des JUnit");
         t.setUser(u);
         t.setType("TODO");
+
         Task result = dao.createTask(t);
         assertThat(result).isNotNull();
         assertThat(result.getText()).isEqualTo("Faire des JUnit");
 
-        // Nombre total de taches pour le pojet un est à 7
+        // Nombre total de taches pour le projet 1 est à 7
         List<Task> list = dao.getTasksByProjectId(1);
         assertThat(list).isNotNull();
         assertThat(list).hasSize(7);
     }
 
+    /** Test : Create or Update a Task.
+     *  Not null : check
+     *  Number of project expected for create: check
+     *  Number of project expected for update: check
+     */
     @Test
     public void shouldCreateOrUpdate() throws Exception {
+        Project p = daoP.getProjectById(1);
+        User u = daoU.getUserByUsername("zoidberg");
+        assertThat(p).isNotNull();
+        assertThat(u).isNotNull();
 
+        Task t = new Task();
+        Date d = new Date(1);
+        t.setProject(p);
+        t.setDate(d);
+        t.setState("New");
+        t.setText("Faire des JUnit");
+        t.setUser(u);
+        t.setType("TODO");
+
+        Task result = dao.createOrUpdate(t);
+        assertThat(result).isNotNull();
+        assertThat(result.getText()).isEqualTo("Faire des JUnit");
+
+        // Nombre total de taches pour le projet 1 est à 7
+        List<Task> list = dao.getTasksByProjectId(1);
+        assertThat(list).isNotNull();
+        assertThat(list).hasSize(7);
+
+        t.setTaskID(1);
+        result = dao.createOrUpdate(t);
+        assertThat(result).isNotNull();
+        assertThat(result.getText()).isEqualTo("Faire des JUnit");
+
+        // Nombre total de taches pour le projet 1 est toujours à 7
+        list = dao.getTasksByProjectId(1);
+        assertThat(list).isNotNull();
+        assertThat(list).hasSize(7);
     }
 
-    @Test
-    public void shouldUpdateTask() throws Exception {
-
-    }
-
+    /** Test : Delete a task.
+     *  Not null : check
+     *  Number of project expected : check
+     */
     @Test
     public void shouldDeleteTaskByTask() throws Exception {
         Task t = dao.getTaskById(1);
@@ -131,6 +206,10 @@ public class TaskDAOTest {
 
     }
 
+    /** Test : Get the projects of an user.
+     *  Not null : check
+     *  Number of project expected : check
+     */
     @Test
     public void shouldDeleteTaskById() throws Exception {
         dao.deleteTask(1);
@@ -139,24 +218,6 @@ public class TaskDAOTest {
         List<Task> list = dao.getTasksByProjectId(1);
         assertThat(list).isNotNull();
         assertThat(list).hasSize(5);
-
     }
-/*
-    public Task createOrUpdate(Task task){
-
-        em.merge(task);
-        return task;
-    }
-    public Task Update(int taskID, String type, String state, String text, Project project, Date date) {
-        Task t = new Task();
-        t.setTaskID(taskID);
-        t.setType(type);
-        t.setState(state);
-        t.setText(text);
-        t.setProject(project);
-        t.setDate(date);
-        em.merge(t);
-        return t;
-    }*/
 
 }
