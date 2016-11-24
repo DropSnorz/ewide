@@ -206,18 +206,31 @@ public class ProjectController {
      	Project project = new Project();
      	project = projectDAO.getProjectById(projectID);
      	int lastid = versionDAO.getProjectLatestVersionNumber(project);
+     	String os = System.getProperty("os.name").toLowerCase();
      	String jsonresult;
      	boolean modified = false;
      	JSONArray jarr = new JSONArray(file);
-     	if (id.equals(lastid) || confirm.equals("1")){
+     	if ((Integer.valueOf(id)==lastid) || confirm.equals("1")){
      		jsonresult = save(file,id,projectID);
      	}else{
      		for (int i =0; i<jarr.length();++i){
      			JSONObject jobj = jarr.getJSONObject(i);
      			
-     			if ( Integer.valueOf(id) > lastid ){ // File is modified
-     				modified = true;
-     			}
+     			try{
+     				String filePath = jobj.get("id").toString();
+     		    	if (os.contains("win")){
+     		    		filePath = filePath.replace("\\\\", "\\");
+     		    		filePath = filePath.replace("\\", "/");
+     		     	}
+     	     		filePath = filePath.replaceAll(git.getReposPath()+projectID+"/", "");
+     				if ( git.gitGetLastFileVersion(projectID, filePath ) != jobj.get("content").toString() ){ // File is modified
+     					modified = true;
+         			}
+     				
+     			}catch (Exception e) {
+					// TODO: handle exception
+				}
+     		
      			
      		}
      		if (!modified){
