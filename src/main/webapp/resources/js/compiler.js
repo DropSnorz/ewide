@@ -86,6 +86,9 @@ valideCompiler.onclick=function(){
 			mainfile="";
 		}
 	}
+	if(mainfile.indexOf("|")!=-1 || mainfile.indexOf("\\ ")!=-1 ){
+		mainfile="";
+	}
 	//put in base the compilation configuration
 	if(compilo!=null){
 		var token = $("meta[name='_csrf']").attr("content");
@@ -102,6 +105,7 @@ valideCompiler.onclick=function(){
 			}
 		});
 	}
+	
 }
 
 //----------------------------------------------------------------------------

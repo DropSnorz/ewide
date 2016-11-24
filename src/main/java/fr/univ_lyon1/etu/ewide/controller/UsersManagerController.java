@@ -95,9 +95,9 @@ public class UsersManagerController extends BaseProjectController{
 	  * @param projectID (int)
 	  * @return
 	  */
-	 @RequestMapping(value="/{projectID}/users_manager",method=RequestMethod.POST)
+	 @RequestMapping(value="/{projectId}/users_manager",method=RequestMethod.POST)
 	 @PreAuthorize("@userRoleService.isManager(#projectID)")
-	 public ModelAndView changeRoles(@RequestParam HashMap<String,String> allRequestParams,@PathVariable("projectID") int projectID){
+	 public ModelAndView changeRoles(@RequestParam HashMap<String,String> allRequestParams,@PathVariable("projectId") int projectID){
 		 	allRequestParams.remove("_csrf");
 		 
 		 	ModelAndView model = new ModelAndView("usersmanager");
@@ -147,7 +147,7 @@ public class UsersManagerController extends BaseProjectController{
 	  * @param username (String)
 	  * @return (ArrayList<User>) list of names
 	  */
-	 @RequestMapping(value="/users",method=RequestMethod.GET)
+	 @RequestMapping(value="/{projectId}/users",method=RequestMethod.GET)
 	 @ResponseBody
 	 public ArrayList<User> autocompleteusers(@RequestParam String username){
 		 User user = authenticationUserService.getCurrentUser();
