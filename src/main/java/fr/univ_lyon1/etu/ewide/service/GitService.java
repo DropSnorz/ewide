@@ -154,7 +154,7 @@ public class GitService {
      		Scanner s = new Scanner(process.getInputStream());
      		while (s.hasNextLine()) {
      		  text.append(s.nextLine());
-     		  text.append("\n");
+     		  //text.append("\n");
      		}
      		s.close();
 
