@@ -55,12 +55,17 @@ public class RoleDAOTest {
 
     }
 
+    /** Test : Get the projects of an user.
+     *  Not null : check
+     *  Number of project expected : check
+     */
     @Test
     public void shouldGetProjectIDByUser() throws Exception {
         User u;
         u = daoU.getUserByEmail("fry@ewide.com");
         assertThat(u).isNotNull();
         assertThat(u.getUserID()).isEqualTo(2);
+
         Project p;
         p = daoP.getProjectById(1);
         assertThat(p).isNotNull();
@@ -70,15 +75,32 @@ public class RoleDAOTest {
         assertThat(list).hasSize(2);
     }
 
+    /** Test : Get the role of an user on a project, by IDs.
+     *  Not null : check
+     *  Columns expected : check
+     */
     @Test
     public void shouldGetRoleByUserIdAndProjectId() throws Exception {
+        User u = daoU.getUserByUsername("fry");
+        Project p = daoP.getProjectById(1);
+        assertThat(p).isNotNull();
+        assertThat(u).isNotNull();
+
         Role r = dao.getRoleByUserIdAndProjectId(2,1);
+
         assertThat(r).isNotNull();
+
         assertThat(r.getRoleID()).isEqualTo(3);
+        assertThat(r.getUser()).isEqualTo(u);
+        assertThat(r.getProject()).isEqualTo(p);
         assertThat(r.getUsername()).isEqualTo("fry");
         assertThat(r.getRole()).isEqualTo("DEVELOPER");
     }
 
+    /** Test : Search the role of an user on a project, by models.
+     *  Not null : check
+     *  Columns expected : check
+     */
     @Test
     public void shouldSearchRoleByUserAndProject() throws  Exception {
         User u = daoU.getUserByUsername("fry");
@@ -93,6 +115,9 @@ public class RoleDAOTest {
         assertThat(r.getRole()).isEqualTo("DEVELOPER");
     }
 
+    /** Test : Update the role.
+     *  Changed expected : check
+     */
     @Test
     public void shouldUpdateRole() throws Exception {
         User u = daoU.getUserByUsername("zoidberg");
@@ -110,6 +135,10 @@ public class RoleDAOTest {
 
     }
 
+    /** Test : Create a role.
+     *  Not null : check
+     *  Columns expected : check
+     */
     @Test
     public void shouldCreateRole() throws Exception {
         User u = daoU.getUserByUsername("bender");
@@ -121,10 +150,17 @@ public class RoleDAOTest {
         assertThat(r).isNull();
 
         dao.createRole(u, p, "MANAGER");
+
         r = dao.searchRoleByUserAndProject(u, p);
         assertThat(r).isNotNull();
+        assertThat(r.getRole()).isEqualTo("MANAGER");
+        assertThat(r.getUser()).isEqualTo(u);
+        assertThat(r.getProject()).isEqualTo(p);
     }
 
+    /** Test : Delete role.
+     *  the role returns null : check
+     */
     @Test
     public void shouldDeleteRole() throws Exception {
         User u = daoU.getUserByUsername("fry");
@@ -138,6 +174,5 @@ public class RoleDAOTest {
         dao.deleteRole(u, p);
         r = dao.searchRoleByUserAndProject(u, p);
         assertThat(r).isNull();
-
     }
 }
