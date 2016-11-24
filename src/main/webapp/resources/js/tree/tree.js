@@ -3,18 +3,12 @@
  * Copyright 2016
  */
 
-$( window ).load(function() {
 
-	// Page preloader
-//	$('#loader').fadeOut(function(){
-//		
-//	});
-});
 $(function () {
 	var projectid = $("meta[name='_project_id']").attr("content");
 	var user_role = $("meta[name='_user_role']").attr("content");
 	var base_path = "";
-	
+	var getid = "";
 	localStorage.removeItem(projectid);
 	var x = $(window).height();
 	var y = $('.main_nav')[0].offsetHeight;
@@ -60,6 +54,7 @@ $(function () {
 				//var jsonObj = $.parseJSON(respond);
 				//alert(respond.id);
 				base_path = respond.id;
+				getid = respond.li_attr.gitid;
 					$('#tree')
 							.jstree({ 'core' : {
 							    'data' : [
@@ -272,14 +267,14 @@ $(function () {
 				
 			
 			$('#save_project').click(function(e){
-				save();
+				save(getid);
 			});
 			 $(document).bind('keydown', function(event) {
 	                if (event.ctrlKey || event.metaKey) {
 	                    switch (String.fromCharCode(event.which).toLowerCase()) {
 	                    case 's':
 	                        event.preventDefault();
-	                        save();
+	                        save(getid);
 	                        return false;
 	                        break;
 	                    }
@@ -288,7 +283,7 @@ $(function () {
 			 
 		});
 
-function save(){
+function save(getid){
 	var files = "";
 	var token = $("meta[name='_csrf']").attr("content");
 	 var header = $("meta[name='_csrf_header']").attr("content");
@@ -314,15 +309,22 @@ function save(){
 		var final_res = JSON.stringify(json_files);
 		//final_res = final_res.replace(/\\\\/g, '\\');
 		alert(final_res);
+		
 		$.ajax({
 			type:"POST",
 			url:"save",
-			data:"file="+final_res,
+			//data:"file="+final_res,
+			data:{file: final_res, id: getid, confirm: "0"},
 		    beforeSend: function(xhr){
 		        xhr.setRequestHeader(header, token);
 		    },
 			success:function(respond){
-				    alert(JSON.stringify(respond));
+				if(respond.type == 'error'){
+					//TODO confirm save
+					alert(JSON.stringify(respond));
+				}else{
+					alert(JSON.stringify(respond));
+				}
 			}
 		});	
 	}
