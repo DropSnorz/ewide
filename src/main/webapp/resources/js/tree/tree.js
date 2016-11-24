@@ -56,7 +56,7 @@ $(function () {
 				type:"GET",
 				url:"files",
 				success:function(respond){
-				console.log(respond);
+				//console.log(respond);
 				//var jsonObj = $.parseJSON(respond);
 				//alert(respond.id);
 				base_path = respond.id;
@@ -168,6 +168,9 @@ $(function () {
 								var inst = $.jstree.reference(data.reference);
 								console.log(inst);
 								updateLocalpath(projectid, data.node.id, data.node.parent+'/'+data.node.text);
+								var new_path = data.node.id;
+							    new_path = new_path.split('\\').join('-');
+							    $('#myTab a[data-efileid="'+new_path+'"]').html(data.node.text);
 							})
 							.on('delete_node.jstree', function (e, data) {
 								var new_path = data.node.id;
