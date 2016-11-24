@@ -64,7 +64,7 @@
 					</c:if>
 					<form name="formlogin" class="form-signin" action="login" method="post">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-						<h2 class="form-signin-heading">Se connecter</h2>
+						<h2 class="form-signin-heading">Sign in</h2>
 						<label for="inputEmail" class="sr-only">Email address</label>
 						<input name="email" type="email" id="email" class="form-control" placeholder="Email address" autofocus><br>
 						<label for="inputPassword" class="sr-only">Password</label>
@@ -88,7 +88,7 @@
 				</spring:hasBindErrors>
 					<form:form name="registerForm" class="form-signup" action="register" method="post">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-						<h2 class="form-signup-heading">S'inscrire</h2>
+						<h2 class="form-signup-heading">Register</h2>
 						<label for="inputUsername" class="sr-only">Email address</label>
 						<input name="username" type="text" id="username" class="form-control" placeholder="Username" autofocus><br>
 						<label for="inputEmail" class="sr-only">Email address</label>
