@@ -40,8 +40,9 @@ public class TaskDAO {
 		}
 	}
 	/**
-	 * Renvoie une list de tous les tasks d'un projet
-	 * @return liste des tasks ou liste vide s'il n'existe pas
+	 * return a list of all the tasks on a project
+	 * @param  projectId the project we work on
+	 * @return result  task list with all the tasks or an empty one if no task.
 	 */
 	public List<Task> getTasksByProjectId(int projectId) {
 
@@ -56,17 +57,23 @@ public class TaskDAO {
 			return new ArrayList<Task>();
 		}
 	}
-	
-	public List<Task> getTasksByProjectIdAndState(int projectId, String state) {
+
+	/**
+	 * Give the closed (inactive) tasks or the opened (active) tasks by project
+	 * @param projectId  the project we work on
+	 * @param active  Must take the value "active" or "inactive"
+	 * @return the list of opened/closed tasks
+	 */
+	public List<Task> getTasksByProjectIdAndState(int projectId, String active) {
 
 		try {
 			TypedQuery<Task> query;
-			if(state != null && state.equalsIgnoreCase("active")){
+			if(active != null && active.equalsIgnoreCase("active")){
 				query = em.createQuery("SELECT t FROM Task t JOIN FETCH  t.user WHERE t.project.projectID = :projectId "
 						+ "AND NOT t.state = 'Closed' ORDER BY t.date desc", Task.class);
 			}
-			else if(state != null && state.equalsIgnoreCase("inactive")){
-				query = em.createQuery("SELECT t FROM Task  t JOIN FETCH  t.user WHERE t.project.projectID = :projectId "
+			else if(active != null && active.equalsIgnoreCase("inactive")){
+				query = em.createQuery("SELECT t FROM Task t JOIN FETCH  t.user WHERE t.project.projectID = :projectId "
 						+ "AND t.state = 'Closed' ORDER BY t.date desc", Task.class);
 			}
 			else{
@@ -82,19 +89,24 @@ public class TaskDAO {
 			return new ArrayList<Task>();
 		}
 	}
-	
-	
-	
-	public List<Task> getTasksByProjectIdAndOwnerId(int projectId, int userId, String state) {
+
+	/**
+	 * Give the closed (inactive) tasks or the opened (active) tasks by project and user
+	 * @param projectId  the project we work on
+	 * @param userId the user which tasks we want to know about
+	 * @param active  Must take the value "active" or "inactive"
+	 * @return the list of opened/closed tasks for this userId
+	 */
+	public List<Task> getTasksByProjectIdAndOwnerId(int projectId, int userId, String active) {
 
 
 		try {
 			TypedQuery<Task> query;
-			if(state != null && state.equalsIgnoreCase("active")){
+			if(active != null && active.equalsIgnoreCase("active")){
 				query = em.createQuery("SELECT t FROM Task t WHERE t.project.projectID = :projectId "
 						+ "AND t.user.userID = :userId AND NOT t.state = 'Closed' ORDER BY t.date desc", Task.class);
 			}
-			else if(state != null && state.equalsIgnoreCase("inactive")){
+			else if(active != null && active.equalsIgnoreCase("inactive")){
 				query = em.createQuery("SELECT t FROM Task t WHERE t.project.projectID = :projectId "
 						+ "AND t.user.userID = :userId AND t.state= 'Closed' ORDER BY t.date desc", Task.class);
 			}
@@ -139,30 +151,6 @@ public class TaskDAO {
 		
 		em.merge(task);
 		return task;
-	}
-	
-
-
-	/**
-	 * mis � jour une task
-	 * @param taskID
-	 * @param type
-	 * @param state
-	 * @param text
-	 * @param referencedTask
-	 * @param date
-	 * @return la task mis � jour
-	 */
-	public Task Update(int taskID, String type, String state, String text, Project project, Date date) {
-		Task t = new Task();
-		t.setTaskID(taskID); 
-		t.setType(type);
-		t.setState(state);
-		t.setText(text);
-		t.setProject(project);
-		t.setDate(date);
-		em.merge(t);
-		return t;
 	}
 
 }

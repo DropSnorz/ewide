@@ -55,6 +55,10 @@ public class MessageDAOTest {
 
     }
 
+    /** Test : Get all the Messages of a Project, with a limited number of Message.
+     *  Not null : check
+     *  Number of project expected : check
+     */
     @Test
     public void shouldGetMessagesByProject() throws Exception {
         List<Message> list = dao.getMessagesByProject(1, 25);
@@ -63,16 +67,19 @@ public class MessageDAOTest {
 
     }
 
+    /** Test : Set a message in a projects.
+     *  Not null : check
+     *  Number of message expected : check
+     */
     @Test
     public void shouldSendMessage() throws Exception {
         User u = daoU.getUserByUsername("fry");
         Project p = daoP.getProjectById(1);
         Date d = new Date(1);
 
-        dao.sendMessage(u, p, "Trolololol", d);
+        dao.sendMessage(u, p, "Bonjour", d);
         List<Message> list = dao.getMessagesByProject(1, 25);
         assertThat(list).isNotNull();
         assertThat(list).hasSize(3);
-
     }
 }
