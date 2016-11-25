@@ -115,6 +115,10 @@
 		<textarea rows="1" id="chattext"></textarea>
 	</div>
 </div>
+<script>
+	var messageUrl = "<c:url value="/project/${project.projectID}/messages" />";
+</script>	
+
 
 
 	<!-- -- -- --  -- Compiler Configuration pop-up -- -- -- -- -- -->

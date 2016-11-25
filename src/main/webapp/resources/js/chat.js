@@ -39,7 +39,7 @@ function loadmessage(){
 	if(document.getElementById("chatdiv")){
 		$.ajax({
 			type:"GET",
-			url:"messages",
+			url:messageUrl,
 			success:function(respond){
 				document.getElementById("chat").innerHTML=respond;
 			}
@@ -70,12 +70,13 @@ $('body').on('keypress','#chattext', function(e){
     		document.getElementById("chattext").innerHTML=document.getElementById("chattext").value+"\n";
     	}
     	else{
+    		e.preventDefault();
     		 var token = $("meta[name='_csrf']").attr("content");
     		 var header = $("meta[name='_csrf_header']").attr("content");
     		 
     		$.ajax({
     			type:"POST",
-    			url:"message",
+    			url:messageUrl,
     			data:"message="+document.getElementById("chattext").value,
     		    beforeSend: function(xhr){
     		        xhr.setRequestHeader(header, token);
@@ -90,7 +91,7 @@ $('body').on('keypress','#chattext', function(e){
     				$('.scrollbar-macosx').scrollTop(height2);
     			}
     		});
-    		
+    		    		
     	}
     }
 });

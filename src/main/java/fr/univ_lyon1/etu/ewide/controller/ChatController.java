@@ -71,7 +71,7 @@ public class ChatController {
 	  * @return list of messages
 	  * @throws IOException
 	  */
-	 @RequestMapping(value ="/{projectID}/message", method = RequestMethod.POST)
+	 @RequestMapping(value ="/{projectID}/messages", method = RequestMethod.POST)
 	 @PreAuthorize("@userRoleService.isMember(#projectID)")
 	 public @ResponseBody ModelAndView  postMessages(@RequestParam String message, @PathVariable("projectID") int projectID) throws IOException{
 		
