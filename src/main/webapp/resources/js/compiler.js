@@ -4,7 +4,7 @@
  */
 
 // Get the modal
-var modalCompil = document.getElementById('paramCompil');
+var modalCompil = document.getElementById("paramCompil");
 // Get the button that opens the modal
 var btnConfigure = document.getElementById("btnConfigure");
 // Get the <span> element that closes the modal
@@ -13,13 +13,13 @@ var closeConfigure = document.getElementById("closeConfigure");
 // When the user clicks on the cancel button close the modal
 closeConfigure.onclick = function() {
 	modalCompil.style.display = "none";
-}
+};
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
 	if (event.target == modalCompil) {
 		modalCompil.style.display = "none";
 	}
-}
+};
 
 //----------------------------------------------------------------------------
 /**
@@ -46,23 +46,26 @@ configureCompiler.onclick=function(){
 			document.getElementById("mvncommand").value=compilerString.replace(array[0], '');
 			document.getElementById("maven").checked=true;
 			document.getElementById("commandCompil").value="";
+			document.getElementById("makecommand").value="";
 		}
 		else{
 			if(array[0]=="make"){
 				document.getElementById("maven").checked=true;
 				document.getElementById("mvncommand").value="";
 				document.getElementById("commandCompil").value="";
+				document.getElementById("makecommand").value=compilerString.replace(array[0], '');
 
 			}else{
 				document.getElementById("mainfileCompil").checked=true;
 				document.getElementById("language").value=array[0];
 				document.getElementById("mvncommand").value="";
+				document.getElementById("makecommand").value="";
 				document.getElementById("commandCompil").value=compilerString.replace(array[0], '');
 			}
 		}
 	}
 	modalCompil.style.display = "block";
-}
+};
 
 
 //----------------------------------------------------------------------------
@@ -83,7 +86,7 @@ valideCompiler.onclick=function(){
 		if(compilo=="mvn"){
 			mainfile=document.getElementById("mvncommand").value;
 		}else{
-			mainfile="";
+			mainfile=document.getElementById("makecommand").value;
 		}
 	}
 	if(mainfile.indexOf("|")!=-1 || mainfile.indexOf("\\ ")!=-1 ){
@@ -106,7 +109,7 @@ valideCompiler.onclick=function(){
 		});
 	}
 	
-}
+};
 
 //----------------------------------------------------------------------------
 /**
@@ -127,7 +130,7 @@ compilation.onclick=function(){
 			}
 		}
 	});
-}
+};
 
 //----------------------------------------------------------------------------
 /**
@@ -141,5 +144,5 @@ resultCompilation.onclick=function(){
 		success:function(respond){
 		}
 	});
-}
+};
 

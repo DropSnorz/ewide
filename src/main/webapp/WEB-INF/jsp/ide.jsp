@@ -87,7 +87,7 @@
 					<div id="the_code_2"></div>
 				</div>
 			</div>
-				<div id="the_console"></div>
+				<div id="the_console"><pre></pre></div>
 			</div>
 		</div> <!-- /container -->
 
@@ -129,14 +129,15 @@
 			</header>
 			<div class="modal-body">
 				<div class="borderCompil">
-					<input id="make" type="radio" name="compilo" value="make"> Makefile</br>
+					<input id="make" type="radio" name="compilo" value="make"> make
+					<input type="text" id="makecommand" placeholder="actions "><br>	
 				</div>
 				<div class="borderCompil">
-					<input id="maven" type="radio" name="compilo" value="mvn"> Maven
+					<input id="maven" type="radio" name="compilo" value="mvn"> mvn 
 					<input type="text" id="mvncommand" placeholder="actions maven"><br>
 				</div>
 				<div class="borderCompil">
-					<input id="mainfileCompil" type="radio" name="compilo" value="cmd"> Command : 
+					<input id="mainfileCompil" type="radio" name="compilo" value="cmd"> language : 
 					<select id="language">
 						<option  value="javac"> javac </option>
 						<option  value="gcc"> gcc</option> 

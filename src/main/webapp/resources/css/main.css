@@ -773,3 +773,7 @@
 }
 
 .ui-autocomplete{ z-index:9999999;}
+#the_console pre{
+	background-color:black;
+	color:white;
+}
