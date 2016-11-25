@@ -3,12 +3,12 @@
  * Copyright 2016
  */
 
-
+var getid = "";
 $(function () {
 	var projectid = $("meta[name='_project_id']").attr("content");
 	var user_role = $("meta[name='_user_role']").attr("content");
 	var base_path = "";
-	var getid = "";
+	//var getid = "";
 	localStorage.removeItem(projectid);
 	var x = $(window).height();
 	var y = $('.main_nav')[0].offsetHeight;
@@ -160,9 +160,16 @@ $(function () {
 							'plugins' : ['sort','types','contextmenu','unique'] 
 							})
 							.on('rename_node.jstree', function (e, data) {
-								var inst = $.jstree.reference(data.reference);
-								console.log(inst);
-								updateLocalpath(projectid, data.node.id, data.node.parent+'/'+data.node.text);
+								//var inst = $.jstree.reference(data.reference);
+								//console.log(inst);
+								if(data.node.icon==="jstree-file"){
+									updateLocalpath(projectid, data.node.id, data.node.parent+'/'+data.node.text);
+								}else{
+									updateLocalpath(projectid, data.node.id, data.node.parent+'/'+data.node.text, "folder");
+									alert("folder + "+data.node.id+" + "+data.node.parent+'/'+data.node.text);
+								}
+								
+								//alert(data.node.parent+'/'+data.node.text);
 								var new_path = data.node.id;
 							    new_path = new_path.split('\\').join('-');
 							    $('#myTab a[data-efileid="'+new_path+'"]').html(data.node.text);
@@ -191,7 +198,7 @@ $(function () {
 								var token = $("meta[name='_csrf']").attr("content");
 					    		 var header = $("meta[name='_csrf_header']").attr("content");
 					    		 var projectid = $("meta[name='_project_id']").attr("content");
-					    		 console.log(data.node);
+					    		 //console.log(data.node);
 					    		 if(data.node&&data.node.icon==="jstree-file" && data.node.type!="deleted"){
 					    			 $.ajax({
 							    			type:"POST",
@@ -267,14 +274,14 @@ $(function () {
 				
 			
 			$('#save_project').click(function(e){
-				save(getid);
+				save();
 			});
 			 $(document).bind('keydown', function(event) {
 	                if (event.ctrlKey || event.metaKey) {
 	                    switch (String.fromCharCode(event.which).toLowerCase()) {
 	                    case 's':
 	                        event.preventDefault();
-	                        save(getid);
+	        				save();
 	                        return false;
 	                        break;
 	                    }
@@ -283,7 +290,7 @@ $(function () {
 			 
 		});
 
-function save(getid){
+function save(){
 	var files = "";
 	var token = $("meta[name='_csrf']").attr("content");
 	 var header = $("meta[name='_csrf_header']").attr("content");
@@ -303,13 +310,12 @@ function save(getid){
 			    	json_files[i].content = filecodeEditor.getValue();
 			    }
 			    var obj = json_files[i];
-			    console.log(json_files[i].id);	
+			    //console.log(json_files[i].id);	
 			}
 		}
 		var final_res = JSON.stringify(json_files);
 		//final_res = final_res.replace(/\\\\/g, '\\');
 		alert(final_res);
-		
 		$.ajax({
 			type:"POST",
 			url:"save",
@@ -319,11 +325,30 @@ function save(getid){
 		        xhr.setRequestHeader(header, token);
 		    },
 			success:function(respond){
-				if(respond.type == 'error'){
-					//TODO confirm save
-					alert(JSON.stringify(respond));
+				var res = $.parseJSON(respond);
+				if(res['type'] == 'error'){
+					//alert(JSON.stringify(respond));
+					var retVal = confirm(res['message']+"\nDo you want to continue ?");
+					if( retVal == true ){
+	            	   $.ajax({
+		           			type:"POST",
+		           			url:"save",
+		           			data:{file: final_res, id: getid, confirm: "1"},
+		           		    beforeSend: function(xhr){
+		           		        xhr.setRequestHeader(header, token);
+		           		    },
+		           			success:function(respond){
+		           				var res2 = $.parseJSON(respond);
+		           				getid = res2['newid'];
+		           				alert(JSON.stringify(respond));
+		           			}
+	           			});	
+					}
 				}else{
 					alert(JSON.stringify(respond));
+					
+					getid = res['newid'];
+					return res['newid'];
 				}
 			}
 		});	
@@ -364,15 +389,34 @@ function updateLocal(projectid, item_id, item_content, item_type = "filetext", n
 	}
 }
 
-function updateLocalpath(projectid, item_id, newpath = ""){
+function updateLocalpath(projectid, item_id, newpath = "", item_type="filetext"){
 	if( localStorage.getItem(projectid) !== null && localStorage.getItem(projectid) !== "" ) {
 		var pfiles =  JSON.parse(localStorage[projectid]);
 		item = {};
+		var exist = false;
+		alert("here");
 		for (var i=0 ; i <pfiles.length ; i++){
 			if(pfiles[i].id==item_id){
+				exist=true;
 				pfiles[i].newpath = newpath;
 			}
 		}
+		if(!exist){
+			item["id"] = item_id;
+			item["content"] = "";
+			item["ftype"] = item_type;
+			item["newpath"] = newpath;
+			pfiles.push(item);
+		}
+		localStorage[projectid]=JSON.stringify(pfiles);
+	}else{
+		item = {};
+		item ["id"] = item_id;
+		item ["content"] = "";
+		item["ftype"] = item_type;
+		item["newpath"] = newpath;
+		var pfiles = [];
+		pfiles.push(item);
 		localStorage[projectid]=JSON.stringify(pfiles);
 	}
 }
