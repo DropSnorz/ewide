@@ -120,7 +120,7 @@
 	</div>
 </div>
 <script>
-	var messageUrl = "<c:url value="/project/${project.projectID}/messages" />";
+	var messageUrl = "<c:url value="/project/${project.projectID}/messages" />"
 </script>	
 
 
