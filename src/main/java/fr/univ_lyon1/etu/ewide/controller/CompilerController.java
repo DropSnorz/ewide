@@ -203,9 +203,9 @@ public class CompilerController {
 
 			String outLine = "", errLine = "";
 			while((outLine = output.readLine()) != null || (errLine = err.readLine()) != null) {
-				if (!outLine.equals(""))
+				if (outLine != null && !outLine.equals(""))
 					ret += (outLine + "\n");
-				if (!errLine.equals(""))
+				if (errLine != null && !errLine.equals(""))
 					ret += (errLine + "\n");
 			}
 
