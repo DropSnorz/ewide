@@ -776,4 +776,6 @@
 #the_console pre{
 	background-color:black;
 	color:white;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }

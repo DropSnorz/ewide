@@ -87,7 +87,7 @@
 					<div id="the_code_2"></div>
 				</div>
 			</div>
-				<div id="the_console"><pre></pre></div>
+				<div id="the_console"></div>
 			</div>
 		</div> <!-- /container -->
 
