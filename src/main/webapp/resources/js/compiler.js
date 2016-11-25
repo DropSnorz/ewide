@@ -117,16 +117,23 @@ valideCompiler.onclick=function(){
  */
 var compilation=document.getElementById("compilation");
 compilation.onclick=function(){
-	document.getElementById("the_console").innerHTML="loading compilation ... ";
+	var console_div = ace.edit("the_console");
+	console_div.setValue("loading compilation ... ");
+	console_div.gotoLine(1);
+	//document.getElementById("the_console").innerHTML="loading compilation ... ";
 	$.ajax({
 		type:"GET",
 		url:"compile",
 		success:function(respond){
 			//si le compilateur n'est pas configurer
 			if(respond==null){
-				document.getElementById("the_console").innerHTML="no compiler : configure a compiler first";
+				var console_div = ace.edit("the_console");
+				console_div.setValue("no compiler : configure a compiler first");
+				//document.getElementById("the_console").innerHTML="no compiler : configure a compiler first";
 			}else{
-				document.getElementById("the_console").innerHTML="<pre>" + respond + "</pre>";
+				var console_div = ace.edit("the_console");
+				console_div.setValue(""+respond);
+				//document.getElementById("the_console").innerHTML="<pre>" + respond + "</pre>";
 			}
 		}
 	});
