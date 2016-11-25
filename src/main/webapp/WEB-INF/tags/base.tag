@@ -10,8 +10,11 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 	<link rel="shortcut icon" href="<c:url value="/resources/images/favicon.ico" />">
 	<!-- CSS dependencies -->
+	<link href="<c:url value="/resources/css/chat.css" />" rel="stylesheet">
 	<link href="<c:url value="/resources/bootstrap/css/bootstrap.css" />" rel="stylesheet">
 	<link href="<c:url value="/resources/css/md-icons.css" />" rel="stylesheet">
 	<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
@@ -96,6 +99,30 @@
 			<div class="double-bounce2"></div>
 		</div>
 	</div>
+	
+	<!-- -- -- -- -- -- -- -- --  chat -- -- -- -- -- -- -->
+<div class="chat_bar">
+	<div class="open_chat">
+		<a href="#">Open Chat</a>
+	</div>
+	<div class="close_chat">
+		<a href="#">Close Chat</a>
+	</div>
+	<div class="chat_content">
+		<div class="chat_messages scrollbar-macosx" id="chat_scrollbar">
+			<div class="pix_items" id="chat_inner">
+				<div id="chatdiv">
+					<div id="chat"></div>
+				</div>
+			</div>
+		</div>
+		<textarea rows="1" id="chattext"></textarea>
+	</div>
+</div>
+<script>
+	var messageUrl = "<c:url value="/project/${project.projectID}/messages" />";
+</script>	
+
 
 	<!-- Javascripts -->
 	<!-- Placed at the end of the document so the pages load faster -->
@@ -108,6 +135,7 @@
 	<script type="text/javascript" src="<c:url value="/resources/js/sidebarEffects.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/custom.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/custom_users.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/chat.js" />"></script>
 	
 	<jsp:invoke fragment="javascript" />
 	</body>
