@@ -166,7 +166,6 @@ $(function () {
 									updateLocalpath(projectid, data.node.id, data.node.parent+'/'+data.node.text);
 								}else{
 									updateLocalpath(projectid, data.node.id, data.node.parent+'/'+data.node.text, "folder");
-									alert("folder + "+data.node.id+" + "+data.node.parent+'/'+data.node.text);
 								}
 								
 								//alert(data.node.parent+'/'+data.node.text);
@@ -199,6 +198,7 @@ $(function () {
 					    		 var header = $("meta[name='_csrf_header']").attr("content");
 					    		 var projectid = $("meta[name='_project_id']").attr("content");
 					    		 //console.log(data.node);
+					    		 var ext  = data.node.li_attr.extension;
 					    		 if(data.node&&data.node.icon==="jstree-file" && data.node.type!="deleted"){
 					    			 $.ajax({
 							    			type:"POST",
@@ -220,6 +220,9 @@ $(function () {
 												    
 												    if($('#myTab a[data-efileid="'+new_path+'"]').length != 0){
 												    	$('#myTab a[data-efileid="'+new_path+'"]').click();
+//												    	var filecodeID = "code_"+tabId;
+//												    	var tab_cont = $('#myTab a[data-efileid="'+new_path+'"]').attr("data-target");
+//												    	var code_div_id = $(tab_cont+' .code_div').attr("id");
 												    }else{
 												    	$('#myTab').append('<li><a class="file_tab" id="tab_'+data.selected.join(':')+'" data-efileid="'+new_path+'" data-target="#'+tabId+'" data-toggle="tab" href="#">'+data.node.text+'</a></li>');
 													    $('.tab-content').append('<div class="tab-pane" id="' + tabId + '"><div class="code_div" data-filecode="'+new_path+'" id="code_'+tabId+'"></div></div>');
@@ -229,7 +232,22 @@ $(function () {
 														if(codeArea.length > 0){
 															var filecodeEditor = ace.edit(filecodeID);
 														    filecodeEditor.setTheme("ace/theme/monokai");
-														    filecodeEditor.getSession().setMode("ace/mode/java");
+														    switch(ext) {
+															    case 'java':
+															    	filecodeEditor.getSession().setMode("ace/mode/java");
+															        break;
+															    case 'cpp':
+															    	filecodeEditor.getSession().setMode("ace/mode/c_cpp");
+															        break;
+															    case 'c':
+															    	filecodeEditor.getSession().setMode("ace/mode/c_cpp");
+															    	break;
+															    case 'py':
+															    	filecodeEditor.getSession().setMode("ace/mode/python");
+															        break;
+															    default:
+															        filecodeEditor.getSession().setMode("ace/mode/text");
+															}
 														    filecodeEditor.setOptions({
 														        enableBasicAutocompletion: true,
 														        enableSnippets: true,
@@ -394,7 +412,6 @@ function updateLocalpath(projectid, item_id, newpath = "", item_type="filetext")
 		var pfiles =  JSON.parse(localStorage[projectid]);
 		item = {};
 		var exist = false;
-		alert("here");
 		for (var i=0 ; i <pfiles.length ; i++){
 			if(pfiles[i].id==item_id){
 				exist=true;
