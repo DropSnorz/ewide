@@ -199,6 +199,7 @@ $(function () {
 					    		 var projectid = $("meta[name='_project_id']").attr("content");
 					    		 //console.log(data.node);
 					    		 var ext  = data.node.li_attr.extension;
+					    		 //alert(ext);
 					    		 if(data.node&&data.node.icon==="jstree-file" && data.node.type!="deleted"){
 					    			 $.ajax({
 							    			type:"POST",
