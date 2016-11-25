@@ -75,6 +75,7 @@ public class ZipUtil {
                 while ((len = in.read(buf)) > 0) {
                     zip.write(buf, 0, len);
                 }
+                in.close();
             }
         }
     }
