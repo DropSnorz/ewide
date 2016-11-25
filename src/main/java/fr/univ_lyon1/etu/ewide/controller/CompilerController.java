@@ -31,6 +31,7 @@ public class CompilerController {
 
 	private static final int BUFFER_SIZE = 2048;
 
+	private Logger logger = LoggerFactory.getLogger(CompilerController.class);
 
 	/**
 	 * add the command to the compiler project attribute
@@ -55,9 +56,8 @@ public class CompilerController {
 	@PreAuthorize("@userRoleService.isMember(#projectID)")
 	public @ResponseBody String getCompiler(@PathVariable("projectID") int projectID) {
 		Project project = projectDAO.getProjectById(projectID);
-		String compiler = project.getCompiler();
-		//System.out.println("Compilateur du projet : " + compiler);
-		return compiler;
+		logger.info("Project {} compiler : {}", project.getName(), project.getCompiler());
+		return project.getCompiler();
 	}
 
 	/**
@@ -75,6 +75,12 @@ public class CompilerController {
 			@RequestParam(value = "mainfile") String params) {
 
 		Project project = projectDAO.getProjectById(projectID);
+
+		logger.info("Set project {} compiler '{}' with arguments '{}'", projectID, compiler, params);
+
+		// Scotch pour le probleme des ++ qui sont remplaces par des espaces
+		if(compiler.equals("g  "))
+			compiler = "g++";
 
 		try {
 			projectDAO.setCompiler(project, compiler + " " + URLDecoder.decode(params, "UTF-8"));
@@ -151,8 +157,6 @@ public class CompilerController {
 	@RequestMapping(value ="/{projectID}/compile", method = RequestMethod.GET)
 	@PreAuthorize("@userRoleService.isMember(#projectID)")
 	public @ResponseBody String compile(@PathVariable("projectID") int projectID){
-		// Logger
-		Logger logger = LoggerFactory.getLogger(CompilerController.class);
 
 		// get the compiler of the project
 		Project project = projectDAO.getProjectById(projectID);
@@ -172,7 +176,7 @@ public class CompilerController {
 		else
 			folder = env + "/GitRepos/" + projectID + "/";
 		// console output to be returned
-		String ret = "<pre>$ " + compiler + "\n";
+		String ret = "$ " + compiler + "\n";
 
 		logger.info("Working on directory {}", folder);
 		logger.info("Compiling project {} with {}", project.getName(), project.getCompiler());
@@ -185,29 +189,61 @@ public class CompilerController {
 			proc = Runtime.getRuntime().exec(compiler, null, new File(folder));
 
 			// Read the output
-
-			BufferedReader reader =
+			//StreamGobbler out = new StreamGobbler(proc.getInputStream(), "OUTPUT", ret);
+			BufferedReader output =
 					new BufferedReader(new InputStreamReader(proc.getInputStream()));
+			//out.start();
 
-			String line;
-			while((line = reader.readLine()) != null) {
-				ret += (line + "\n");
+			// Read the err
+			//StreamGobbler err = new StreamGobbler(proc.getErrorStream(), "ERROR", ret);
+			BufferedReader err =
+					new BufferedReader(new InputStreamReader(proc.getErrorStream()));
+			//err.start();
+
+			String outLine = "", errLine = "";
+			while((outLine = output.readLine()) != null || (errLine = err.readLine()) != null) {
+				if (!outLine.equals(""))
+					ret += (outLine + "\n");
+				if (!errLine.equals(""))
+					ret += (errLine + "\n");
 			}
 
-			ret += "Process returned value " + proc.waitFor() + "\n</pre>";
+			int exitValue = proc.waitFor();
+			ret += "Process returned value " + exitValue + "\n";
 
 			return ret;
 		} catch (IOException e) {
-			e.printStackTrace();
-			logger.error("Error: Cannot launch compiling process", e);
+			logger.error("Error: Cannot launch compiling process ", e);
 			return "Error: Cannot launch compiling process";
 		} catch (InterruptedException e) {
-			e.printStackTrace();
-			logger.error("Error: InterruptedException", e);
+			logger.error("Error: InterruptedException ", e);
 			return "Error: InterruptedException";
 		}
 
 	}
 
 
+	class StreamGobbler extends Thread {
+		InputStream is;
+		String type;
+		String out;
+
+		StreamGobbler(InputStream is, String type, String out) {
+			this.is = is;
+			this.type = type;
+			this.out = out;
+		}
+
+		public void run() {
+			try {
+				InputStreamReader isr = new InputStreamReader(is);
+				BufferedReader br = new BufferedReader(isr);
+				String line;
+				while ( (line = br.readLine()) != null)
+					out += type + ">" + line;
+			} catch (IOException ioe) {
+				ioe.printStackTrace();
+			}
+		}
+	}
 }
