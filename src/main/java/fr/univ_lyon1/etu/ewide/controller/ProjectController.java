@@ -252,6 +252,9 @@ public class ProjectController {
      public String save(String file, String id, int projectID){
      	String os = System.getProperty("os.name").toLowerCase();
      	JSONArray jarr = new JSONArray(file);
+     	Project project = new Project();
+     	project = projectDAO.getProjectById(projectID);
+     	
       	for (int i = 0; i< jarr.length();++i){
       		try{
  	     		JSONObject jobj = jarr.getJSONObject(i);
@@ -261,10 +264,16 @@ public class ProjectController {
  	     		if(!jobj.get("newpath").toString().equals("")){ // Move or rename file ;
  	     			if (!_file.exists())
  	     				throw (new Exception ("File doesn't exists"));
- 	     			git.gitRename(projectID, _file.toString(), jobj.get("newpath").toString());
- 	     			File temp = new File(jobj.get("id").toString());
  	     			_file.renameTo(new File(jobj.get("newpath").toString()));
- 	     			temp.delete();			
+ 	     			
+ 	     			//File temp = new File(jobj.get("id").toString());
+ 	     			//temp.delete();	
+ 	     			//git.gitRename(projectID, _file.toString(), jobj.get("newpath").toString());
+ 	     			
+ 	     			
+ 	     			
+ 	     			
+ 	     					
  	     		}
  	 
  	     		if(jobj.get("ftype").toString().equals("filetext")){ 
@@ -317,13 +326,17 @@ public class ProjectController {
       	JSONObject jsuccess = new JSONObject();
       	jsuccess.put("type", "success");
       	jsuccess.put("message", "Commit success");
+      	jsuccess.put("newid", versionDAO.getProjectLatestVersionNumber(project));
  		return jsuccess.toString(); 
      }
      
      public JSONArray tree(File files[]){
     	 ArrayList<String> liste = new ArrayList<String>() ;
     	 JSONArray jarr = new JSONArray();
+    	 String extension;
+    	 int i;
     	 for (File file: files){
+    		 extension ="";
     		 if (file.isDirectory()){
     			 if (!file.getName().equals(".git")){
     				 JSONObject jobj = new JSONObject();
@@ -344,6 +357,14 @@ public class ProjectController {
     	    	 jobj.put("text", file.getName());
     	    	 jobj.put("icon", "jstree-file");
     	    	 jobj.put("type", "file");
+    	    	 JSONObject jobjext = new JSONObject();
+    	    	 i = file.getName().lastIndexOf('.');
+    	    	 if (i>0){
+    	    		 extension = file.getName().substring(i+1);
+    	    	 }
+    	    	 jobjext.put("extension", extension);
+    			 jobj.put("li_attr", jobjext);
+    	    	
     	    	 
 				 jarr.put(jobj);
     		 }
