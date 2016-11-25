@@ -46,4 +46,4 @@ btnConfirm.onclick=function(){
 		document.getElementById("newpwd").innerHTML="";
 	}
 
-}
+};
