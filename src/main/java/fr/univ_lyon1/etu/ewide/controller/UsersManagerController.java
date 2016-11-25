@@ -56,6 +56,10 @@ public class UsersManagerController extends BaseProjectController{
 	 public ModelAndView usersManager(ModelMap Model, @PathVariable("projectId") int projectID) throws IOException{
 	     
 		 	List<User> listUsers = usersDAO.getAllUsersByProjectID(projectID);
+		 	List<Role> listroles=new ArrayList<Role>();
+		 	for(User u :listUsers ){
+		 		listroles.add(roleDAO.getRoleByUserIdAndProjectId(u.getUserID(), projectID));
+		 	}
 		 	User user = authenticationUserService.getCurrentUser();
 		 	Role role=roleDAO.getRoleByUserIdAndProjectId(user.getUserID(), projectID);
 	        ModelAndView model = new ModelAndView("usersmanager");
@@ -63,11 +67,14 @@ public class UsersManagerController extends BaseProjectController{
 	        //set of roles that exist (for the select)
 	        model.addObject("roles",roles);
 	        
+	        
 	        //role of the actual user (to display or not deleted button)
 	        model.addObject("userrole",role.getRole());
 	          
 	        //list of users with their role
 	        model.addObject("listUsers", listUsers);
+	        model.addObject("listRoles",listroles);
+	       
 	        model.setViewName("usersmanager");
 			model.addObject("projectId",projectID);
 	        return model;
@@ -122,8 +129,13 @@ public class UsersManagerController extends BaseProjectController{
 	
 		 	}
 		 	List<User> listUsers = usersDAO.getAllUsersByProjectID(projectID);
+			List<Role> listroles=new ArrayList<Role>();
+		 	for(User u :listUsers ){
+		 		listroles.add(roleDAO.getRoleByUserIdAndProjectId(u.getUserID(), projectID));
+		 	}
 	        model.addObject("listUsers", listUsers);
 			model.addObject("projectId",projectID);
+			model.addObject("listRoles",listroles);
 	        model.setViewName("usersmanager");
 			return model;
 	 }

@@ -54,27 +54,28 @@
 					</tr>
 				</thead>
 				<tbody  id="userRoleTab">
-					<c:forEach var="user" items="${listUsers}" >
-						<tr>
-							<td>${user.username}</td>
-							<td class="text-center">
-							<c:if test="${userrole=='MANAGER'}">
-								<select class="userrole form-control" name="${user.username}">
-									<c:forEach var="role" items="${roles}">
-								        <option value="${role}" ${role == user.roles.get(0).role ? 'selected="selected"' : ''}>${role}</option>
-								    </c:forEach>
-								</select>
-							</c:if>
-							<c:if test="${userrole!='MANAGER'}">
-								${user.roles.get(0).role}
-							</c:if>
-							</td>
-							<td class="text-center">
+					<c:forEach var="user" items="${listRoles}" >
+							<tr>
+								<td>${user.user.username}</td>
+								<td class="text-center">
 								<c:if test="${userrole=='MANAGER'}">
-									<a href="#" class="btn btn-danger btn-delete-user delete-user"><i class="material-icons">delete</i></a>
+									<select class="userrole form-control" name="${user.username}">
+										<c:forEach var="role" items="${roles}">
+									        <option value="${role}" ${  user.role==role   ? 'selected="selected"' : ''}>${role}</option>
+									    </c:forEach>
+	
+									</select>
 								</c:if>
-							</td>
-						</tr>
+								<c:if test="${userrole!='MANAGER'}">
+									${user.roles.get(0).role}
+								</c:if>
+								</td>
+								<td class="text-center">
+									<c:if test="${userrole=='MANAGER'}">
+										<a href="#" class="btn btn-danger btn-delete-user delete-user"><i class="material-icons">delete</i></a>
+									</c:if>
+								</td>
+							</tr>
 				     </c:forEach>
 				</tbody>
 			</table>
