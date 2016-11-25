@@ -113,10 +113,11 @@ public class CompilerController {
 		// Temporary directory for zip storage
 		String temp = "/tmp/EWIDE/";
 		File tmp = new File(temp);
+		logger.info("Creating directory for zip save");
 		if(tmp.mkdir())
-			System.out.println("Directory created");
+			logger.info("Directory created");
 		else
-			System.out.println("Directory already exists");
+			logger.info("Directory already exists");
 
 		// zip path
 		String zipPath = temp + projectID + ".zip";
@@ -220,30 +221,5 @@ public class CompilerController {
 			return "Error: InterruptedException";
 		}
 
-	}
-
-
-	class StreamGobbler extends Thread {
-		InputStream is;
-		String type;
-		String out;
-
-		StreamGobbler(InputStream is, String type, String out) {
-			this.is = is;
-			this.type = type;
-			this.out = out;
-		}
-
-		public void run() {
-			try {
-				InputStreamReader isr = new InputStreamReader(is);
-				BufferedReader br = new BufferedReader(isr);
-				String line;
-				while ( (line = br.readLine()) != null)
-					out += type + ">" + line;
-			} catch (IOException ioe) {
-				ioe.printStackTrace();
-			}
-		}
 	}
 }
