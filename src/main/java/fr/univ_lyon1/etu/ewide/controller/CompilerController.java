@@ -85,7 +85,7 @@ public class CompilerController {
 		try {
 			projectDAO.setCompiler(project, compiler + " " + URLDecoder.decode(params, "UTF-8"));
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			logger.info("Error while setting project compiler");
 		}
 
 		return 0;
