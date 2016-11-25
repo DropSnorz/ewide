@@ -126,7 +126,7 @@ compilation.onclick=function(){
 			if(respond==null){
 				document.getElementById("the_console").innerHTML="no compiler : configure a compiler first";
 			}else{
-				document.getElementById("the_console").innerHTML=respond;
+				document.getElementById("the_console").innerHTML="<pre>" + respond + "</pre>";
 			}
 		}
 	});
