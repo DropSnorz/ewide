@@ -46,25 +46,24 @@ public class MessageDAOTest {
     UserDAO daoU;
 
     @Before
-    public void setUp() throws Exception {
-
+    public void setUp(){
+        // Do nothing because there's no set up operation to do
     }
 
     @After
-    public void tearDown() throws Exception {
-
+    public void tearDown(){
+        // Do nothing because there's no tear down operation to do
     }
 
     /** Test : Get all the Messages of a Project, with a limited number of Message.
      *  Not null : check
-     *  Number of project expected : check
+     *  Number of message expected : check
      */
     @Test
-    public void shouldGetMessagesByProject() throws Exception {
+    public void shouldGetMessagesByProject(){
         List<Message> list = dao.getMessagesByProject(1, 25);
         assertThat(list).isNotNull();
         assertThat(list).hasSize(2);
-
     }
 
     /** Test : Set a message in a projects.
@@ -72,7 +71,7 @@ public class MessageDAOTest {
      *  Number of message expected : check
      */
     @Test
-    public void shouldSendMessage() throws Exception {
+    public void shouldSendMessage(){
         User u = daoU.getUserByUsername("fry");
         Project p = daoP.getProjectById(1);
         Date d = new Date(1);
