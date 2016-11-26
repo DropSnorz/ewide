@@ -16,9 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.TypedQuery;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,13 +47,13 @@ public class TaskDAOTest {
     UserDAO daoU;
 
     @Before
-    public void setUp() throws Exception {
-
+    public void setUp() {
+        // Do nothing because there's no set up operation to do
     }
 
     @After
-    public void tearDown() throws Exception {
-
+    public void tearDown() {
+        // Do nothing because there's no tear down operation to do
     }
 
     /** Test : Get the task with its ID.
@@ -63,7 +61,7 @@ public class TaskDAOTest {
      *  Columns expected : check
      */
     @Test
-    public void shouldGetTaskById() throws Exception {
+    public void shouldGetTaskById() {
         Task t = dao.getTaskById(1);
         assertThat(t).isNotNull();
         assertThat(t.getText()).isEqualTo("Add project name in pages");
@@ -77,7 +75,7 @@ public class TaskDAOTest {
      *  Result expected when empty : check
      */
     @Test
-    public void shouldGetTasksByProjectId() throws Exception {
+    public void shouldGetTasksByProjectId() {
         List<Task> list = dao.getTasksByProjectId(1);
         assertThat(list).isNotNull();
         assertThat(list).hasSize(6);
@@ -93,7 +91,7 @@ public class TaskDAOTest {
      *  Number of task closed expected : check
      */
     @Test
-    public void shouldGetTasksByProjectIdAndState() throws Exception {
+    public void shouldGetTasksByProjectIdAndState() {
         List<Task> list = dao.getTasksByProjectIdAndState(1, "active");
         assertThat(list).isNotNull();
         assertThat(list).hasSize(5);
@@ -109,7 +107,7 @@ public class TaskDAOTest {
      *  Number of task closed expected : check
      */
     @Test
-    public void shouldGetTasksByProjectIdAndOwnerId() throws Exception {
+    public void shouldGetTasksByProjectIdAndOwnerId() {
         List<Task> list = dao.getTasksByProjectIdAndOwnerId(1, 3,"active");
         assertThat(list).isNotNull();
         assertThat(list).hasSize(2);
@@ -124,7 +122,7 @@ public class TaskDAOTest {
      *  Number of project expected : check
      */
     @Test
-    public void shouldCreateTask() throws Exception {
+    public void shouldCreateTask() {
         Task t = new Task();
         Project p = daoP.getProjectById(1);
         User u = daoU.getUserByUsername("zoidberg");
@@ -155,7 +153,8 @@ public class TaskDAOTest {
      *  Number of project expected for update: check
      */
     @Test
-    public void shouldCreateOrUpdate() throws Exception {
+    public void shouldCreateOrUpdate() {
+        String testText = "Faire des Junit";
         Project p = daoP.getProjectById(1);
         User u = daoU.getUserByUsername("zoidberg");
         assertThat(p).isNotNull();
@@ -166,13 +165,13 @@ public class TaskDAOTest {
         t.setProject(p);
         t.setDate(d);
         t.setState("New");
-        t.setText("Faire des JUnit");
+        t.setText(testText);
         t.setUser(u);
         t.setType("TODO");
 
         Task result = dao.createOrUpdate(t);
         assertThat(result).isNotNull();
-        assertThat(result.getText()).isEqualTo("Faire des JUnit");
+        assertThat(result.getText()).isEqualTo(testText);
 
         // Nombre total de taches pour le projet 1 est à 7
         List<Task> list = dao.getTasksByProjectId(1);
@@ -182,7 +181,7 @@ public class TaskDAOTest {
         t.setTaskID(1);
         result = dao.createOrUpdate(t);
         assertThat(result).isNotNull();
-        assertThat(result.getText()).isEqualTo("Faire des JUnit");
+        assertThat(result.getText()).isEqualTo(testText);
 
         // Nombre total de taches pour le projet 1 est toujours à 7
         list = dao.getTasksByProjectId(1);
@@ -195,7 +194,7 @@ public class TaskDAOTest {
      *  Number of project expected : check
      */
     @Test
-    public void shouldDeleteTaskByTask() throws Exception {
+    public void shouldDeleteTaskByTask() {
         Task t = dao.getTaskById(1);
         dao.deleteTask(t);
 
@@ -211,7 +210,7 @@ public class TaskDAOTest {
      *  Number of project expected : check
      */
     @Test
-    public void shouldDeleteTaskById() throws Exception {
+    public void shouldDeleteTaskById() {
         dao.deleteTask(1);
 
         // Nombre total de taches pour le pojet un est à 5

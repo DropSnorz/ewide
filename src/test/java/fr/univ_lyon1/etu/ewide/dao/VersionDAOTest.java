@@ -41,13 +41,13 @@ public class VersionDAOTest {
     UserDAO daoU;
 
     @Before
-    public void setUp() throws Exception {
-
+    public void setUp() {
+        // Do nothing because there's no set up operation to do
     }
 
     @After
-    public void tearDown() throws Exception {
-
+    public void tearDown() {
+        // Do nothing because there's no tear down operation to do
     }
 
     /** Test : Get a version by its git ID.
@@ -55,7 +55,7 @@ public class VersionDAOTest {
      *  Columns expected : check
      */
     @Test
-    public void shouldGetVersionByGitID() throws Exception {
+    public void shouldGetVersionByGitID() {
         User u = daoU.getUserByUsername("zoidberg");
         Project p = daoP.getProjectById(1);
         assertThat(u).isNotNull();
@@ -74,7 +74,7 @@ public class VersionDAOTest {
      *  version expected : check
      */
     @Test
-    public void shouldGetProjectLatestVersionNumber() throws Exception {
+    public void shouldGetProjectLatestVersionNumber() {
         Project p = daoP.getProjectById(2);
         int lastVersion = dao.getProjectLatestVersionNumber(p);
         assertThat(lastVersion).isNotNull();
@@ -86,7 +86,7 @@ public class VersionDAOTest {
      *  Columns expected : check
      */
     @Test
-    public void shouldCreate() throws Exception {
+    public void shouldCreate() {
         User u = daoU.getUserByUsername("fry");
         Project p = daoP.getProjectById(1);
         assertThat(u).isNotNull();
@@ -104,7 +104,7 @@ public class VersionDAOTest {
      *  Columns expected : check
      */
     @Test
-    public void shouldCreate1() throws Exception {
+    public void shouldCreate1() {
         User u = daoU.getUserByUsername("fry");
         Project p = daoP.getProjectById(1);
         assertThat(u).isNotNull();
@@ -124,7 +124,7 @@ public class VersionDAOTest {
      * size expected : check
      */
     @Test
-    public void shouldGetAllVersionsByProject() throws Exception {
+    public void shouldGetAllVersionsByProject() {
         Project p = daoP.getProjectById(1);
         List<Version> list = dao.getAllVersionsByProject(p);
         assertThat(list).isNotNull();

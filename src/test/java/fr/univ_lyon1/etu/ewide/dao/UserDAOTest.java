@@ -40,14 +40,21 @@ public class UserDAOTest {
     @Autowired
     private UserDAO dao;
 
-    @Before
-    public void setUp() throws Exception {
+    private String emailTest = "zoidberg@ewide.com";
+    private String stringTest = "$2a$10$WzSOqXRoTXA7QkIdhP3hl.2R85JSgG2nGYltG3HC0DftrefgFH5o6";
+    private String pseudoTest = "zoidberg";
+    private String changePseudoTest = "Pseudo";
+    private String changeStringTest = "password";
+    private String changeEmailTest = "mail@mail.com";
 
+    @Before
+    public void setUp() {
+        // Do nothing because there's no set up operation to do
     }
 
     @After
-    public void tearDown() throws Exception {
-
+    public void tearDown() {
+        // Do nothing because there's no tear down operation to do
     }
 
     /**  Test : Get the User with his email
@@ -55,13 +62,13 @@ public class UserDAOTest {
      *  All the columns are OK
      */
     @Test
-    public void shouldGetUserByEmail() throws Exception {
-        User searchResults = dao.getUserByEmail("zoidberg@ewide.com");
+    public void shouldGetUserByEmail() {
+        User searchResults = dao.getUserByEmail(emailTest);
         assertThat(searchResults).isNotNull();
         assertThat(searchResults.getUserID()).isEqualTo(1);
-        assertThat(searchResults.getUsername()).isEqualTo("zoidberg");
-        assertThat(searchResults.getMail()).isEqualTo("zoidberg@ewide.com");
-        assertThat(searchResults.getPwd()).isEqualTo("$2a$10$WzSOqXRoTXA7QkIdhP3hl.2R85JSgG2nGYltG3HC0DftrefgFH5o6");
+        assertThat(searchResults.getUsername()).isEqualTo(pseudoTest);
+        assertThat(searchResults.getMail()).isEqualTo(emailTest);
+        assertThat(searchResults.getPwd()).isEqualTo(stringTest);
     }
 
     /** Test : Get the User with his username
@@ -69,13 +76,13 @@ public class UserDAOTest {
      *  All the columns are OK : check
      */
     @Test
-    public void shouldGetUserByUsername() throws Exception {
-        User searchResults = dao.getUserByUsername("zoidberg");
+    public void shouldGetUserByUsername() {
+        User searchResults = dao.getUserByUsername(pseudoTest);
         assertThat(searchResults).isNotNull();
         assertThat(searchResults.getUserID()).isEqualTo(1);
-        assertThat(searchResults.getUsername()).isEqualTo("zoidberg");
-        assertThat(searchResults.getMail()).isEqualTo("zoidberg@ewide.com");
-        assertThat(searchResults.getPwd()).isEqualTo("$2a$10$WzSOqXRoTXA7QkIdhP3hl.2R85JSgG2nGYltG3HC0DftrefgFH5o6");
+        assertThat(searchResults.getUsername()).isEqualTo(pseudoTest);
+        assertThat(searchResults.getMail()).isEqualTo(emailTest);
+        assertThat(searchResults.getPwd()).isEqualTo(stringTest);
     }
 
     /** Test : Create an user with Email, username and password
@@ -84,19 +91,18 @@ public class UserDAOTest {
      *  All the columns given are OK : check
      */
     @Test
-    public void shouldCreateUser() throws Exception {
-        User u, u2;
-        u = dao.createUser("mail@mail.com","Pseudo","password");
-        u2 = dao.createUser("mail2@mail.com","Pseudo2","password2");
+    public void shouldCreateUser() {
+        User u = dao.createUser(changeEmailTest,changePseudoTest,changeStringTest);
+        User u2 = dao.createUser("mail2@mail.com","Pseudo2","password2");
 
         assertThat(u).isNotNull();
         assertThat(u2).isNotNull();
 
         assertThat(u2.getUserID()).isNotEqualTo(u.getUserID());
 
-        assertThat(u.getUsername()).isEqualTo("Pseudo");
-        assertThat(u.getMail()).isEqualTo("mail@mail.com");
-        assertThat(u.getPwd()).isEqualTo("password");
+        assertThat(u.getUsername()).isEqualTo(changePseudoTest);
+        assertThat(u.getMail()).isEqualTo(changeEmailTest);
+        assertThat(u.getPwd()).isEqualTo(changeStringTest);
 
         assertThat(u2.getUsername()).isEqualTo("Pseudo2");
         assertThat(u2.getMail()).isEqualTo("mail2@mail.com");
@@ -109,14 +115,14 @@ public class UserDAOTest {
      *  All the columns given are OK : check
      */
     @Test
-    public void shouldUpdateUser() throws Exception {
+    public void shouldUpdateUser() {
         User u = new User();
-        User u2 = dao.getUserByUsername("zoidberg");
+        User u2 = dao.getUserByUsername(pseudoTest);
 
         u.setUserID(1);
-        u.setUsername("Pseudo");
-        u.setMail("mail@mail.com");
-        u.setPwd("password");
+        u.setUsername(changePseudoTest);
+        u.setMail(changeEmailTest);
+        u.setPwd(changeStringTest);
 
          u = dao.updateUser(u);
 
@@ -124,12 +130,12 @@ public class UserDAOTest {
         assertThat(u2).isNotNull();
 
         assertThat(u.getUserID()).isEqualTo(u2.getUserID());
-        assertThat(u2.getUsername()).isNotEqualTo("zoidgerg");
-        assertThat(u2.getUsername()).isEqualTo("Pseudo");
-        assertThat(u2.getMail()).isNotEqualTo("zoidberg@ewide.com");
-        assertThat(u2.getMail()).isEqualTo("mail@mail.com");
-        assertThat(u2.getPwd()).isNotEqualTo("$2a$10$WzSOqXRoTXA7QkIdhP3hl.2R85JSgG2nGYltG3HC0DftrefgFH5o6");
-        assertThat(u2.getPwd()).isEqualTo("password");
+        assertThat(u2.getUsername()).isNotEqualTo(pseudoTest);
+        assertThat(u2.getUsername()).isEqualTo(changePseudoTest);
+        assertThat(u2.getMail()).isNotEqualTo(emailTest);
+        assertThat(u2.getMail()).isEqualTo(changeEmailTest);
+        assertThat(u2.getPwd()).isNotEqualTo(stringTest);
+        assertThat(u2.getPwd()).isEqualTo(changeStringTest);
     }
 
     /** Test : Get all user of a project by its ID
@@ -137,7 +143,7 @@ public class UserDAOTest {
      *  Return the number of users expected : check
      */
     @Test
-    public void shouldGetAllUsersByProjectID() throws Exception {
+    public void shouldGetAllUsersByProjectID() {
         List<User> list = dao.getAllUsersByProjectID(1);
 
         assertThat(list).isNotNull();
@@ -149,8 +155,8 @@ public class UserDAOTest {
      *  Number of users expected : check
      */
     @Test
-    public void shouldGetUsersStartedwith() throws Exception {
-        User u = dao.getUserByEmail("zoidberg@ewide.com");
+    public void shouldGetUsersStartedwith() {
+        User u = dao.getUserByEmail(emailTest);
         List<User> list = dao.getUsersStartedwith("zoid", u);
         assertThat(list).isNotNull();
         assertThat(list).hasSize(1);

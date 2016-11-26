@@ -121,17 +121,3 @@ FOREIGN KEY (userID) REFERENCES User(userID)
 INSERT INTO USER Values(0001,'zoidberg', '$2a$10$WzSOqXRoTXA7QkIdhP3hl.2R85JSgG2nGYltG3HC0DftrefgFH5o6', 'zoidberg@ewide.com', 'zoidberg_directory');
 INSERT INTO USER Values(0002,'fry', '$2a$10$WzSOqXRoTXA7QkIdhP3hl.2R85JSgG2nGYltG3HC0DftrefgFH5o6', 'fry@ewide.com', 'fry_directory');
 INSERT INTO USER Values(0003,'bender', '$2a$10$WzSOqXRoTXA7QkIdhP3hl.2R85JSgG2nGYltG3HC0DftrefgFH5o6', 'bender@ewide.com', 'bender_directory');
-
-INSERT INTO PROJECT Values (1,"Projet MULTIMIF","compiler","unknow","wiki");
-INSERT INTO PROJECT Values (2, "Projet IA","compiler","unknow","wiki");
-
-INSERT INTO ROLE Values(1, 1, 1, 'MANAGER');
-INSERT INTO ROLE Values(2, 2, 2, 'MANAGER');
-INSERT INTO ROLE Values(3, 3, 1, 'DEVELOPER');
-
-INSERT INTO TASK (taskID, userID, projectID, type, state, text) Values(1,1,1, 'TODO', 'New', 'Add project name in pages');
-INSERT INTO TASK (taskID, userID, projectID, type, state, text) Values(2,1,1, 'Bug', 'InProgress', 'Fix security issues with /newproject access');
-INSERT INTO TASK (taskID, userID, projectID, type, state, text) Values(3,1,1, 'TODO', 'New', 'Translate all pages in englidh');
-INSERT INTO TASK (taskID, userID, projectID, type, state, text) Values(4,3,1, 'TODO', 'Rejected', 'Add second password field on register form');
-INSERT INTO TASK (taskID, userID, projectID, type, state, text) Values(5,3,1, 'TODO', 'New', 'Clear database');
-INSERT INTO TASK (taskID, userID, projectID, type, state, text) Values(6,3,1, 'TODO', 'Closed', 'Hash password');

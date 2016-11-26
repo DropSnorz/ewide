@@ -38,13 +38,13 @@ public class ProjectDAOTest {
     ProjectDAO dao;
 
     @Before
-    public void setUp() throws Exception {
-
+    public void setUp() {
+        // Do nothing because there's no set up operation to do
     }
 
     @After
-    public void tearDown() throws Exception {
-
+    public void tearDown() {
+        // Do nothing because there's no tear down operation to do
     }
 
     /** Test : Get all the projects.
@@ -52,7 +52,7 @@ public class ProjectDAOTest {
      *  Number of project expected : check
      */
     @Test
-    public void shouldGetAllProjects() throws Exception {
+    public void shouldGetAllProjects() {
         List<Project> list = dao.getAllProjects();
         assertThat(list).isNotNull();
         assertThat(list).hasSize(3);
@@ -62,7 +62,7 @@ public class ProjectDAOTest {
      *  Number of project expected : check
      */
     @Test
-    public void shouldCreateProject() throws Exception {
+    public void shouldCreateProject() {
         Project p = new Project();
         p.setName("Project ++");
         p.setDescription("Je suis une description");
@@ -81,7 +81,7 @@ public class ProjectDAOTest {
      *  Columns expected : check
      */
     @Test
-    public void shouldGetProjectById() throws Exception {
+    public void shouldGetProjectById() {
         Project p;
         p = dao.getProjectById(1);
 
@@ -93,43 +93,29 @@ public class ProjectDAOTest {
         assertThat(p.getWiki()).isEqualTo("wiki");
     }
 
-    /** Test : Update the name and compiler of a project.
-     *  Change observed in the project: check
-     */
-    @Test
-    public void shouldUpdateFile() throws Exception {
-        Project p = dao.getProjectById(1);
-
-        assertThat(p.getName()).isNotEqualTo("Je suis un nouveau nom");
-        assertThat(p.getCompiler()).isNotEqualTo("Compilation!");
-
-        dao.UpdateFile(1, "Je suis un nouveau nom", "Compilation!");
-
-        assertThat(p.getName()).isEqualTo("Je suis un nouveau nom");
-        assertThat(p.getCompiler()).isEqualTo("Compilation!");
-    }
-
     /** Test : Update the wiki of a project.
      *  Change observed in the project : check
      */
     @Test
-    public void shouldUpdateWiki() throws Exception {
+    public void shouldUpdateWiki() {
+        String test = "Je suis un nouveau wiki";
         Project p = dao.getProjectById(1);
-        assertThat(p.getWiki()).isNotEqualTo("Je suis un nouveau wiki");
+        assertThat(p.getWiki()).isNotEqualTo(test);
 
-        dao.updateWiki(p.getProjectID(), "Je suis un nouveau wiki");
-        assertThat(p.getWiki()).isEqualTo("Je suis un nouveau wiki");
+        dao.updateWiki(p.getProjectID(), test);
+        assertThat(p.getWiki()).isEqualTo(test);
     }
 
     /** Test : Change the compiler
      *  Change observed in the project : check
      */
     @Test
-    public void shouldSetCompiler() throws Exception {
+    public void shouldSetCompiler() {
+        String test = "Je suis un nouveau compiler";
         Project p = dao.getProjectById(1);
-        assertThat(p.getCompiler()).isNotEqualTo("Je suis un nouveau compiler");
+        assertThat(p.getCompiler()).isNotEqualTo(test);
 
-        dao.setCompiler(p, "Je suis un nouveau compiler");
-        assertThat(p.getCompiler()).isEqualTo("Je suis un nouveau compiler");
+        dao.setCompiler(p, test);
+        assertThat(p.getCompiler()).isEqualTo(test);
     }
 }

@@ -46,13 +46,13 @@ public class RoleDAOTest {
 
 
     @Before
-    public void setUp() throws Exception {
-
+    public void setUp() {
+        // Do nothing because there's no set up operation to do
     }
 
     @After
-    public void tearDown() throws Exception {
-
+    public void tearDown() {
+        // Do nothing because there's no tear down operation to do
     }
 
     /** Test : Get the projects of an user.
@@ -60,7 +60,7 @@ public class RoleDAOTest {
      *  Number of project expected : check
      */
     @Test
-    public void shouldGetProjectIDByUser() throws Exception {
+    public void shouldGetProjectIDByUser() {
         User u;
         u = daoU.getUserByEmail("fry@ewide.com");
         assertThat(u).isNotNull();
@@ -80,7 +80,7 @@ public class RoleDAOTest {
      *  Columns expected : check
      */
     @Test
-    public void shouldGetRoleByUserIdAndProjectId() throws Exception {
+    public void shouldGetRoleByUserIdAndProjectId() {
         User u = daoU.getUserByUsername("fry");
         Project p = daoP.getProjectById(1);
         assertThat(p).isNotNull();
@@ -102,7 +102,7 @@ public class RoleDAOTest {
      *  Columns expected : check
      */
     @Test
-    public void shouldSearchRoleByUserAndProject() throws  Exception {
+    public void shouldSearchRoleByUserAndProject() {
         User u = daoU.getUserByUsername("fry");
         Project p = daoP.getProjectById(1);
         assertThat(p).isNotNull();
@@ -119,19 +119,21 @@ public class RoleDAOTest {
      *  Changed expected : check
      */
     @Test
-    public void shouldUpdateRole() throws Exception {
+    public void shouldUpdateRole() {
+        String testDeveloper = "DEVELOPER";
+        String testManager = "MANAGER";
         User u = daoU.getUserByUsername("zoidberg");
         Project p = daoP.getProjectById(1);
         assertThat(u).isNotNull();
         assertThat(p).isNotNull();
 
         Role r = dao.searchRoleByUserAndProject(u, p);
-        assertThat(r.getRole()).isEqualTo("MANAGER");
-        assertThat(r.getRole()).isNotEqualTo("DEVELOPER");
+        assertThat(r.getRole()).isEqualTo(testManager);
+        assertThat(r.getRole()).isNotEqualTo(testDeveloper);
 
-        dao.updateRole(u, p, "DEVELOPER");
-        assertThat(r.getRole()).isEqualTo("DEVELOPER");
-        assertThat(r.getRole()).isNotEqualTo("MANAGER");
+        dao.updateRole(u, p, testDeveloper);
+        assertThat(r.getRole()).isEqualTo(testDeveloper);
+        assertThat(r.getRole()).isNotEqualTo(testManager);
 
     }
 
@@ -140,7 +142,8 @@ public class RoleDAOTest {
      *  Columns expected : check
      */
     @Test
-    public void shouldCreateRole() throws Exception {
+    public void shouldCreateRole() {
+        String testManager = "MANAGER";
         User u = daoU.getUserByUsername("bender");
         Project p = daoP.getProjectById(2);
         assertThat(u).isNotNull();
@@ -149,11 +152,11 @@ public class RoleDAOTest {
         Role r = dao.searchRoleByUserAndProject(u, p);
         assertThat(r).isNull();
 
-        dao.createRole(u, p, "MANAGER");
+        dao.createRole(u, p, testManager);
 
         r = dao.searchRoleByUserAndProject(u, p);
         assertThat(r).isNotNull();
-        assertThat(r.getRole()).isEqualTo("MANAGER");
+        assertThat(r.getRole()).isEqualTo(testManager);
         assertThat(r.getUser()).isEqualTo(u);
         assertThat(r.getProject()).isEqualTo(p);
     }
@@ -162,7 +165,7 @@ public class RoleDAOTest {
      *  the role returns null : check
      */
     @Test
-    public void shouldDeleteRole() throws Exception {
+    public void shouldDeleteRole() {
         User u = daoU.getUserByUsername("fry");
         Project p = daoP.getProjectById(2);
         assertThat(u).isNotNull();
