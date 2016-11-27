@@ -67,7 +67,7 @@
 									</select>
 								</c:if>
 								<c:if test="${userrole!='MANAGER'}">
-									${user.roles.get(0).role}
+									${user.role}
 								</c:if>
 								</td>
 								<td class="text-center">
