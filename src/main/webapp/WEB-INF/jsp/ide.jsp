@@ -26,7 +26,7 @@
 		<h2 class="icon icon-stack">${project.name}</h2>
 		<ul>
 			<li><a class="icon icon-location" href="<c:url value="/project/${project.projectID}/ide"/>">Workspace</a></li>
-			<li><a class="icon icon-data" href="<c:url value="/project/${projectId}/wiki"/>">Wiki</a></li>
+			<li><a class="icon icon-data" href="<c:url value="/project/${projectID}/wiki"/>">Wiki</a></li>
 			<li><a class="icon icon-study"  href="<c:url value="/project/${projectID}/versions/display"/>">Versioning</a></li>
 			<li><a class="icon icon-photo" href="<c:url value="/project/${project.projectID}/users_manager"/>">Members</a></li>
 			<li><a class="icon icon-wallet" href="<c:url value="/project/${project.projectID}/task"/>">Tasks List</a></li>
