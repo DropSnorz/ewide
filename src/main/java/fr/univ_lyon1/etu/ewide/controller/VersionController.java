@@ -104,7 +104,14 @@ public class VersionController extends BaseProjectController{
         model.addAttribute("fileName", fileName);
     	model.addAttribute("projectId", projectId);
 	}
-	
+	/**
+	 * 
+	 * @param model
+	 * @param projectId
+	 * @param fileName
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/project/{projectId}/versions/{fileName}/display", method = RequestMethod.GET)
 	public String gitVersions(ModelMap model, @PathVariable("projectId") int projectId, @PathVariable(value = "fileName") String fileName) throws Exception {
 		
@@ -115,7 +122,15 @@ public class VersionController extends BaseProjectController{
 
     }
 	
-	
+	/**
+	 * 
+	 * @param model
+	 * @param projectId
+	 * @param fileName
+	 * @param version
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/project/{projectId}/versions/{fileName}/restore/{version}", method = RequestMethod.GET)
 	public ModelAndView gitRollback(ModelMap model, @PathVariable("projectId") int projectId, @PathVariable("fileName") String fileName, @PathVariable("version") String version) throws Exception {
 		
@@ -129,7 +144,13 @@ public class VersionController extends BaseProjectController{
 		mv.addObject("versionRestored", version);
 		return mv;
 	}
-	
+	/**
+	 * 
+	 * @param model
+	 * @param projectId
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/project/{projectId}/versions/display", method = RequestMethod.GET)
 	public String gitProjectVersions(ModelMap model, @PathVariable("projectId") int projectId) throws Exception {
 		

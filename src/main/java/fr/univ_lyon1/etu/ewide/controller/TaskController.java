@@ -44,7 +44,13 @@ public class TaskController extends BaseProjectController {
 	@Autowired
 	AuthenticationUserService authenticationUserService;
 	
-
+	/**
+	 * 
+	 * @param projectId
+	 * @param owner
+	 * @param state
+	 * @return view 
+	 */
 	@PreAuthorize("@userRoleService.isMember(#projectId)")
 	@RequestMapping(value="")
 	public ModelAndView taskList(@PathVariable("projectId") int projectId, 
@@ -81,8 +87,12 @@ public class TaskController extends BaseProjectController {
 	}
 	
 	
-	//task Create
-
+	
+	/**
+	 * Task create
+	 * @param projectId
+	 * @return view of task-create
+	 */
 	@PreAuthorize("@userRoleService.isMember(#projectId)")
 	@RequestMapping(value="/create", method = RequestMethod.GET)
 	public ModelAndView getTaskCreate(@PathVariable("projectId") int projectId){
@@ -91,7 +101,15 @@ public class TaskController extends BaseProjectController {
 
 		return model;
 	}
-
+	/**
+	 * Save task
+	 * @param projectId
+	 * @param form
+	 * @param bindingResult
+	 * @param model
+	 * @param redirectAttributes
+	 * @return
+	 */
 	@PreAuthorize("@userRoleService.isMember(#projectId)")
 	@RequestMapping(value="/create", method = RequestMethod.POST)
 	public ModelAndView postTaskCreate(@PathVariable("projectId") int projectId, 
@@ -123,9 +141,12 @@ public class TaskController extends BaseProjectController {
 		return view;
 	}
 	
-	//task Edit
-	
-	
+	/**
+	 * Task edit
+	 * @param projectId
+	 * @param taskId
+	 * @return view of task edit
+	 */
 	@PreAuthorize("@userRoleService.isMember(#projectId)")
 	@RequestMapping(value="/{taskId}/edit", method = RequestMethod.GET)
 	public ModelAndView getTaskEdit(@PathVariable("projectId") int projectId,
@@ -138,7 +159,16 @@ public class TaskController extends BaseProjectController {
 
 		return model;
 	}
-
+	/**
+	 * Save task edit modification
+	 * @param projectId
+	 * @param taskId
+	 * @param form
+	 * @param bindingResult
+	 * @param model
+	 * @param redirectAttributes
+	 * @return
+	 */
 	@PreAuthorize("@userRoleService.isMember(#projectId)")
 	@RequestMapping(value="/{taskId}/edit", method = RequestMethod.POST)
 	public ModelAndView postTaskEdit(@PathVariable("projectId") int projectId, 
@@ -175,7 +205,12 @@ public class TaskController extends BaseProjectController {
 		return view;
 	}
 	
-	// Task delete
+	/**
+	 * Task delete
+	 * @param projectId
+	 * @param taskId
+	 * @return
+	 */
 	
 	@PreAuthorize("@userRoleService.isMember(#projectId)")
 	@RequestMapping(value="/{taskId}/delete", method = RequestMethod.GET)
@@ -188,7 +223,13 @@ public class TaskController extends BaseProjectController {
 
 		return model;
 	}
-	
+	/**
+	 * Task delete
+	 * @param projectId
+	 * @param taskId
+	 * @param redirectAttributes
+	 * @return
+	 */
 	@PreAuthorize("@userRoleService.isMember(#projectId)")
 	@RequestMapping(value="/{taskId}/delete", method = RequestMethod.POST)
 	public ModelAndView postTaskDelete(@PathVariable("projectId") int projectId,
@@ -200,7 +241,13 @@ public class TaskController extends BaseProjectController {
 		redirectAttributes.addFlashAttribute("SUCCESS_MESSAGE", "Task successfully deleted !");
 		return model;
 	}
-	
+	/**
+	 * Edit task
+	 * @param projectId
+	 * @param taskId
+	 * @param state
+	 * @return
+	 */
 	@PreAuthorize("@userRoleService.isMember(#projectId)")
 	@RequestMapping(value="/edit/state", method = RequestMethod.POST)
 	@ResponseBody

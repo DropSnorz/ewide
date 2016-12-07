@@ -334,7 +334,7 @@ function save(){
 		}
 		var final_res = JSON.stringify(json_files);
 		//final_res = final_res.replace(/\\\\/g, '\\');
-		alert(final_res);
+		//alert(final_res);
 		$.ajax({
 			type:"POST",
 			url:"save",
@@ -359,12 +359,14 @@ function save(){
 		           			success:function(respond){
 		           				var res2 = $.parseJSON(respond);
 		           				getid = res2['newid'];
-		           				alert(JSON.stringify(respond));
+		           				alert(res['message']);
+		           				//alert(JSON.stringify(respond));
 		           			}
 	           			});	
 					}
 				}else{
-					alert(JSON.stringify(respond));
+					// alert(JSON.stringify(respond))
+					alert(res['message']);
 					
 					getid = res['newid'];
 					return res['newid'];
