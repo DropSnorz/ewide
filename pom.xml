@@ -236,26 +236,8 @@
 			<properties>
 				<tomcat-server>localhost</tomcat-server>
 				<tomcat-url>http://localhost:8080/manager/text</tomcat-url>
-				<tomcat-username>machine</tomcat-username>
-				<tomcat-password>machine</tomcat-password>
-			</properties>
-		</profile>
-		<profile>
-			<id>vm_mathilde</id>
-			<properties>
-				<tomcat-server>vm_mathilde</tomcat-server>
-				<tomcat-url>http://192.168.77.24/manager/text</tomcat-url>
-				<tomcat-username>machine</tomcat-username>
-				<tomcat-password>machine</tomcat-password>
-			</properties>
-		</profile>
-		<profile>
-			<id>vm_arthur</id>
-			<properties>
-				<tomcat-server>vm_arthur</tomcat-server>
-				<tomcat-url>http://192.168.77.126:8080/manager/text</tomcat-url>
-				<tomcat-username>machine</tomcat-username>
-				<tomcat-password>machine</tomcat-password>
+				<tomcat-username>username</tomcat-username>
+				<tomcat-password>password</tomcat-password>
 			</properties>
 		</profile>
 	</profiles>
