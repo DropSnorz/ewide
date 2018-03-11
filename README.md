@@ -11,7 +11,7 @@
 
 ![](https://github.com/boltmaud/Ewide/blob/master/gif2.gif?raw=true)
 
-> Finally, this gif show the versionning option. 
+> Finally, this gif shows the versionning tool. 
 
 ![](https://github.com/boltmaud/Ewide/blob/master/gif3.gif?raw=true)
 
