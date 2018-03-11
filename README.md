@@ -2,7 +2,7 @@
 
 *Please find the repport ![here](https://github.com/BoltMaud/Ewide/blob/master/RAPPORT.pdf).*
 
-> Ewide for Embedded web integrated environnement permit users to login, create projects, manage users that you can see in the first gif.  
+> Ewide for Embedded Web Integrated Environnement permit users to login, create projects, manage users that you can see in the first gif.  
 
 
    ![](https://github.com/boltmaud/Ewide/blob/master/gif1.gif?raw=true)
